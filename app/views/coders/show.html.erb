@@ -1,0 +1,48 @@
+<p>
+  <b>First name:</b>
+  <%=h @coder.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @coder.last_name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @coder.email %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%=h @coder.city %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%=h @coder.rank %>
+</p>
+
+<p>
+  <b>Website:</b>
+  <%=h @coder.website %>
+</p>
+
+<p>
+  <b>Delta:</b>
+  <%=h @coder.delta %>
+</p>
+
+<p>
+  <b>Recommendation count:</b>
+  <%=h @coder.recommendation_count %>
+</p>
+
+<p>
+  <b>Image path:</b>
+  <%=h @coder.image_path %>
+</p>
+
+
+<%= link_to 'Edit', edit_coder_path(@coder) %> |
+<%= link_to 'Back', coders_path %>

@@ -1,0 +1,42 @@
+<h1>Rails Coders</h1>
+<% form_tag filter_by_cities_coders_path do %>
+	<%= select_tag "locations",options_for_select(@locations) %>
+	<%= submit_tag "Filter" %>
+<% end %>
+
+<input type="button" id="test" value="Try it"/>
+
+<italics><%= "Found #{@coders.size} coders" %></italics>
+<table>
+  <tr>
+    <th>Full name</th>
+    <th>Location</th>
+    <th>Rank</th>
+    <th>Website</th>
+    <th>WWR URL</th>
+    <th>Recommendation count</th>
+    <th>Image path</th>
+	<th>&nbsp;</th>
+	<th>&nbsp;</th>
+	<th>&nbsp;</th>		
+  </tr>
+
+<% for coder in @coders %>
+  <tr>
+    <td><%=h coder.full_name %></td>
+    <td><%=h coder.city %></td>
+    <td><%=h coder.rank %></td>
+    <td style="width: 50px;"><%=link_to coder.website, coder.website %></td>
+    <td><%=link_to 'WWR URL',coder.profile_url %></td>
+    <td><%=coder.recommendation_count %></td>
+    <td><%=image_tag(format_image_path(coder.image_path),{:size  => "75x75"}) if not coder.rank.blank? %></td>
+    <td><%= link_to 'Show', coder %></td>
+    <td><%= link_to 'Edit', edit_coder_path(coder) %></td>
+    <td><%= link_to 'Destroy', coder, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New coder', new_coder_path %>
