@@ -3,7 +3,7 @@ require 'open-uri'
 
 class WWRScraper
   PROCESS_UPDATES = true
-  LEVELS_TO_PARSE = 55
+  LEVELS_TO_PARSE = 45
   attr_accessor :processed_urls,:levels_parsed
   
   def initialize
@@ -16,19 +16,24 @@ class WWRScraper
     puts "processing based on seed data"
     
     processing_array = [
-      "http://workingwithrails.com/person/2892-akhil-bansal",
+    #  "http://workingwithrails.com/person/4343-brendan-lim",
+    #  "http://workingwithrails.com/person/2892-akhil-bansal",
     #  "http://workingwithrails.com/person/9530-jason-lee",
-      "http://workingwithrails.com/person/13224-collin-vandyck",
     # "http://workingwithrails.com/person/7440-lindsay-ucci",
     #  "http://workingwithrails.com/person/9784-colin-harris",
     #  "http://workingwithrails.com/person/7241-craig-webster",
     #  "http://workingwithrails.com/person/5957-cheah-chu-yeow",
     #  "http://workingwithrails.com/person/12003-les-hill",
-    "http://workingwithrails.com/person/5246-david-heinemeier-hansson",
-    #{}"http://www.workingwithrails.com/person/9252-hank-beaver"
+    #{}"http://workingwithrails.com/person/5246-david-heinemeier-hansson",
+    "http://workingwithrails.com/person/11125-asa-wilson",
+    "http://www.workingwithrails.com/person/2941-andrew-stone",
+    "http://www.workingwithrails.com/person/9252-hank-beaver",
     #{}"http://workingwithrails.com/person/5639-amy-hoy",
     #{}"http://workingwithrails.com/person/5306-james-duncan-davidson",      
     "http://workingwithrails.com/person/12633-mark-jones",
+    "http://workingwithrails.com/person/13224-collin-vandyck",
+    "http://www.workingwithrails.com/person/15297-zack-adams",
+    "http://www.workingwithrails.com/person/15141-tommy-campbell", 
     #{}"http://www.workingwithrails.com/person/5414-sam-stephenson",
     #{}"http://workingwithrails.com/person/3942-charles-nutter",
     #{}"http://workingwithrails.com/person/5421-ezra-zygmuntowicz",
@@ -36,7 +41,7 @@ class WWRScraper
     #{}"http://workingwithrails.com/person/4987-michael-koziarski",
     #{}"http://workingwithrails.com/person/6085-eric-hodel",
     #{}"http://workingwithrails.com/person/5595-stuart-halloway",
-    #{}"http://workingwithrails.com/person/5296-geoffrey-grosenbach",
+    "http://workingwithrails.com/person/5296-geoffrey-grosenbach",
     #{}"http://workingwithrails.com/person/7739-evan-weaver",
     #{}"http://workingwithrails.com/person/6629-jeremy-mcanally",
     #{}"http://workingwithrails.com/person/12253-nathen-grass",
@@ -46,7 +51,7 @@ class WWRScraper
     #{}"http://workingwithrails.com/person/6766-neal-ford",
     "http://workingwithrails.com/person/6491-ryan-bates",
     #  "http://workingwithrails.com/person/7192-wayne-e-seguin",
-    "http://workingwithrails.com/person/4769-tobias-luetke",
+    #{}"http://workingwithrails.com/person/4769-tobias-luetke",
     "http://workingwithrails.com/person/871-jim-weirich"
     ]
     processing_array.each do |url_to_process|
@@ -74,8 +79,8 @@ class WWRScraper
   end
   
   def process_recommendations(full_recommendation_url,coder)
-    #return if @levels_parsed > LEVELS_TO_PARSE
-    @levels_parsed += 1   
+    # return if @levels_parsed > LEVELS_TO_PARSE
+    # @levels_parsed += 1   
     puts "#{@levels_parsed} levels down the rabbit hole"
     recommendations = [] 
     recommender_url_doc = open(full_recommendation_url)

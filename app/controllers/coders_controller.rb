@@ -1,16 +1,15 @@
 class CodersController < ApplicationController
   
-  before_filter :load_locations, :only => [:index, :filter_by_cities]
-  
-  
-  def test
-    raise StandardError, "woah beeyotch!"
-  end
+  #before_filter :load_locations, :only => [:index, :filter_by_cities]
   
   # GET /coders
   # GET /coders.xml
   def index
-    @coders = Coder.find(:all,:conditions => "rank is not null", :order => :rank)
+    @coders = Coder.search(
+      (params[:search] || ""),
+      #:page => (params[:page] || 1),
+      :order => :rank
+    )
 
     respond_to do |format|
       format.html # index.html.erb

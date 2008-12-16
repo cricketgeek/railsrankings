@@ -1,10 +1,8 @@
 <h1>Rails Coders</h1>
-<% form_tag filter_by_cities_coders_path do %>
-	<%= select_tag "locations",options_for_select(@locations) %>
+<% form_tag coders_path, :method => :get do %>
+  <%= text_field_tag :search, params[:search] %>
 	<%= submit_tag "Filter" %>
 <% end %>
-
-<input type="button" id="test" value="Try it"/>
 
 <italics><%= "Found #{@coders.size} coders" %></italics>
 <table>
@@ -17,8 +15,6 @@
     <th>Recommendation count</th>
     <th>Image path</th>
 	<th>&nbsp;</th>
-	<th>&nbsp;</th>
-	<th>&nbsp;</th>		
   </tr>
 
 <% for coder in @coders %>
@@ -31,8 +27,6 @@
     <td><%=coder.recommendation_count %></td>
     <td><%=image_tag(format_image_path(coder.image_path),{:size  => "75x75"}) if not coder.rank.blank? %></td>
     <td><%= link_to 'Show', coder %></td>
-    <td><%= link_to 'Edit', edit_coder_path(coder) %></td>
-    <td><%= link_to 'Destroy', coder, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

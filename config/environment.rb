@@ -54,6 +54,8 @@ Rails::Initializer.run do |config|
     :secret      => 'a78c6ae4604fc8175d1d2aaee47a2b8baf312c751361f5619fa242cb355525f1e9d08542e1d69f9f88d0d8dbfe7975660803ee7e3088081699531654be3a79a3'
   }
 
+  config.gem "mislav-will_paginate", :version => "~> 2.3.4", :lib => "will_paginate", :source => "http://gems.github.com"
+  require "will_paginate"
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")
