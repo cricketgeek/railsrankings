@@ -14,6 +14,7 @@ class WWRScraper
     puts "processing based on seed data"
     
     processing_array = [
+      "http://www.workingwithrails.com/person/5236-charles-brian-quinn",
      "http://www.workingwithrails.com/person/4343-brendan-lim",
      "http://www.workingwithrails.com/person/2892-akhil-bansal",
      "http://www.workingwithrails.com/person/9530-jason-lee",
@@ -112,6 +113,9 @@ class WWRScraper
       website = doc.search('#person-about-summary/a.url').inner_html
       img_url = doc.search('img.photo').attr('src')
       company_name = doc.search('td/a.organization_name').inner_html
+      country_name = doc.search('a.country-name').inner_html
+      nickname = doc.search('td.nickname').inner_html
+      puts "nickname is: #{nickname}"
       
       rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
       rank = 9999 if rank.blank?
@@ -127,7 +131,8 @@ class WWRScraper
       
       coder.update_attributes(:last_name => last_name,:first_name => first_name,:website => website,
                 :image_path => img_url,:rank => rank, :city => location, 
-                :profile_url => url, :company_name => company_name)
+                :profile_url => url, :company_name => company_name,
+                :country => country_name, :nickname => nickname)
     
       coder.save
       puts "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?

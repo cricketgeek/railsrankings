@@ -3,7 +3,7 @@ class Coder < ActiveRecord::Base
   
   define_index do
     indexes [first_name,last_name], :as => :name
-    indexes city, company_name
+    indexes city, company_name, country
     
     has rank
   end
