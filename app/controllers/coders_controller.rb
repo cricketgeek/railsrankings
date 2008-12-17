@@ -7,9 +7,11 @@ class CodersController < ApplicationController
   def index
     @coders = Coder.search(
       (params[:search] || ""),
-      #:page => (params[:page] || 1),
+      :page => (params[:page] || 1),
       :order => :rank
     )
+    
+    @count = ThinkingSphinx::Search.count(params[:search])
 
     respond_to do |format|
       format.html # index.html.erb

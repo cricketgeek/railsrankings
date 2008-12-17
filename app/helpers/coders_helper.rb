@@ -5,4 +5,12 @@ module CodersHelper
     path
   end
   
+  def page_index
+    if params[:page]
+      params[:page].to_i == 1 ? 1 : (20 * (params[:page].to_i - 1)) + 1
+    else
+      return 1
+    end
+  end
+  
 end

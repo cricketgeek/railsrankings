@@ -3,7 +3,7 @@ class Coder < ActiveRecord::Base
   
   define_index do
     indexes [first_name,last_name], :as => :name
-    indexes city
+    indexes city, company_name
     
     has rank
   end
@@ -11,7 +11,7 @@ class Coder < ActiveRecord::Base
   validates_uniqueness_of :profile_url
   validates_presence_of :profile_url
   
-  named_scope :ranked, :conditions => "rank is not null", :order => :rank
+  named_scope :ranked, :conditions => "rank is not null"
   
   before_create :default_rank
   

@@ -1,24 +1,29 @@
 <h1>Rails Coders</h1>
 <% form_tag coders_path, :method => :get do %>
-  <%= text_field_tag :search, params[:search] %>
+  <%= text_field_tag :search, params[:search]%>
 	<%= submit_tag "Filter" %>
 <% end %>
+<h3><%= @count %> matching coders</h3>
 
-<italics><%= "Found #{@coders.size} coders" %></italics>
+<%= will_paginate @coders %>
+
 <table>
   <tr>
+    <th>Rank in Search</th>
     <th>Full name</th>
     <th>Location</th>
     <th>Rank</th>
     <th>Website</th>
     <th>WWR URL</th>
-    <th>Recommendation count</th>
+    <th>Rec count</th>
     <th>Image path</th>
 	<th>&nbsp;</th>
   </tr>
 
-<% for coder in @coders %>
+<% @coders.each_with_index do |coder, index| %>
+  <% if coder %>
   <tr>
+    <td><%= index + page_index %>
     <td><%=h coder.full_name %></td>
     <td><%=h coder.city %></td>
     <td><%=h coder.rank %></td>
@@ -28,6 +33,7 @@
     <td><%=image_tag(format_image_path(coder.image_path),{:size  => "75x75"}) if not coder.rank.blank? %></td>
     <td><%= link_to 'Show', coder %></td>
   </tr>
+  <% end %>
 <% end %>
 </table>
 
