@@ -8,6 +8,7 @@ class CodersController < ApplicationController
     @coders = Coder.search(
       (params[:search] || ""),
       :page => (params[:page] || 1),
+      :max_matches => 15000,
       :order => :rank
     )
     
