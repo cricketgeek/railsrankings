@@ -1,18 +1,11 @@
-<p>
-  <b>First name:</b>
-  <%=h @coder.first_name %>
-</p>
+<div>
+<%= link_to 'Search Again', coders_path %>
+</div>
 
 <p>
-  <b>Last name:</b>
-  <%=h @coder.last_name %>
+  <b>name:</b>
+  <%=h @coder.full_name %>
 </p>
-
-<p>
-  <b>Email:</b>
-  <%=h @coder.email %>
-</p>
-
 <p>
   <b>City:</b>
   <%=h @coder.city %>
@@ -24,25 +17,38 @@
 </p>
 
 <p>
+  <b>Company</b>
+  <%= h @coder.company_name %>
+</p>
+
+<p>
   <b>Website:</b>
   <%=h @coder.website %>
 </p>
-
+<% if @coder.delta != 0 %>
 <p>
   <b>Delta:</b>
   <%=h @coder.delta %>
 </p>
-
+<% end %>
+<p>
+  <b>alias:</b>
+  <%=h @coder.nickname %>
+</p>
 <p>
   <b>Recommendation count:</b>
   <%=h @coder.recommendation_count %>
 </p>
 
 <p>
-  <b>Image path:</b>
-  <%=h @coder.image_path %>
+  <%=image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}) %>
 </p>
 
+<fieldset>
+  <legend><strong>Author of the following Github public repos</strong></legend>
+<div id="repos_container">
+<%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
+</div>
+</fieldset>
 
-<%= link_to 'Edit', edit_coder_path(@coder) %> |
-<%= link_to 'Back', coders_path %>
+<%= link_to 'Search Again', coders_path %>

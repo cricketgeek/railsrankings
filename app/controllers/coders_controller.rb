@@ -8,11 +8,13 @@ class CodersController < ApplicationController
     @coders = Coder.search(
       (params[:search] || ""),
       :page => (params[:page] || 1),
-      :max_matches => 15000,
+      :per_page => SEARCH_PER_PAGE,
+      :max_matches => MAX_SEARCH_RESULTS,
+      :match_mode => :boolean,
       :order => :rank
     )
     
-    @count = ThinkingSphinx::Search.count(params[:search])
+    @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
 
     respond_to do |format|
       format.html # index.html.erb

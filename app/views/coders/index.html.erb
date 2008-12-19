@@ -1,42 +1,54 @@
-<h1>Rails Coders</h1>
-<% form_tag coders_path, :method => :get do %>
-  <%= text_field_tag :search, params[:search]%>
-	<%= submit_tag "Filter" %>
-<% end %>
-<h3><%= @count %> matching coders</h3>
+<div class="wrapper">
+  <div id="logo">
+    <img src="images/logo.gif" />
+  </div>
+</div><!--wrapper-->
+<div id="topbar">
+  <div id="searchbox">
+    <h1 class="searchhdr">Find Some Rails Coders</h1>
 
-<%= will_paginate @coders %>
+    <% form_tag coders_path, :method => :get do %>
+      <%= text_field_tag :search, params[:search]%>
+    	<%= submit_tag "Filter", :id => "browsecom", :name => "browsecom" %>
+    <% end %>
+    
+  </div><!--search-->
+</div>
 
-<table>
-  <tr>
-    <th>Rank in Search</th>
-    <th>Full name</th>
-    <th>Location</th>
-    <th>Rank</th>
-    <th>Website</th>
-    <th>WWR URL</th>
-    <th>Rec count</th>
-    <th>Image path</th>
-	<th>&nbsp;</th>
-  </tr>
+    <h3><%= @count %> matching coders</h3>
 
-<% @coders.each_with_index do |coder, index| %>
-  <% if coder %>
-  <tr>
-    <td><%= index + page_index %>
-    <td><%=h coder.full_name %></td>
-    <td><%=h coder.city %></td>
-    <td><%=h coder.rank %></td>
-    <td style="width: 50px;"><%=link_to coder.website, coder.website %></td>
-    <td><%=link_to 'WWR URL',coder.profile_url %></td>
-    <td><%=coder.recommendation_count %></td>
-    <td><%=image_tag(format_image_path(coder.image_path),{:size  => "75x75"}) if not coder.rank.blank? %></td>
-    <td><%= link_to 'Show', coder %></td>
-  </tr>
-  <% end %>
-<% end %>
-</table>
+    <%= will_paginate @coders %>
 
-<br />
+    <table>
+      <tr>
+        <th>Rank in Search</th>
+        <th>Full name</th>
+        <th>Location</th>
+        <th>Rank</th>
+        <th>Website</th>
+        <th>WWR</th>
+        <th>Rec count</th>
+        <th>Company</th>
+        <th>Details</th>
+    	<th>&nbsp;</th>
+      </tr>
 
-<%= link_to 'New coder', new_coder_path %>
+    <% @coders.each_with_index do |coder, index| %>
+      <% if coder %>
+      <tr>
+        <td><%= index + page_index %>
+        <td><%=h coder.full_name.slice(0..20) %></td>
+        <td><%=h coder.city %></td>
+        <td><%=h coder.rank %></td>
+        <td style="width: 50px;"><%=link_to coder.website, coder.website %></td>
+        <td><%=link_to 'WWR URL',coder.profile_url %></td>
+        <td><%=coder.recommendation_count %></td>
+        <td><%=h company_clipped(coder) %></td>
+        <td><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75"}), coder if not coder.rank.blank? %></td>
+      </tr>
+      <% end %>
+    <% end %>
+    </table>
+
+    <br />
+    <%= will_paginate @coders %>
