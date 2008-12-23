@@ -13,6 +13,7 @@ class CodersController < ApplicationController
       :match_mode => :boolean,
       :order => :rank
     )
+
     
     @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
 

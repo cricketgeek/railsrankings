@@ -17,4 +17,20 @@ module CodersHelper
     coder.company_name ? coder.company_name.slice(0..20) : ""
   end
   
+  def recommendation_url(coder)    
+    coder.profile_url.sub("http://www.workingwithrails.com/","http://www.workingwithrails.com/recommendation/new/")
+  end
+  
+  def show_delta(coder)
+    return "" if coder.nil? or coder.delta.nil? or coder.delta == 0
+
+    case 
+    when coder.delta > 0
+      "<span class='green bolder'>Delta: +#{coder.delta}</span>"
+    when coder.delta < 0
+      "<span class='red bolder'>Delta: #{coder.delta}</span>"      
+    end
+    
+  end
+  
 end

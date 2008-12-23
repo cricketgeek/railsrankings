@@ -140,6 +140,8 @@ class WWRScraper
         puts "rank was #{coder.rank} delta was #{delta}"
       end
       
+      github_watchers(coder)
+      
       coder.update_attributes(:last_name => last_name,:first_name => first_name,:website => website,
                 :image_path => img_url,:rank => rank, :city => location, 
                 :profile_url => url, :company_name => company_name,
@@ -148,6 +150,7 @@ class WWRScraper
                 :delta => delta)
     
       coder.save
+            
       puts "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
     
       full_recommendation_url = url.sub("http://www.workingwithrails.com","http://www.workingwithrails.com/recommendation/for")
@@ -164,6 +167,19 @@ class WWRScraper
       process_profile_page(prof_url.get_attribute("href"))
     end
     main_open_url.close
+  end
+  
+  def github_watchers(coder)
+    watchers = 0
+    github_url = ""
+    coder.github_repos.each do |repo|
+      puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
+      watchers += repo.watchers
+      github_url = repo.owner
+      puts "github_url will be #{repo.owner}"
+    end
+    coder.github_watchers = watchers
+    coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
   end
   
   

@@ -17,7 +17,7 @@ body{
 
 #topbar{
 	/*background:#d7e3f5;*/
-	background:url(/images/topbarbg.gif) #d7e3f5 top center no-repeat;
+	background:url(images/topbarbg.gif) #d7e3f5 top center no-repeat;
 	height:105px;}
 	
 #searchbox{
@@ -35,9 +35,8 @@ body{
 #browsecomm{
 	height:36px;
 	width:229px;
-  background: transparent url(/images/btn-browsecommunity.gif) repeat scroll 0 0;	
-	position: relative;
-	top:20px; }		
+	position:relative;
+	top:20px;}		
 
 .searchhdr{
 	padding:0;
@@ -88,7 +87,8 @@ a{
 .user{
 	height:110px;
 	margin-bottom:10px;
-	width:665px;}	
+	width:665px;
+	padding:5px;}	
 
 .userpic{
 	width:93px;
@@ -105,6 +105,25 @@ a{
 .username, .userrank, .userlocation{
 	font-size:16px;}
 
+.rank{
+	width:120px;
+	height:98px;
+	background:#82b4eb;
+	border:1px solid #1a56b0;
+	float:right;
+	font-size:11px;
+	padding:5px;
+	}
+
+.rank ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;}		
+
+.ranknum{
+	font-size:18px;
+	font-weight:bold;}	
+
 .username{
 	font-weight:bold;}
 
@@ -116,5 +135,41 @@ a{
 	margin:0px auto;}	
 
 .subhead{
-	font-size:14px;}	
-	
+	font-size:14px;}
+
+#results{
+	float:left;
+	font-size:10px;
+	width:200px;}		
+
+#pagination{
+	width:145px;
+	float:right;
+	margin-right:50px;
+	font-size:10px;}	
+
+#pagination ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;}	
+
+#pagination ul li{
+	display:inline;
+	padding:2px 5px;
+	margin:0 3px;
+	border:1px solid #82b4eb;}
+
+#pagination a{
+	text-decoration:none;}		
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.bolder {
+  font-weight: bold;
+}

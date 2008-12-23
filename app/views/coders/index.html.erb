@@ -9,46 +9,67 @@
 
     <% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
-    	<%= submit_tag "Filter", :id => "browsecom", :name => "browsecom" %>
+      <input name="" type="image" src="/images/btn-browsecommunity.gif" id="browsecomm" onclick="this.submit();"/>
     <% end %>
     
   </div><!--search-->
 </div>
-
-    <h3><%= @count %> matching coders</h3>
+<div class="graydivide"></div><!--graydivide-->
+<div id="main">
+  <div id="leftbar">
+    <h1><%= @count %> Ranking Rails Coders</h1>
+    <p class="subhead"><em>What’s your ruby ranking?</em> <a href="http://www.rubyrankings.com">Create your profile now</a>.</p>
 
     <%= will_paginate @coders %>
-
-    <table>
-      <tr>
-        <th>Rank in Search</th>
-        <th>Full name</th>
-        <th>Location</th>
-        <th>Rank</th>
-        <th>Website</th>
-        <th>WWR</th>
-        <th>Rec count</th>
-        <th>Company</th>
-        <th>Details</th>
-    	<th>&nbsp;</th>
-      </tr>
 
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
-      <tr>
-        <td><%= index + page_index %>
-        <td><%=h coder.full_name.slice(0..20) %></td>
-        <td><%=h coder.city %></td>
-        <td><%=h coder.rank %></td>
-        <td style="width: 50px;"><%=link_to coder.website, coder.website %></td>
-        <td><%=link_to 'WWR URL',coder.profile_url %></td>
-        <td><%=coder.recommendation_count %></td>
-        <td><%=h company_clipped(coder) %></td>
-        <td><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75"}), coder if not coder.rank.blank? %></td>
-      </tr>
+      
+      <div class="user greybg">
+        <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
+        <div class="rank">
+          <ul>
+            <li class="ranknum">Ranking: <%= coder.rank %></li>
+            <li>Recommended by: <%= coder.recommendation_count %></li>
+            <% if coder.github_watchers > 0 %>
+              <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
+            <% end %>
+            <li><a href="<%= recommendation_url(coder) %>">Recommend this person</a></li>
+            <li><%= show_delta(coder) %></li>
+          </ul>
+        </div>        
+        <!--userpic-->
+        <ul class="userinfo">
+          <li class="username"><%=h "#{coder.full_name}" %></li>
+          <li class="userlocation"><%=h coder.city %></li>
+          <li class="userlocation"><%=h coder.company_name %></li>
+        </ul>
+      </div>
       <% end %>
     <% end %>
-    </table>
 
-    <br />
-    <%= will_paginate @coders %>
+
+   </div>
+    <!--leftbar-->
+    <div id="rightbar">
+      <h2>Popular Ruby Cities</h2>
+      <ul id="rubycities">
+        <li><a href="#">City Name</a></li>
+        <li><a href="#">City Name</a></li>
+        <li><a href="#">City Name</a></li>
+        <li><a href="#">City Name</a></li>
+      </ul>
+    </div>
+    <!--rightbar-->
+    <div style="clear:both;"></div>
+    <!--clearing div-->
+  </div>
+  <!--main-->
+
+  <div id="footer"><div class="graydivide"></div><!--graydivide-->
+    <div class="wrapper">
+      <p>Disclaimer: This is a publicly accessible database. The views and opinions of originators and contributors expressed on this site do not necessarily state or reflect those of DSC Limited. No representation or warranty is given as regards to any applicability of any suggestion, its accuracy or completeness.</p>
+    </div>
+    <!--wrapper-->
+  </div>
+  <!--footer-->
