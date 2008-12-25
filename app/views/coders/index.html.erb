@@ -29,20 +29,20 @@
         <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
         <div class="rank">
           <ul>
-            <li class="ranknum">Ranking: <%= coder.rank %></li>
+            <li class="ranknum">Ranking: <%= show_rank(coder) %> <%= show_delta(coder) %></li>
             <li>Recommended by: <%= coder.recommendation_count %></li>
             <% if coder.github_watchers > 0 %>
               <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
             <% end %>
-            <li><a href="<%= recommendation_url(coder) %>">Recommend this person</a></li>
-            <li><%= show_delta(coder) %></li>
+            <li><a href="<%= recommendation_url(coder) %>">Recommend them</a></li>
           </ul>
         </div>        
         <!--userpic-->
         <ul class="userinfo">
           <li class="username"><%=h "#{coder.full_name}" %></li>
-          <li class="userlocation"><%=h coder.city %></li>
+          <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
+          <li class="userlocation"><%=link_to coder.website, coder.website %></li>
         </ul>
       </div>
       <% end %>

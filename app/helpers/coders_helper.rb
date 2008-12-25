@@ -21,14 +21,18 @@ module CodersHelper
     coder.profile_url.sub("http://www.workingwithrails.com/","http://www.workingwithrails.com/recommendation/new/")
   end
   
+  def show_rank(coder)
+    coder.rank < MAX_RANK ? coder.rank : "nil"
+  end
+  
   def show_delta(coder)
     return "" if coder.nil? or coder.delta.nil? or coder.delta == 0
 
     case 
     when coder.delta > 0
-      "<span class='green bolder'>Delta: +#{coder.delta}</span>"
+      "<span class='green bolder'>(+#{coder.delta})</span>"
     when coder.delta < 0
-      "<span class='red bolder'>Delta: #{coder.delta}</span>"      
+      "<span class='red bolder'>(#{coder.delta})</span>"      
     end
     
   end
