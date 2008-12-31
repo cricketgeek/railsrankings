@@ -1,59 +1,34 @@
-<div>
-<%= link_to 'Search Again', coders_path %>
+
+<div id="show_container">
+  
+  <div class="user greybg">
+    <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "120x120"}), coder_path(@coder) %></div>
+    <div class="rank">
+      <ul>
+        <li class="ranknum">Ranking: <%= show_rank(@coder) %> <%= show_delta(@coder) %></li>
+        <li>Recommended by: <%= @coder.recommendation_count %></li>
+        <% if @coder.github_watchers > 0 %>
+          <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
+        <% end %>
+        <li><a href="<%= recommendation_url(@coder) %>">Recommend them</a></li>
+      </ul>
+    </div>        
+    <!--userpic-->
+    <ul class="userinfo">
+      <li class="username"><%=h "#{@coder.full_name}" %></li>
+      <li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
+      <li class="userlocation"><%=h @coder.company_name %></li>
+      <li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
+      <li class="userlocation">alias: <%= h @coder.nickname %></li>
+      <li class="userlocation">  <%= link_to "WWR Profile",@coder.profile_url %></li>
+    </ul>
+  </div>
+
+  <fieldset>
+    <legend><strong>Author of the following Github public repos</strong></legend>
+  <div id="repos_container">
+  <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
+  </div>
+  </fieldset>
+  <%= link_to image_tag("/images/btn-browsecommunity.gif", :class => "plain_image"), coders_path, :class => "plain_link" %>  
 </div>
-
-<p>
-  <b>name:</b>
-  <%=h @coder.full_name %>
-</p>
-<p>
-  <b>City:</b>
-  <%=h @coder.city %>
-</p>
-
-<p>
-  <b>Rank:</b>
-  <%=h @coder.rank %>
-</p>
-
-<p>
-  <b>Company</b>
-  <%= h @coder.company_name %>
-</p>
-
-<p>
-  <b>Website:</b>
-  <%=h @coder.website %>
-</p>
-<% if @coder.delta != 0 %>
-<p>
-  <b>Delta:</b>
-  <%=h @coder.delta %>
-</p>
-<% end %>
-<p>
-  <b>alias:</b>
-  <%=h @coder.nickname %>
-</p>
-<p>
-  <b>WWR Profile:</b>
-  <%= @coder.profile_url %>
-</p>
-
-<p>
-  <b>Recommendation count:</b>
-  <%=h @coder.recommendation_count %>
-</p>
-
-<p>
-  <%=image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}) %>
-</p>
-
-<fieldset>
-  <legend><strong>Author of the following Github public repos</strong></legend>
-<div id="repos_container">
-<%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
-</div>
-</fieldset>
-
-<%= link_to 'Search Again', coders_path %>

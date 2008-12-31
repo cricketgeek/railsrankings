@@ -8,12 +8,17 @@ class Coder < ActiveRecord::Base
     indexes city, company_name, country, nickname
     
     has rank
+    has full_rank
   end
   
   validates_uniqueness_of :profile_url
   validates_presence_of :profile_url
   
   named_scope :ranked, :conditions => "rank is not null"
+  named_scope :cities, :select => "city, sum(full_rank) as total,count(*) as count", 
+    :conditions => "city is not null AND city <> ''", :limit => 25, :group => "city", :order => "total DESC"
+  named_scope :companies, :select => "company_name, sum(full_rank) as total, count(*) as count", 
+    :conditions => "company_name is not null AND company_name <> ''", :limit => 35, :group => "company_name", :order => "total DESC"
   
   before_create :default_rank
   

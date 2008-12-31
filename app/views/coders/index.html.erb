@@ -1,17 +1,17 @@
-<div class="wrapper">
-  <div id="logo">
-    <img src="images/logo.gif" />
-  </div>
-</div><!--wrapper-->
+
 <div id="topbar">
   <div id="searchbox">
-    <h1 class="searchhdr">Find Some Rails Coders</h1>
+    <h1 class="searchhdr">Whittle it down a bit</h1>
 
     <% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
-      <input name="" type="image" src="/images/btn-browsecommunity.gif" id="browsecomm" onclick="this.submit();"/>
+      <input name="" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
     <% end %>
-    
+    <div>
+      <p class="desc">You can use any of the thinking sphinx boolean search options to whittle the field of ranked rails coders down.  Rank is based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
+      and a star signifies that the coder has at least one public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo displaying the total number of repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.
+      </p>
+    </div>
   </div><!--search-->
 </div>
 <div class="graydivide"></div><!--graydivide-->
@@ -19,13 +19,13 @@
   <div id="leftbar">
     <h1><%= @count %> Ranking Rails Coders</h1>
     <p class="subhead"><em>What’s your ruby ranking?</em> <a href="http://www.rubyrankings.com">Create your profile now</a>.</p>
-
+    
     <%= will_paginate @coders %>
-
+    
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
       
-      <div class="user greybg">
+      <div class="<%= alternate_row_color(index) %>">
         <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
         <div class="rank">
           <ul>
@@ -42,6 +42,7 @@
           <li class="username"><%=h "#{coder.full_name}" %></li>
           <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
+          <li class="userlocation">full rank: <%= coder.full_rank %></li>
           <li class="userlocation"><%=link_to coder.website, coder.website %></li>
         </ul>
       </div>
@@ -52,13 +53,10 @@
    </div>
     <!--leftbar-->
     <div id="rightbar">
-      <h2>Popular Ruby Cities</h2>
-      <ul id="rubycities">
-        <li><a href="#">City Name</a></li>
-        <li><a href="#">City Name</a></li>
-        <li><a href="#">City Name</a></li>
-        <li><a href="#">City Name</a></li>
-      </ul>
+      <h2>Top Rails Cities</h2>
+        <%= render :partial => "city_rankings" %>
+      <h2>Top Ranked Companies</h2>
+        <%= render :partial => "company_rankings" %>
     </div>
     <!--rightbar-->
     <div style="clear:both;"></div>

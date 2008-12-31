@@ -1,0 +1,10 @@
+<div>
+  <p class="desc">Based on WWR rank and github watchers. No upper limit on coder rank.
+  </p>
+</div>
+<ol id="rubycities">
+<% Coder.cities.each do |city| %>
+  <li><%= show_city_name(city.city) %> <%= "(#{city.count} coders)" %></li>
+<% end %>    
+</ol>        
+        

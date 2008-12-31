@@ -27,14 +27,24 @@ module CodersHelper
   
   def show_delta(coder)
     return "" if coder.nil? or coder.delta.nil? or coder.delta == 0
-
     case 
     when coder.delta > 0
       "<span class='green bolder'>(+#{coder.delta})</span>"
     when coder.delta < 0
       "<span class='red bolder'>(#{coder.delta})</span>"      
     end
-    
+  end
+  
+  def show_city_name(city)
+    city.blank? ? "Unknown location" : city
+  end
+
+  def show_company_name(company)
+    company.blank? ? "Unknown" : company
+  end
+  
+  def alternate_row_color(index)
+    (index % 2) == 0 ? "user greybg" : "user"
   end
   
 end

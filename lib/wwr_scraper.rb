@@ -29,27 +29,27 @@ class WWRScraper
       # "http://www.workingwithrails.com/person/12003-les-hill",
       # "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
       # "http://www.workingwithrails.com/person/11125-asa-wilson",
-      # "http://www.workingwithrails.com/person/2941-andrew-stone",
-      # "http://www.workingwithrails.com/person/9252-hank-beaver",
-      # "http://www.workingwithrails.com/person/5639-amy-hoy",
-      # "http://www.workingwithrails.com/person/5306-james-duncan-davidson",      
-      # "http://www.workingwithrails.com/person/12633-mark-jones",
-      # "http://www.workingwithrails.com/person/13224-collin-vandyck",
-      # "http://www.workingwithrails.com/person/15297-zack-adams",
-      # "http://www.workingwithrails.com/person/15141-tommy-campbell", 
-      # "http://www.workingwithrails.com/person/5414-sam-stephenson",
-      # "http://www.workingwithrails.com/person/3942-charles-nutter",
-      # "http://www.workingwithrails.com/person/5421-ezra-zygmuntowicz",
-      # "http://www.workingwithrails.com/person/5426-dr-nic-williams",
-      # "http://www.workingwithrails.com/person/4987-michael-koziarski",
-      # "http://www.workingwithrails.com/person/6085-eric-hodel",
-      # "http://www.workingwithrails.com/person/5595-stuart-halloway",
-      # "http://www.workingwithrails.com/person/5296-geoffrey-grosenbach",
-      # "http://www.workingwithrails.com/person/7739-evan-weaver",
-      # "http://www.workingwithrails.com/person/6629-jeremy-mcanally",
-      # "http://www.workingwithrails.com/person/12253-nathen-grass",
-      # "http://www.workingwithrails.com/person/5416-rick-olson",
-      # "http://www.workingwithrails.com/person/5260-dave-thomas",
+      "http://www.workingwithrails.com/person/2941-andrew-stone",
+      "http://www.workingwithrails.com/person/9252-hank-beaver",
+      "http://www.workingwithrails.com/person/5639-amy-hoy",
+      "http://www.workingwithrails.com/person/5306-james-duncan-davidson",      
+      "http://www.workingwithrails.com/person/12633-mark-jones",
+      "http://www.workingwithrails.com/person/13224-collin-vandyck",
+      "http://www.workingwithrails.com/person/15297-zack-adams",
+      "http://www.workingwithrails.com/person/15141-tommy-campbell", 
+      "http://www.workingwithrails.com/person/5414-sam-stephenson",
+      "http://www.workingwithrails.com/person/3942-charles-nutter",
+      "http://www.workingwithrails.com/person/5421-ezra-zygmuntowicz",
+      "http://www.workingwithrails.com/person/5426-dr-nic-williams",
+      "http://www.workingwithrails.com/person/4987-michael-koziarski",
+      "http://www.workingwithrails.com/person/6085-eric-hodel",
+      "http://www.workingwithrails.com/person/5595-stuart-halloway",
+      "http://www.workingwithrails.com/person/5296-geoffrey-grosenbach",
+      "http://www.workingwithrails.com/person/7739-evan-weaver",
+      "http://www.workingwithrails.com/person/6629-jeremy-mcanally",
+      "http://www.workingwithrails.com/person/12253-nathen-grass",
+      "http://www.workingwithrails.com/person/5416-rick-olson",
+      "http://www.workingwithrails.com/person/5260-dave-thomas",
       "http://www.workingwithrails.com/person/5646--whytheluckystiff",
       "http://www.workingwithrails.com/person/6766-neal-ford",
       "http://www.workingwithrails.com/person/6491-ryan-bates",
@@ -72,8 +72,11 @@ class WWRScraper
     
     @locations = {"norcross"  =>  "Atlanta", 
       "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta",
-      "decatur, ga" => "Atlanta", "decatur" => "Atlanta","chicago, IL" => "Chicago","wheaton, il" => "Chicago",
-      "chicago, illinois" => "Chicago"
+      "decatur, ga" => "Atlanta", "decatur" => "Atlanta","chicago, il" => "Chicago","wheaton, il" => "Chicago",
+      "chicago, illinois" => "Chicago", "san francisco, ca" => "San Francisco",
+      "boston, ma" => "Boston", "austin, tx" => "Austin", "jacksonville, fl" => "Jacksonville",
+      "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
+      "san diego, ca" => "San Diego"
     }
     
     return @locations[location.downcase] if @locations[location.downcase]
@@ -135,13 +138,15 @@ class WWRScraper
       coder = Coder.find_by_profile_url(url)
       puts "updating #{coder.full_name}" if coder
       coder = Coder.new if coder.nil?
+
+      github_watchers(coder)
       
       if not rank.blank? and rank.to_i < MAX_RANK
         delta = coder.rank - rank.to_i
         puts "rank was #{coder.rank} delta was #{delta}"
       end
       
-      github_watchers(coder)
+      coder.full_rank = determine_full_rank(coder)
       
       coder.update_attributes(:last_name => last_name,:first_name => first_name,:website => website,
                 :image_path => img_url,:rank => rank, :city => location, 
@@ -168,6 +173,14 @@ class WWRScraper
       process_profile_page(prof_url.get_attribute("href"))
     end
     main_open_url.close
+  end
+  
+  def determine_full_rank(coder)
+    
+    coder.rank.blank? ? 0 : coder.rank.to_i
+    
+    (MAX_RANK - coder.rank) + coder.github_watchers * 1.5
+    
   end
   
   def github_watchers(coder)

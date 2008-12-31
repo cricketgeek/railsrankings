@@ -1,0 +1,5 @@
+<ol id="rubycompanies">
+<% Coder.companies.each do |company| %>
+  <li><%= show_company_name(company.company_name) %> <%= "(#{company.count} coders)" %></li>
+<% end %>    
+</ol>

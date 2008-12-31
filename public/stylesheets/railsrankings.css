@@ -17,8 +17,8 @@ body{
 
 #topbar{
 	/*background:#d7e3f5;*/
-	background:url(images/topbarbg.gif) #d7e3f5 top center no-repeat;
-	height:105px;}
+	background:url(/images/topbarbg-175px.gif) #d7e3f5 top center no-repeat;
+	height:175px;}
 	
 #searchbox{
 	width:635px;
@@ -31,17 +31,29 @@ body{
 	width:350px;
 	border:4px solid #1a56b0;
 	height:25px;}
+	
+.desc{	
+	font-size:12px;
+	font-style:italic;}	
 
 #browsecomm{
 	height:36px;
 	width:229px;
 	position:relative;
-	top:20px;}		
+	top:20px;}	
+	
+
+#search-btn{
+	height:36px;
+	width:95px;
+	position:relative;
+	top:20px;}	
 
 .searchhdr{
 	padding:0;
 	margin:0 0 -15px 0;
 	font-weight:normal;}	
+
 
 .graydivide{
 	height:10px;
@@ -50,7 +62,7 @@ body{
 #leftbar{
 	width:720px;
 	float:left;
-	background:url(images/border-right.gif) top right repeat-y;}
+	background:url(/images/border-right.gif) top right repeat-y;}
 
 #rightbar{
 	width:240px;
@@ -59,9 +71,17 @@ body{
 	padding-left:10px;}
 
 #rubycities{
-	list-style-image:url(images/arrow-bullet.gif);
 	margin:0px;
 	padding:0px;}
+	
+#rubycompanies{
+  margin: 0px;
+  padding: 0px;
+}
+
+#rubycompanies li {
+  margin-left:20px;
+}
 
 #rubycities li{
 	margin-left:20px;}	
@@ -96,6 +116,14 @@ a{
 	border:1px solid #1a56b0;
 	float:left;
 	margin-right:15px;}	
+	
+.userprofilepic {
+	width:123px;
+	height:123px;
+	border:1px solid #1a56b0;
+	float:left;
+	margin-right:15px;  
+}
 
 .userinfo{	
 	list-style-type:none;
@@ -118,7 +146,8 @@ a{
 .rank ul{
 	margin:0;
 	padding:0;
-	list-style-type:none;}		
+	list-style-type:none;}
+	
 
 .ranknum{
 	font-size:18px;
@@ -162,8 +191,21 @@ a{
 #pagination a{
 	text-decoration:none;}		
 
+#show_container {
+  margin: 10px;
+}	
+
 .green {
   color: green;
+}
+
+.plain_link {
+  text-decoration:none;
+  border: none;
+}
+
+.plain_image {
+  border: 0px;
 }
 
 .red {
