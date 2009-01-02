@@ -18,7 +18,7 @@
 <div id="main">
   <div id="leftbar">
     <h1><%= @count %> Ranking Rails Coders</h1>
-    <p class="subhead"><em>What’s your ruby ranking?</em> <a href="http://www.rubyrankings.com">Create your profile now</a>.</p>
+    <p class="subhead"><em></em> <a></a></p>
     
     <%= will_paginate @coders %>
     
@@ -29,7 +29,7 @@
         <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
         <div class="rank">
           <ul>
-            <li class="ranknum">Ranking: <%= show_rank(coder) %> <%= show_delta(coder) %></li>
+            <li class="ranknum">WWR Rank: <%= show_rank(coder) %> <%= show_delta(coder) %></li>
             <li>Recommended by: <%= coder.recommendation_count %></li>
             <% if coder.github_watchers > 0 %>
               <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>" target="_new"><%= coder.github_watchers %></a></li>
@@ -43,6 +43,7 @@
           <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
           <li class="userlocation"><%=link_to coder.website, coder.website, :target => "_new" %></li>
+          <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,",") %></li>
         </ul>
       </div>
       <% end %>
@@ -56,6 +57,8 @@
         <%= render :partial => "city_rankings" %>
       <h2>Top Ranked Companies</h2>
         <%= render :partial => "company_rankings" %>
+      <h2>Top Coders</h2>
+        <%= render :partial => "top_coders_new_rank" %>
     </div>
     <!--rightbar-->
     <div style="clear:both;"></div>
@@ -63,10 +66,4 @@
   </div>
   <!--main-->
 
-  <div id="footer"><div class="graydivide"></div><!--graydivide-->
-    <div class="wrapper">
-      <p>Disclaimer: This is a publicly accessible database. The views and opinions of originators and contributors expressed on this site do not necessarily state or reflect those of DSC Limited. No representation or warranty is given as regards to any applicability of any suggestion, its accuracy or completeness.</p>
-    </div>
-    <!--wrapper-->
-  </div>
-  <!--footer-->
+

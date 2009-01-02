@@ -47,4 +47,8 @@ module CodersHelper
     (index % 2) == 0 ? "user greybg" : "user"
   end
   
+  def show_coder_name(coder)
+    coder.full_name
+  end
+  
 end

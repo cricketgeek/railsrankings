@@ -1,11 +1,11 @@
 
 <div id="show_container">
   
-  <div class="user greybg">
-    <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "120x120"}), coder_path(@coder) %></div>
+  <div class="show_user greybg">
+    <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %></div>
     <div class="rank">
       <ul>
-        <li class="ranknum">Ranking: <%= show_rank(@coder) %> <%= show_delta(@coder) %></li>
+        <li class="ranknum">WWR Rank: <%= show_rank(@coder) %> <%= show_delta(@coder) %></li>
         <li>Recommended by: <%= @coder.recommendation_count %></li>
         <% if @coder.github_watchers > 0 %>
           <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
@@ -16,6 +16,7 @@
     <!--userpic-->
     <ul class="userinfo">
       <li class="username"><%=h "#{@coder.full_name}" %></li>
+      <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,",") %></li>      
       <li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
       <li class="userlocation"><%=h @coder.company_name %></li>
       <li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
@@ -24,11 +25,10 @@
     </ul>
   </div>
 
-  <fieldset>
+  <fieldset class="github_watchers">
     <legend><strong>Author of the following Github public repos</strong></legend>
   <div id="repos_container">
   <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
   </div>
   </fieldset>
-  <%= link_to image_tag("/images/btn-search.gif", :class => "plain_image"), coders_path, :class => "plain_link" %>  
 </div>

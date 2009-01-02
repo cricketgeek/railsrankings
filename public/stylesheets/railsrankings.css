@@ -108,7 +108,14 @@ a{
 	height:110px;
 	margin-bottom:10px;
 	width:665px;
-	padding:5px;}	
+	padding:5px;}
+
+.show_user {
+  height:155px;
+	margin-bottom:10px;
+	width:665px;
+	padding:5px;
+}
 
 .userpic{
 	width:93px;
@@ -118,8 +125,8 @@ a{
 	margin-right:15px;}	
 	
 .userprofilepic {
-	width:123px;
-	height:123px;
+	width:153px;
+	height:153px;
 	border:1px solid #1a56b0;
 	float:left;
 	margin-right:15px;  
@@ -134,7 +141,7 @@ a{
 	font-size:16px;}
 
 .rank{
-	width:125px;
+	width:135px;
 	height:98px;
 	background:#82b4eb;
 	border:1px solid #1a56b0;
@@ -142,6 +149,10 @@ a{
 	font-size:11px;
 	padding:5px;
 	}
+	
+.github_watchers {
+  width: 655px;
+}
 
 .rank ul{
 	margin:0;
@@ -150,7 +161,7 @@ a{
 	
 
 .ranknum{
-	font-size:18px;
+	font-size:16px;
 	font-weight:bold;}	
 
 .username{

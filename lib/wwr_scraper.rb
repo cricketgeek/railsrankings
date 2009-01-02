@@ -16,6 +16,9 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
+      "http://www.workingwithrails.com/person/13437-luigi-montanez",
+      "http://www.workingwithrails.com/person/2941-andrew-stone",
+      "http://www.workingwithrails.com/person/9252-hank-beaver",      
       "http://www.workingwithrails.com/person/12062-jonathan-nelson",
       "http://www.workingwithrails.com/person/14858-samuel-sayer",
       "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
@@ -32,8 +35,6 @@ class WWRScraper
       "http://www.workingwithrails.com/person/12003-les-hill",
       "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
       "http://www.workingwithrails.com/person/11125-asa-wilson",
-      "http://www.workingwithrails.com/person/2941-andrew-stone",
-      "http://www.workingwithrails.com/person/9252-hank-beaver",
       "http://www.workingwithrails.com/person/5639-amy-hoy",
       "http://www.workingwithrails.com/person/5306-james-duncan-davidson",      
       "http://www.workingwithrails.com/person/12633-mark-jones",
@@ -74,13 +75,14 @@ class WWRScraper
   def normalize_location(location)
     
     @locations = {"norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
-      "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta",
-      "decatur, ga" => "Atlanta", "decatur" => "Atlanta","chicago, il" => "Chicago","wheaton, il" => "Chicago",
-      "chicago, illinois" => "Chicago", "san francisco, ca" => "San Francisco",
+      "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta","atlanta, georgia" => "Atlanta",
+      "decatur, ga" => "Atlanta", "decatur" => "Atlanta","greater atlanta area, georgia" => "Atlanta", "chicago, il" => "Chicago","wheaton, il" => "Chicago",
+      "chicago, illinois" => "Chicago", "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco",
       "boston, ma" => "Boston", "austin, tx" => "Austin", "jacksonville, fl" => "Jacksonville",
       "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
-      "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", "new york, ny" => "New York City", 
-      "new york" => "New York City", "portland, oregon" => "Portland", "toronto, ontario" => "Toronto",
+      "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", 
+      "new york, ny" => "New York City", "new york" => "New York City", "NYC" => "New York City", 
+      "portland, oregon" => "Portland", "portland or" => "Portland","toronto, ontario" => "Toronto",
       "denver, co" => "Denver", "denver, colorado" => "Denver", "nashville, tn" => "Nashville",
       "los angeles, ca" => "Los Angeles", "brooklyn, ny" => "New York City",
       "orlando, fl" => "Orlando", "berkeley, ca" => "San Francisco", "cambridge, ma" => "Boston",
@@ -88,7 +90,8 @@ class WWRScraper
       "washington, d.c." => "Washington, DC","são paulo, sp" => "São Paulo",
       "São Paulo - SP" => "São Paulo", "winchester" => "Southampton, UK",
       "hamburg, germany" => "Hamburg", "montreal / quebec" => "Montreal",
-      "longmont, co" => "Denver", "dallas, tx" => "Dallas"
+      "longmont, co" => "Denver", "dallas, tx" => "Dallas", "dallas tx" => "Dallas",
+      "columbus, ohio" => "Columbus, OH", 
     }
     
     return @locations[location.downcase] if @locations[location.downcase]
