@@ -16,19 +16,22 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
-      # "http://www.workingwithrails.com/person/5380-mike-clark",
-      # "http://www.workingwithrails.com/person/5414-sam-stephenson",
-      # "http://www.workingwithrails.com/person/5236-charles-brian-quinn",
-      # "http://www.workingwithrails.com/person/4343-brendan-lim",
-      # "http://www.workingwithrails.com/person/2892-akhil-bansal",
-      # "http://www.workingwithrails.com/person/9530-jason-lee",
-      # "http://www.workingwithrails.com/person/7440-lindsay-ucci",
-      # "http://www.workingwithrails.com/person/9784-colin-harris",
-      # "http://www.workingwithrails.com/person/7241-craig-webster",
-      # "http://www.workingwithrails.com/person/5957-cheah-chu-yeow",
-      # "http://www.workingwithrails.com/person/12003-les-hill",
-      # "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
-      # "http://www.workingwithrails.com/person/11125-asa-wilson",
+      "http://www.workingwithrails.com/person/12062-jonathan-nelson",
+      "http://www.workingwithrails.com/person/14858-samuel-sayer",
+      "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
+      "http://www.workingwithrails.com/person/5380-mike-clark",
+      "http://www.workingwithrails.com/person/5414-sam-stephenson",
+      "http://www.workingwithrails.com/person/5236-charles-brian-quinn",
+      "http://www.workingwithrails.com/person/4343-brendan-lim",
+      "http://www.workingwithrails.com/person/2892-akhil-bansal",
+      "http://www.workingwithrails.com/person/9530-jason-lee",
+      "http://www.workingwithrails.com/person/7440-lindsay-ucci",
+      "http://www.workingwithrails.com/person/9784-colin-harris",
+      "http://www.workingwithrails.com/person/7241-craig-webster",
+      "http://www.workingwithrails.com/person/5957-cheah-chu-yeow",
+      "http://www.workingwithrails.com/person/12003-les-hill",
+      "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
+      "http://www.workingwithrails.com/person/11125-asa-wilson",
       "http://www.workingwithrails.com/person/2941-andrew-stone",
       "http://www.workingwithrails.com/person/9252-hank-beaver",
       "http://www.workingwithrails.com/person/5639-amy-hoy",
@@ -70,13 +73,22 @@ class WWRScraper
   
   def normalize_location(location)
     
-    @locations = {"norcross"  =>  "Atlanta", 
+    @locations = {"norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
       "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta",
       "decatur, ga" => "Atlanta", "decatur" => "Atlanta","chicago, il" => "Chicago","wheaton, il" => "Chicago",
       "chicago, illinois" => "Chicago", "san francisco, ca" => "San Francisco",
       "boston, ma" => "Boston", "austin, tx" => "Austin", "jacksonville, fl" => "Jacksonville",
       "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
-      "san diego, ca" => "San Diego"
+      "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", "new york, ny" => "New York City", 
+      "new york" => "New York City", "portland, oregon" => "Portland", "toronto, ontario" => "Toronto",
+      "denver, co" => "Denver", "denver, colorado" => "Denver", "nashville, tn" => "Nashville",
+      "los angeles, ca" => "Los Angeles", "brooklyn, ny" => "New York City",
+      "orlando, fl" => "Orlando", "berkeley, ca" => "San Francisco", "cambridge, ma" => "Boston",
+      "washington dc" => "Washington, DC", "toronto (ontario)" => "Toronto",
+      "washington, d.c." => "Washington, DC","são paulo, sp" => "São Paulo",
+      "São Paulo - SP" => "São Paulo", "winchester" => "Southampton, UK",
+      "hamburg, germany" => "Hamburg", "montreal / quebec" => "Montreal",
+      "longmont, co" => "Denver", "dallas, tx" => "Dallas"
     }
     
     return @locations[location.downcase] if @locations[location.downcase]
@@ -178,19 +190,21 @@ class WWRScraper
   def determine_full_rank(coder)
     
     coder.rank.blank? ? 0 : coder.rank.to_i
-    
-    (MAX_RANK - coder.rank) + coder.github_watchers * 1.5
+    bonus = coder.rank < 100 ? 10000 : 0
+    (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus
     
   end
   
   def github_watchers(coder)
     watchers = 0
     github_url = ""
-    coder.github_repos.each do |repo|
-      puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
-      watchers += repo.watchers
-      github_url = repo.owner
-      puts "github_url will be #{repo.owner}"
+    unless coder.nickname == "sam"
+      coder.github_repos.each do |repo|
+        puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
+        watchers += repo.watchers
+        github_url = repo.owner
+        puts "github_url will be #{repo.owner}"
+      end
     end
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0

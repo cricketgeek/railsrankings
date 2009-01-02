@@ -1,10 +1,11 @@
 <div>
-  <p class="desc">Based on WWR rank and github watchers. No upper limit on coder rank.
+  <p class="desc">Based on WWR rank and github watchers. Every ranked coder is counted.  Bonus points
+    for being in the top 100 of WWR and 250 points for every github watcher.
   </p>
 </div>
 <ol id="rubycities">
 <% Coder.cities.each do |city| %>
-  <li><%= show_city_name(city.city) %> <%= "(#{city.count} coders)" %></li>
+  <li><%= show_city_name(city.city) %> <%= "(#{pluralize(city.count,"coder")})" %></li>
 <% end %>    
 </ol>        
         

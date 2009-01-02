@@ -32,9 +32,9 @@
             <li class="ranknum">Ranking: <%= show_rank(coder) %> <%= show_delta(coder) %></li>
             <li>Recommended by: <%= coder.recommendation_count %></li>
             <% if coder.github_watchers > 0 %>
-              <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
+              <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>" target="_new"><%= coder.github_watchers %></a></li>
             <% end %>
-            <li><a href="<%= recommendation_url(coder) %>">Recommend them</a></li>
+            <li><a href="<%= recommendation_url(coder) %>">Recommend on WWR</a></li>
           </ul>
         </div>        
         <!--userpic-->
@@ -42,8 +42,7 @@
           <li class="username"><%=h "#{coder.full_name}" %></li>
           <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
-          <li class="userlocation">full rank: <%= coder.full_rank %></li>
-          <li class="userlocation"><%=link_to coder.website, coder.website %></li>
+          <li class="userlocation"><%=link_to coder.website, coder.website, :target => "_new" %></li>
         </ul>
       </div>
       <% end %>

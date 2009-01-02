@@ -16,9 +16,9 @@ class Coder < ActiveRecord::Base
   
   named_scope :ranked, :conditions => "rank is not null"
   named_scope :cities, :select => "city, sum(full_rank) as total,count(*) as count", 
-    :conditions => "city is not null AND city <> ''", :limit => 25, :group => "city", :order => "total DESC"
+    :conditions => "city is not null AND city <> ''", :limit => 55, :group => "city", :order => "total DESC"
   named_scope :companies, :select => "company_name, sum(full_rank) as total, count(*) as count", 
-    :conditions => "company_name is not null AND company_name <> ''", :limit => 35, :group => "company_name", :order => "total DESC"
+    :conditions => "company_name is not null AND company_name <> ''", :limit => 55, :group => "company_name", :order => "total DESC"
   
   before_create :default_rank
   
