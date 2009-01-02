@@ -99,6 +99,16 @@ class WWRScraper
     
   end
   
+  def normalize_company_name(company)
+    @companies = {"active reload, llc." => "Active Reload","thoughtworks, inc." => "ThoughtWorks",
+      "atlantic dominion solutions, llc" => "Atlantic Dominion Solutions",
+      "37 signals" => "37signals","consumer source inc" => "Primedia"}
+    
+    return @companies[company.downcase] if @companies[company.downcase]
+    return company
+    
+  end
+  
   def process_recommendations(full_recommendation_url,coder)
     recommendations = [] 
     recommender_url_doc = open(full_recommendation_url)

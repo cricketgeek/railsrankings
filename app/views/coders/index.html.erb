@@ -17,7 +17,7 @@
 <div class="graydivide"></div><!--graydivide-->
 <div id="main">
   <div id="leftbar">
-    <h1><%= @count %> Ranking Rails Coders</h1>
+    <h1><%= pluralize(@count,"coder") %> found</h1>
     <p class="subhead"><em></em> <a></a></p>
     
     <%= will_paginate @coders %>
@@ -43,12 +43,13 @@
           <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
           <li class="userlocation"><%=link_to coder.website, coder.website, :target => "_new" %></li>
-          <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,",") %></li>
+          <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></li>
         </ul>
       </div>
       <% end %>
     <% end %>
 
+    <%= will_paginate @coders %>
 
    </div>
     <!--leftbar-->
