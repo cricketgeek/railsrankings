@@ -168,7 +168,7 @@ class WWRScraper
       github_watchers(coder)
       
       if not rank.blank? and rank.to_i < MAX_RANK
-        delta = coder.rank - rank.to_i
+        delta = (coder.rank.to_i - rank.to_i)
         puts "rank was #{coder.rank} delta was #{delta}"
       end
       
