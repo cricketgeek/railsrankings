@@ -28,4 +28,4 @@ production:
   pool: 5
   username: root
   password: Magpies123
-  socket: /tmp/mysql.sock
+  #socket: /tmp/mysql.sock
