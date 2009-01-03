@@ -16,11 +16,6 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
-      "http://www.workingwithrails.com/person/13437-luigi-montanez",
-      "http://www.workingwithrails.com/person/2941-andrew-stone",
-      "http://www.workingwithrails.com/person/9252-hank-beaver",      
-      "http://www.workingwithrails.com/person/12062-jonathan-nelson",
-      "http://www.workingwithrails.com/person/14858-samuel-sayer",
       "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
       "http://www.workingwithrails.com/person/5380-mike-clark",
       "http://www.workingwithrails.com/person/5414-sam-stephenson",
@@ -59,7 +54,12 @@ class WWRScraper
       "http://www.workingwithrails.com/person/6491-ryan-bates",
       "http://www.workingwithrails.com/person/7192-wayne-e-seguin",
       "http://www.workingwithrails.com/person/4769-tobias-luetke",
-      "http://www.workingwithrails.com/person/871-jim-weirich"
+      "http://www.workingwithrails.com/person/871-jim-weirich",
+      "http://www.workingwithrails.com/person/13437-luigi-montanez",
+      "http://www.workingwithrails.com/person/2941-andrew-stone",
+      "http://www.workingwithrails.com/person/9252-hank-beaver",      
+      "http://www.workingwithrails.com/person/12062-jonathan-nelson",
+      "http://www.workingwithrails.com/person/14858-samuel-sayer"
     ]
     processing_array.each do |url_to_process|
       process_profile_page(url_to_process)
@@ -143,7 +143,6 @@ class WWRScraper
       location = normalize_location(doc.search('span.locality').inner_html)
       puts "name: #{name} location is #{location}"
       website = doc.search('#person-about-summary/p/a.url').inner_html
-      puts "website is #{website}"
       img_url = doc.search('img.photo').attr('src')
       company_name = doc.search('td/a.organization_name').inner_html
       country_name = doc.search('a.country-name').inner_html
