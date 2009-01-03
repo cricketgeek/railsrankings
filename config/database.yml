@@ -27,5 +27,5 @@ production:
   database: rails_rankings_production
   pool: 5
   username: root
-  password: 
+  password: Magpies123
   socket: /tmp/mysql.sock

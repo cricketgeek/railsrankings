@@ -1,5 +1,7 @@
+set :user, "deploy"
 set :application, "railsrankings"
-set :repository,  "set your repository location here"
+set :domain, "root@209.20.84.38"
+set :repository,  "git@github.com:cricketgeek/railsrankings.git"
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
@@ -9,7 +11,8 @@ set :deploy_to, "/var/www/#{application}"
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
 set :scm, :git
+set :branch, 'master'
 
-role :app, "your app-server here"
-role :web, "your web-server here"
-role :db,  "your db-server here", :primary => true
+role :app, domain
+role :web, domain
+role :db,  domain, :primary => true
