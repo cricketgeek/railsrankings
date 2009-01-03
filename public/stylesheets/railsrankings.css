@@ -152,6 +152,7 @@ a{
 	
 .github_watchers {
   width: 655px;
+  padding: 5px;
 }
 
 .rank ul{
@@ -183,11 +184,12 @@ a{
 	width:200px;}		
 
 #pagination{
-	width:145px;
+	width:225px;
 	float:right;
 	margin-right:50px;
-	font-size:10px;}	
-
+	font-size:10px;
+	 }
+	
 #pagination ul{
 	margin:0;
 	padding:0;
@@ -199,7 +201,7 @@ a{
 	margin:0 3px;
 	border:1px solid #82b4eb;}
 
-#pagination a{
+.pagination a{
 	text-decoration:none;}		
 
 #show_container {

@@ -36,11 +36,11 @@ module CodersHelper
   end
   
   def show_city_name(city)
-    city.blank? ? "Unknown location" : city
+    city.blank? ? "Unknown location" : link_to("#{city}", coders_path(:search => city))
   end
 
   def show_company_name(company)
-    company.blank? ? "Unknown" : company
+    company.blank? ? "Unknown" : link_to("#{company}", coders_path(:search => company))
   end
   
   def alternate_row_color(index)
@@ -48,7 +48,7 @@ module CodersHelper
   end
   
   def show_coder_name(coder)
-    coder.full_name
+    link_to(coder.full_name,coder_path(coder))
   end
   
 end

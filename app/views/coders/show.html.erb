@@ -1,7 +1,7 @@
-
+<div class="graydivide"></div><!--graydivide-->
 <div id="show_container">
   
-  <div class="show_user greybg">
+  <div class="show_user">
     <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %></div>
     <div class="rank">
       <ul>
@@ -25,10 +25,10 @@
     </ul>
   </div>
 
-  <fieldset class="github_watchers">
-    <legend><strong>Author of the following Github public repos</strong></legend>
-  <div id="repos_container">
-  <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
+  <div class="github_watchers">
+    <h2>Author of the following Github public repos</h2>
+    <div id="repos_container">
+    <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
+    </div>
   </div>
-  </fieldset>
 </div>

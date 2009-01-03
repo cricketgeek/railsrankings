@@ -91,7 +91,8 @@ class WWRScraper
       "São Paulo - SP" => "São Paulo", "winchester" => "Southampton, UK",
       "hamburg, germany" => "Hamburg", "montreal / quebec" => "Montreal",
       "longmont, co" => "Denver", "dallas, tx" => "Dallas", "dallas tx" => "Dallas",
-      "columbus, ohio" => "Columbus, OH", 
+      "columbus, ohio" => "Columbus, OH", "baltimore/md" => "Baltimore", "baltimore, md" => "Baltimore",
+      "baltimore md" => "Baltimore"
     }
     
     return @locations[location.downcase] if @locations[location.downcase]
@@ -102,7 +103,8 @@ class WWRScraper
   def normalize_company_name(company)
     @companies = {"active reload, llc." => "Active Reload","thoughtworks, inc." => "ThoughtWorks",
       "atlantic dominion solutions, llc" => "Atlantic Dominion Solutions",
-      "37 signals" => "37signals","consumer source inc" => "Primedia"}
+      "37 signals" => "37signals","consumer source inc" => "Primedia", 
+      "intridea, inc" => "Intridea"}
     
     return @companies[company.downcase] if @companies[company.downcase]
     return company
