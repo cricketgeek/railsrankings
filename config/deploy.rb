@@ -1,6 +1,8 @@
-set :user, "deploy"
+set :user, "root"
 set :application, "railsrankings"
-set :domain, "root@209.20.84.38"
+set :domain, "209.20.84.38"
+set :scm_verbose, true
+default_run_options[:pty] = true
 set :repository,  "git@github.com:cricketgeek/railsrankings.git"
 
 # If you aren't deploying to /u/apps/#{application} on the target
