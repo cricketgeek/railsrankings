@@ -159,11 +159,16 @@ class WWRScraper
       #TODO: retain authority lines
       # doc.search('ul.authority/li.tick').each do |authority|
       #   
-      # end
+      # end      
 
       coder = Coder.find_by_profile_url(url)
       puts "updating #{coder.full_name}" if coder
       coder = Coder.new if coder.nil?
+
+
+      # rails_core_contrib_img = doc.search("img[@src='/images/rails-core-contributor.gif']")
+      # coder.core_contributor = !rails_core_contrib_img.nil?
+      # puts "#{last_name} is a core contrib" if coder.core_contributor
 
       github_watchers(coder)
       
@@ -195,7 +200,6 @@ class WWRScraper
     main_open_url = open("http://www.workingwithrails.com/browse/popular/people")
     doc = Hpricot(main_open_url)
     doc.search('#Main/table/tr/td/a').each do |prof_url|
-      #puts prof_url.get_attribute("href")
       process_profile_page(prof_url.get_attribute("href"))
     end
     main_open_url.close
@@ -205,7 +209,9 @@ class WWRScraper
     
     coder.rank.blank? ? 0 : coder.rank.to_i
     bonus = coder.rank < 100 ? 10000 : 0
-    (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus
+    #core_contrib_bonus = 2500 if coder.core_contributor
+    #puts "adding core contrib bonus #{core_contrib_bonus}"
+    (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus # + core_contrib_bonus
     
   end
   

@@ -16,7 +16,7 @@
     <!--userpic-->
     <ul class="userinfo">
       <li class="username"><%=h "#{@coder.full_name}" %></li>
-      <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,",") %></li>      
+      <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>      
       <li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
       <li class="userlocation"><%=h @coder.company_name %></li>
       <li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
