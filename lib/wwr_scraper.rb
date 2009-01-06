@@ -16,6 +16,7 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
+      "http://www.workingwithrails.com/person/5554-pat-allan",
       "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
       "http://www.workingwithrails.com/person/5380-mike-clark",
       "http://www.workingwithrails.com/person/5414-sam-stephenson",
