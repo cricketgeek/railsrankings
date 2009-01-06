@@ -31,14 +31,15 @@ class Coder < ActiveRecord::Base
     repos = []
     if valid_for_github?
       nicknames = nickname.split(",")
-      begin
-        nicknames.each do |nickname|
+      nicknames.each do |nickname|
+        begin
+          puts "processing github repo for nickname #{nickname}"
           nickname.strip!
           github_user = GitHub::API.user(nickname)
           repos = repos + github_user.repositories
+        rescue Exception => ex
+          puts "error geting github repo, #{ex}"
         end
-      rescue Exception => ex
-        puts "error geting github repo, #{ex}"
       end
     end
     repos
