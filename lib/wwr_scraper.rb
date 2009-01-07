@@ -222,7 +222,7 @@ class WWRScraper
     unless coder.nickname == "sam"
       coder.github_repos.each do |repo|
         puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
-        watchers += repo.watchers
+        watchers += (repo.watchers - 1)
         github_url = repo.owner
         puts "github_url will be #{repo.owner}"
       end
