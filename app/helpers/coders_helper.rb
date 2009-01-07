@@ -51,4 +51,9 @@ module CodersHelper
     link_to(coder.full_name,coder_path(coder))
   end
   
+  def coder_metadata(coders)
+    coders = @coders.collect { |coder| coder.full_name }
+    coders.join(",")
+  end
+  
 end

@@ -1,4 +1,8 @@
 
+<% content_for :head do %>
+  <meta id="metaDescription" name="description" content="<%=  coder_metadata(@coders)%>"/>
+<% end %>
+
 <div id="topbar">
   <div id="searchbox">
     <h1 class="searchhdr">Whittle it down a bit</h1>
@@ -8,7 +12,7 @@
       <input name="" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
     <% end %>
     <div>
-      <p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use | to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
+      <p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
       and the number of public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.  Hopefully RailsRankings Points is a better measuring stick.
       </p>
     </div>
@@ -17,7 +21,7 @@
 <div class="graydivide"></div><!--graydivide-->
 <div id="main">
   <div id="leftbar">
-    <h1><%= pluralize(@count,"coder") %> found</h1>
+    <h1><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h1>
     
     <%= will_paginate @coders %>
     <div style="clear:both;"></div>
@@ -38,7 +42,7 @@
         </div>        
         <!--userpic-->
         <ul class="userinfo">
-          <li class="username"><%=h "#{coder.full_name}" %></li>
+          <li class="username"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
           <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="userlocation"><%=h coder.company_name %></li>
           <li class="userlocation"><%=link_to coder.website, coder.website, :target => "_new" %></li>
