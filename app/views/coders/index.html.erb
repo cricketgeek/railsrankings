@@ -20,7 +20,7 @@
     <h1><%= pluralize(@count,"coder") %> found</h1>
     
     <%= will_paginate @coders %>
-
+    <div style="clear:both;"></div>
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
       
@@ -48,10 +48,8 @@
       <% end %>
     <% end %>
     
-    <div id="results">
-    <%= page_entries_info @coders %>
-    </div>
-    <%= will_paginate @coders,{:id => "pagination"} %>
+
+    <%= will_paginate @coders %>
 
    </div>
     <!--leftbar-->

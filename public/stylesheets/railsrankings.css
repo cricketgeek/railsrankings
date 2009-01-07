@@ -178,31 +178,38 @@ a{
 .subhead{
 	font-size:14px;}
 
-#results{
+.results{
 	float:left;
 	font-size:10px;
-	width:200px;}		
+	width:180px;
+	clear:both;}		
 
-#pagination{
-	width:255px;
-	float:right;
-	margin-right:50px;
-	font-size:10px;
-	 }
-	
-#pagination ul{
-	margin:0;
-	padding:0;
-	list-style-type:none;}	
+.pagination{
 
-#pagination ul li{
-	display:inline;
-	padding:2px 5px;
-	margin:0 3px;
-	border:1px solid #82b4eb;}
+  margin-right:50px;
+  font-size:10px;
+  clear:both;
+}
+
 
 .pagination a{
-	text-decoration:none;}		
+  display:inline;
+  padding:2px 5px;
+  border:1px solid #82b4eb;
+  font-size:10px;
+  text-decoration:none;
+}
+
+.disabled{display:none;}
+
+.current{
+  padding:2px 5px;
+  margin:0 3px;
+  border:1px solid #82b4eb;
+  background:#ebebeb;
+  font-weight:bold;
+}
+      
 
 #show_container {
   margin: 10px;
