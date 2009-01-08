@@ -1,5 +1,7 @@
 <ol id="rubycompanies">
-<% Coder.top_coders.each do |coder| %>
-  <li><%= show_coder_name(coder) %> <%= "(points: #{number_with_delimiter(coder.full_rank,{:delimiter => ","})})"  %></li>
-<% end %>    
+<% cache :top_coders do %>
+  <% Coder.top_coders.each do |coder| %>
+    <li><%= show_coder_name(coder) %> <%= "(points: #{number_with_delimiter(coder.full_rank,{:delimiter => ","})})"  %></li>
+  <% end %>    
+<% end %>
 </ol>

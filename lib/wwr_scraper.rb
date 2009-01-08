@@ -16,6 +16,7 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
+      "http://www.workingwithrails.com/person/6962-justin-palmer",
       "http://www.workingwithrails.com/person/5554-pat-allan",
       "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
       "http://www.workingwithrails.com/person/5380-mike-clark",
@@ -145,7 +146,7 @@ class WWRScraper
       puts "name: #{name} location is #{location}"
       website = doc.search('#person-about-summary/p/a.url').inner_html
       img_url = doc.search('img.photo').attr('src')
-      company_name = doc.search('td/a.organization_name').inner_html
+      company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
       country_name = doc.search('a.country-name').inner_html
       nickname = doc.search('td.nickname').inner_html
       puts "nickname is: #{nickname}"
