@@ -3,11 +3,39 @@ require 'open-uri'
 
 class WWRScraper
   PROCESS_UPDATES = true
+  WWR_BASE_URL = "http://www.workingwithrails.com"
   attr_accessor :processed_urls
   
   def initialize
     @processed_urls = {}
+    @crawling = true
   end
+  
+  def process_using_name_browse_pages
+    @crawling = false
+    base_page_url = open("http://www.workingwithrails.com/browse/people/name")
+    doc = Hpricot(base_page_url)
+    doc.search('#Main/a').each do |letter_page|
+      page_url = "#{WWR_BASE_URL}#{letter_page.get_attribute("href")}"
+      puts "================================================================"
+      puts "processing #{page_url} next"
+      puts "================================================================"
+      process_name_page(page_url)
+    end
+  end
+    
+  def process_main_popular_page
+    main_open_url = open("http://www.workingwithrails.com/browse/popular/people")
+    doc = Hpricot(main_open_url)
+    doc.search('#Main/table/tr/td/a').each do |prof_url|
+      next_prof_url = prof_url.get_attribute("href")
+      puts "==================================="
+      puts "pulling #{next_prof_url} to update coder"
+      process_profile_page(next_prof_url)
+    end
+    main_open_url.close
+  end
+  
   
   def process_using_seed_data
     
@@ -69,6 +97,16 @@ class WWRScraper
     
   end
   
+  private
+  
+  def process_name_page(page)
+    name_page_url = open(page)
+    doc = Hpricot(name_page_url)
+    doc.search("ul.entry-list/li/a").each do |profile_url|
+      process_profile_page(profile_url.get_attribute("href"))
+    end
+  end
+  
   def should_process_url?(url)
     coder = Coder.find_by_profile_url(url)
     coder.nil? or PROCESS_UPDATES
@@ -79,23 +117,31 @@ class WWRScraper
     @locations = {"norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
       "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta","atlanta, georgia" => "Atlanta",
       "decatur, ga" => "Atlanta", "decatur" => "Atlanta","greater atlanta area, georgia" => "Atlanta", "chicago, il" => "Chicago","wheaton, il" => "Chicago",
-      "chicago, illinois" => "Chicago", "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco",
-      "boston, ma" => "Boston", "austin, tx" => "Austin", "jacksonville, fl" => "Jacksonville",
+      "chicago, illinois" => "Chicago","chicago il" => "Chicago", "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco",
+      "boston, ma" => "Boston","boston ma" => "Boston", "austin, tx" => "Austin","austin tx" => "Austin", "jacksonville, fl" => "Jacksonville",
+      "jacksonville/ fl" => "Jacksonville", "jacksonville, florida" => "Jacksonville",
+      "rio de janeiro / rj" => "Rio de Janeiro","austin, tx, usa" => "Austin",
       "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
       "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", 
-      "new york, ny" => "New York City", "new york" => "New York City", "NYC" => "New York City", 
+      "new york, ny" => "New York City", "new york" => "New York City", "nyc" => "New York City", 
       "portland, oregon" => "Portland", "portland or" => "Portland","toronto, ontario" => "Toronto",
       "denver, co" => "Denver", "denver, colorado" => "Denver", "nashville, tn" => "Nashville",
-      "los angeles, ca" => "Los Angeles", "brooklyn, ny" => "New York City",
-      "orlando, fl" => "Orlando", "berkeley, ca" => "San Francisco", "cambridge, ma" => "Boston",
-      "washington dc" => "Washington, DC", "toronto (ontario)" => "Toronto",
+      "los angeles, ca" => "Los Angeles", "los angeles / california" => "Los Angeles", "brooklyn, ny" => "New York City",
+      "orlando, fl" => "Orlando", "orlando, florida" => "Orlando", "berkeley, ca" => "San Francisco", "cambridge, ma" => "Boston",
+      "washington dc" => "Washington, DC", "washington dc area" => "Washington, DC", "toronto (ontario)" => "Toronto",
       "washington, d.c." => "Washington, DC","são paulo, sp" => "São Paulo",
       "São Paulo - SP" => "São Paulo", "winchester" => "Southampton, UK",
       "hamburg, germany" => "Hamburg", "montreal / quebec" => "Montreal",
       "longmont, co" => "Denver", "dallas, tx" => "Dallas", "dallas tx" => "Dallas",
+      "chapel hill, nc" => "Chapel Hill", "chapel hill, north carolina" => "Chapel Hill", "Chapel Hill NC" => "Chapel Hill",
+      "stillwater, oklahoma" => "Stillwater", "stillwater, ok" => "Stillwater, Oklahoma",
       "columbus, ohio" => "Columbus, OH", "baltimore/md" => "Baltimore", "baltimore, md" => "Baltimore",
-      "baltimore md" => "Baltimore"
-    }
+      "baltimore md" => "Baltimore", "cracow" => "Kraków", "krakow" => "Kraków", 
+      "kansas city, mo, usa" => "Kansas City", "kansas city, mo" => "Kansas City","kansas city mo" => "Kansas City",
+      "santa barabara" =>"Santa Barbara", "Santa Barbara, CA" => "Santa Barbara", "Santa Barbara, California" => "Santa Barbara",
+      "winnipeg, manitoba" => "Winnipeg"
+      
+     }
     
     return @locations[location.downcase] if @locations[location.downcase]
     return location
@@ -141,11 +187,13 @@ class WWRScraper
       name = doc.search('h2.item-title').inner_html.lstrip.rstrip
       name = name.titleize.split(' ')
       first_name = name[0]
-      last_name = name[1,name.length].join(" ")
+      last_name = name[1,name.length].join(" ") if name.size > 1
       location = normalize_location(doc.search('span.locality').inner_html)
       puts "name: #{name} location is #{location}"
       website = doc.search('#person-about-summary/p/a.url').inner_html
-      img_url = doc.search('img.photo').attr('src')
+      puts doc.at('img.photo')
+      img_url_el = doc.search('img.photo')
+      img_url = img_url_el.attr('src') if img_url_el.any?
       company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
       country_name = doc.search('a.country-name').inner_html
       nickname = doc.search('td.nickname').inner_html
@@ -191,25 +239,20 @@ class WWRScraper
       coder.save
             
       puts "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
-    
-      full_recommendation_url = url.sub("http://www.workingwithrails.com","http://www.workingwithrails.com/recommendation/for")
-      process_recommendations(full_recommendation_url,coder)      
+      
+      crawl_recommendations(url,coder) if @crawling
       open_url.close
     end
-  end
-  
-  def process_main_popular_page
-    main_open_url = open("http://www.workingwithrails.com/browse/popular/people")
-    doc = Hpricot(main_open_url)
-    doc.search('#Main/table/tr/td/a').each do |prof_url|
-      process_profile_page(prof_url.get_attribute("href"))
-    end
-    main_open_url.close
+  end  
+
+  def crawl_recommendations
+    full_recommendation_url = url.sub("http://www.workingwithrails.com","http://www.workingwithrails.com/recommendation/for")
+    process_recommendations(full_recommendation_url,coder)
   end
   
   def determine_full_rank(coder)
     
-    coder.rank.blank? ? 0 : coder.rank.to_i
+    coder.rank = coder.rank.blank? ? 0 : coder.rank.to_i
     bonus = coder.rank < 100 ? 10000 : 0
     #core_contrib_bonus = 2500 if coder.core_contributor
     #puts "adding core contrib bonus #{core_contrib_bonus}"
@@ -231,6 +274,5 @@ class WWRScraper
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
   end
-  
   
 end

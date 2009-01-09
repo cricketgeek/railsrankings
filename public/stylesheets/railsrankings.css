@@ -6,7 +6,7 @@ body{
 	line-height:160%;}
 	
 #main{
-	width:975px;
+	width:1005px;
 	margin:0px auto;}	
 
 #logo{
@@ -65,7 +65,7 @@ body{
 	background:url(/images/border-right.gif) top right repeat-y;}
 
 #rightbar{
-	width:240px;
+	width:270px;
 	float:right;
 	/*border-left:1px solid #d7e3f5;*/
 	padding-left:10px;}

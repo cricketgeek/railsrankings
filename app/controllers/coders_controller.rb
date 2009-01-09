@@ -13,25 +13,15 @@ class CodersController < ApplicationController
       :match_mode => :boolean,
       :order => :rank
     )
-
     
     @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @coders }
-    end
   end
 
   # GET /coders/1
   # GET /coders/1.xml
   def show
     @coder = Coder.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @coder }
-    end
   end
 
   # GET /coders/new
@@ -96,8 +86,7 @@ class CodersController < ApplicationController
     end
   end
   
-  def filter_by_cities
-    
+  def filter_by_cities  
     @coders = Coder.find(:all,:conditions => ["city like ?","#{params[:locations]}%"],:order => :rank)   
     render :action => "index"
   end
