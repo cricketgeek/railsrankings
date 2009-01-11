@@ -25,6 +25,20 @@ class WWRScraper
     base_page_url.close
   end
     
+  def process_name_browse_by_letter(letter)
+    @crawling = false
+    base_page_url = open("http://www.workingwithrails.com/browse/people/name")
+    doc = Hpricot(base_page_url)
+    doc.search("#Main/#{letter}").each do |letter_page|
+      page_url = "#{WWR_BASE_URL}#{letter_page.get_attribute("href")}"
+      puts "================================================================"
+      puts "processing #{page_url} next"
+      puts "================================================================"
+      process_name_page(page_url)
+    end
+    base_page_url.close    
+  end  
+  
   def process_main_popular_page
     main_open_url = open("http://www.workingwithrails.com/browse/popular/people")
     doc = Hpricot(main_open_url)
@@ -45,6 +59,8 @@ class WWRScraper
     processing_array = [
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
+      "http://www.workingwithrails.com/person/5323-jeremy-kemper",
+      "http://www.workingwithrails.com/person/8677-sam-smoot",
       "http://www.workingwithrails.com/person/6962-justin-palmer",
       "http://www.workingwithrails.com/person/5554-pat-allan",
       "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
@@ -192,8 +208,12 @@ class WWRScraper
       last_name = name[1,name.length].join(" ") if name.size > 1
       location = normalize_location(doc.search('span.locality').inner_html)
       puts "name: #{name} location is #{location}"
-      website = doc.search('#person-about-summary/p/a.url').inner_html
-      puts doc.at('img.photo')
+      if doc.at("#person-about-summary/p/a.url")
+        website = doc.search('#person-about-summary/p/a.url').attr('href')
+      end
+      # email = doc.search('#person-further-info/a').inner_html
+      # puts "email is #{email}"
+      #puts doc.at('img.photo')
       img_url_el = doc.search('img.photo')
       img_url = img_url_el.attr('src') if img_url_el.any?
       company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
@@ -217,10 +237,14 @@ class WWRScraper
       puts "updating #{coder.full_name}" if coder
       coder = Coder.new if coder.nil?
 
-
+      coder.nickname = nickname
+      coder.first_name = first_name
+      coder.last_name = last_name
+      puts "setting nickname on coder to #{coder.nickname}"
       # rails_core_contrib_img = doc.search("img[@src='/images/rails-core-contributor.gif']")
       # coder.core_contributor = !rails_core_contrib_img.nil?
       # puts "#{last_name} is a core contrib" if coder.core_contributor
+      cleanse_bad_aliases(coder)
 
       github_watchers(coder)
       
@@ -231,10 +255,10 @@ class WWRScraper
       
       coder.full_rank = determine_full_rank(coder)
       puts "coder full_rank was #{coder.full_rank}"
-      coder.update_attributes(:last_name => last_name,:first_name => first_name,:website => website,
+      coder.update_attributes(:website => website,
                 :image_path => img_url,:rank => rank, :city => location, 
                 :profile_url => url, :company_name => company_name,
-                :country => country_name, :nickname => nickname,
+                :country => country_name,
                 :recommendation_count  => recs.to_i,
                 :delta => delta)
     
@@ -245,7 +269,21 @@ class WWRScraper
       crawl_recommendations(coder,url) if @crawling
       open_url.close
     end
-  end  
+  end
+  
+  def cleanse_bad_aliases(coder)
+    puts "cleansing name of #{coder.full_name}"
+    if coder.first_name == 'Maciafts'
+      coder.nickname = "not_sam"
+    elsif coder.nickname.downcase == "rails"
+      coder.nickname = "not_rails"
+    elsif coder.last_name == "Smoot"
+      puts "found sammy"
+      coder.nickname = "Sam"
+    else
+      puts "well couldn't find #{coder.full_name}"
+    end
+  end
 
   def crawl_recommendations(coder,url)
     full_recommendation_url = url.sub("http://www.workingwithrails.com","http://www.workingwithrails.com/recommendation/for")
@@ -265,13 +303,11 @@ class WWRScraper
   def github_watchers(coder)
     watchers = 0
     github_url = ""
-    unless coder.nickname == "sam"
-      coder.github_repos.each do |repo|
-        puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
-        watchers += (repo.watchers - 1)
-        github_url = repo.owner
-        puts "github_url will be #{repo.owner}"
-      end
+    coder.github_repos.each do |repo|
+      puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
+      watchers += (repo.watchers - 1)
+      github_url = repo.owner
+      puts "github_url will be #{repo.owner}"
     end
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0

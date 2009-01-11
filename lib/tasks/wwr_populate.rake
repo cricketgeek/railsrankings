@@ -3,7 +3,6 @@ namespace :wwr do
   namespace :remote do
     desc "Load data from the WWR website"
     task :load => :environment do
-      RAILS_ENV="production"
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_seed_data
       wwr_scraper.process_main_popular_page
@@ -14,6 +13,16 @@ namespace :wwr do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_name_browse_pages
     end
-    
+
+    desc "load data by a specific first letter of the first name on WWR"
+    task :load_by_letter, [:letter] => :environment do
+      unless ENV.include?("letter")
+          raise "usage: rake letter=[A-Z]" 
+      end
+      letter = ENV['letter']
+      puts "processing just letter #{letter} page"
+      wwr_scraper = WWRScraper.new
+      wwr_scraper.process_name_browse_by_letter(letter)
+    end
   end
 end
