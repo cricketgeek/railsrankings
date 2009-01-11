@@ -10,7 +10,7 @@
         <% if @coder.github_watchers > 0 %>
           <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
         <% end %>
-        <li><a href="<%= recommendation_url(@coder) %>">Recommend them</a></li>
+        <li><a href="<%= recommendation_url(@coder) %>">Recommend <%= @coder.first_name[0..20] %></a></li>
       </ul>
     </div>        
     <!--userpic-->
