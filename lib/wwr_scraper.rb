@@ -22,6 +22,7 @@ class WWRScraper
       puts "================================================================"
       process_name_page(page_url)
     end
+    base_page_url.close
   end
     
   def process_main_popular_page
@@ -105,6 +106,7 @@ class WWRScraper
     doc.search("ul.entry-list/li/a").each do |profile_url|
       process_profile_page(profile_url.get_attribute("href"))
     end
+    name_page_url.close
   end
   
   def should_process_url?(url)
@@ -240,20 +242,20 @@ class WWRScraper
             
       puts "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
       
-      crawl_recommendations(url,coder) if @crawling
+      crawl_recommendations(coder,url) if @crawling
       open_url.close
     end
   end  
 
-  def crawl_recommendations
+  def crawl_recommendations(coder,url)
     full_recommendation_url = url.sub("http://www.workingwithrails.com","http://www.workingwithrails.com/recommendation/for")
     process_recommendations(full_recommendation_url,coder)
   end
   
   def determine_full_rank(coder)
     
+    bonus = coder.rank < 100 ? 10000 : 0 if not coder.rank.blank?
     coder.rank = coder.rank.blank? ? 0 : coder.rank.to_i
-    bonus = coder.rank < 100 ? 10000 : 0
     #core_contrib_bonus = 2500 if coder.core_contributor
     #puts "adding core contrib bonus #{core_contrib_bonus}"
     (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus # + core_contrib_bonus
