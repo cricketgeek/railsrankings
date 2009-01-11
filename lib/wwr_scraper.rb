@@ -230,7 +230,7 @@ class WWRScraper
       end
       
       coder.full_rank = determine_full_rank(coder)
-      
+      puts "coder full_rank was #{coder.full_rank}"
       coder.update_attributes(:last_name => last_name,:first_name => first_name,:website => website,
                 :image_path => img_url,:rank => rank, :city => location, 
                 :profile_url => url, :company_name => company_name,
@@ -254,8 +254,8 @@ class WWRScraper
   
   def determine_full_rank(coder)
     
+    coder.rank = coder.rank.blank? ? MAX_RANK : coder.rank.to_i
     bonus = coder.rank < 100 ? 10000 : 0 if not coder.rank.blank?
-    coder.rank = coder.rank.blank? ? 0 : coder.rank.to_i
     #core_contrib_bonus = 2500 if coder.core_contributor
     #puts "adding core contrib bonus #{core_contrib_bonus}"
     (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus # + core_contrib_bonus
