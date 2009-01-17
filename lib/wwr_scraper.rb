@@ -27,15 +27,8 @@ class WWRScraper
     
   def process_name_browse_by_letter(letter)
     @crawling = false
-    base_page_url = open("http://www.workingwithrails.com/browse/people/name")
-    doc = Hpricot(base_page_url)
-    doc.search("#Main/#{letter}").each do |letter_page|
-      page_url = "#{WWR_BASE_URL}#{letter_page.get_attribute("href")}"
-      puts "================================================================"
-      puts "processing #{page_url} next"
-      puts "================================================================"
-      process_name_page(page_url)
-    end
+    base_page_url = open("http://www.workingwithrails.com/browse/people/name/#{letter}")
+    process_name_page(base_page_url)
     base_page_url.close    
   end  
   
