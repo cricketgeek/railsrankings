@@ -27,9 +27,7 @@ class WWRScraper
     
   def process_name_browse_by_letter(letter)
     @crawling = false
-    base_page_url = open("http://www.workingwithrails.com/browse/people/name/#{letter}")
-    process_name_page(base_page_url)
-    base_page_url.close    
+    process_name_page("http://www.workingwithrails.com/browse/people/name/#{letter}")
   end  
   
   def process_main_popular_page
