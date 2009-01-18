@@ -263,6 +263,11 @@ class WWRScraper
   end
   
   def cleanse_bad_aliases(coder)
+    
+    if coder.first_name == "David" and coder.last_name == "Chelimsky"
+      coder.nickname = "dchelimsky"
+    end
+    
     if coder.nickname and coder.last_name
       if coder.first_name and coder.first_name == 'Maciafts'
         coder.nickname = "not_sam"
@@ -272,8 +277,8 @@ class WWRScraper
         coder.nickname = "not_pieter"
       elsif coder.nickname.downcase == "tobias" and coder.last_name.downcase == "Kahre"
         coder.nickname = "not_tobias"
-      elsif coder.first_name.downcase == "sam" and coder.last_name.downcase == "smoot"
-        coder.nickname = "Sam"
+      elsif coder.nickname.downcase == "sam" and (coder.first_name.downcase != "sam" or coder.last_name.downcase != "smoot")
+        coder.nickname = "not_sam"
       end
     end
   end

@@ -1,0 +1,5 @@
+<% cache :all_companies do %>
+<ol>
+  <%= render :partial  => "company_rankings", :collection => Coder.all_companies, :as => :company  %>
+</ol>
+<% end %>

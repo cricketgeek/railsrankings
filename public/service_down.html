@@ -1,0 +1,54 @@
+
+<html>
+<head>
+<%= stylesheet_link_tag "railsrankings" %>
+<title>Rails Rankings</title>
+</head>
+<body>
+<div class="wrapper">
+  <div id="logo">
+    <%= link_to image_tag("/images/logo.gif", :class => "plain_image"),coders_path %>
+  </div>
+</div><!--wrapper-->
+
+<div id="topbar">
+  <div id="searchbox">
+    <h1 class="searchhdr">Whittle it down a bit</h1>
+
+    <% form_tag coders_path, :method => :get do %>
+      <%= text_field_tag :search, params[:search]%>
+      <input name="" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
+    <% end %>
+    <div>
+      <p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
+      and the number of public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.  Hopefully RailsRankings Points is a better measuring stick.
+      </p>
+    </div>
+  </div><!--search-->
+</div>
+<div class="graydivide"></div><!--graydivide-->
+<div id="main">
+  <div id="leftbar">
+    <h1>Yikes!</h1>
+       I can't find the page you're looking for. Please enjoy this video.
+       <div id="not-found">
+       <object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/a1Y73sPHKxw&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/a1Y73sPHKxw&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
+        </div><!--not-found-->
+        Or <a href="#">return to the home page</a> to find the top ranking ruby coders.
+   </div>
+    <!--leftbar-->
+    <div id="rightbar">
+    </div>
+    <!--rightbar-->
+    <div style="clear:both;"></div>
+    <!--clearing div-->
+  </div>
+  <!--main-->    
+    <div id="footer"><div class="graydivide"></div><!--graydivide-->
+      <div class="wrapper">
+        <p>Site designed by <%= link_to "Playfulpixel","http://playfulpixel.com/", :target => "_new" %> and coded by <%= link_to "Reedhot Studios LLC","http://reedhot.com", :target => "_new" %>.  If you like, please recommend <%= link_to "me","http://www.workingwithrails.com/person/12633-mark-jones", :target => "_new" %>. Disclaimer: This is a publicly accessible database. The views and opinions of originators and contributors expressed on this site do not necessarily state or reflect those of Reedhot Studios LLC. No representation or warranty is given as regards to any applicability of any suggestion, its accuracy or completeness.</p>
+      </div>
+      <!--wrapper-->
+    </div>
+    <!--footer-->
+    </body>    

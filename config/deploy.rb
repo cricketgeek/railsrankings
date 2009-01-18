@@ -1,4 +1,4 @@
-require 'capistrano/ext/multistage'
+#require 'capistrano/ext/multistage'
 
 set :user, "root"
 set :application, "railsrankings"
@@ -13,7 +13,7 @@ set :repository,  "git@github.com:cricketgeek/railsrankings.git"
 # servers (which is the default), you can specify the actual location
 # via the :deploy_to variable:
 set :deploy_to, "/var/www/#{application}"
-set :mongrel_conf, "#{deploy_to}/current/config/mongrel_cluster.yml"  
+set :mongrel_conf, "#{deploy_to}/current/config/mongrel_cluster.yml"
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
@@ -38,9 +38,9 @@ namespace :deploy do
     transaction do
       deploy.update
       
-      deploy.stop
+      #deploy.stop
       sleep(3)
-      deploy.start
+      #deploy.start
       deploy.cleanup
     end
   end

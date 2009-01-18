@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :locations
 
-  map.resources :coders, :collection => {:filter_by_cities  => :any,:test => :any}
+  map.resources :coders, :collection => {:filter_by_cities  => [:get,:post],:all_companies => :get}
   
   # The priority is based upon order of creation: first created -> highest priority.
 

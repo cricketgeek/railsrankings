@@ -58,12 +58,29 @@
    </div>
     <!--leftbar-->
     <div id="rightbar">
+      
       <h2>Top Rails Cities</h2>
-        <%= render :partial => "city_rankings" %>
-      <h2>Top Ranked Companies</h2>
-        <%= render :partial => "company_rankings" %>
+      <div>
+        <p class="desc"><strong>Every</strong> ranked coder is counted.  Bonus points
+          for being in the top 100 of WWR and 250 points for every github watcher. Sorted on RailsRankings Points in the top 20
+          lists below
+        </p>
+      </div>
+      <ol id="rubycities">
+        <%= render :partial => "city_rankings", :collection => Coder.cities, :as => :city %>
+      </ol>
+      <h2><%= link_to "Top Ranked Companies",all_companies_coders_path %></h2>
+      <ol id="rubycompanies">
+      <% cache :top_companies_cache do %>
+        <%= render :partial => "company_rankings", :collection => Coder.companies, :as => :company %>
+      <% end %>
+      </ol>  
       <h2>Top Coders</h2>
-        <%= render :partial => "top_coders_new_rank" %>
+      <ol id="rubycompanies">
+      <% cache :top_coders do %>      
+        <%= render :partial => "top_coders_new_rank", :collection => Coder.top_coders, :as => :coder %>
+      <% end %>
+      </ol>  
     </div>
     <!--rightbar-->
     <div style="clear:both;"></div>

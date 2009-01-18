@@ -1,12 +1,1 @@
-<div>
-  <p class="desc"><strong>Every</strong> ranked coder is counted.  Bonus points
-    for being in the top 100 of WWR and 250 points for every github watcher. Sorted on RailsRankings Points in the top 20
-    lists below
-  </p>
-</div>
-<ol id="rubycities">
-<% Coder.cities.each do |city| %>
-  <li><%= show_city_name(city.city) %> <%= "(#{pluralize(city.count,"coder")} #{number_with_delimiter(city.total,{:delimiter => ","})} points)" %></li>
-<% end %>    
-</ol>        
-        
+<li><%= show_city_name(city.city) %> <%= "(#{pluralize(city.count,"coder")} #{number_with_delimiter(city.total,{:delimiter => ","})} points)" %></li>
