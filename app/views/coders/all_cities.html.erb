@@ -1,0 +1,5 @@
+<% cache :all_cities do %>
+<ol>
+  <%= render :partial  => "city_rankings", :collection => Coder.all_cities, :as => :city  %>
+</ol>
+<% end %>

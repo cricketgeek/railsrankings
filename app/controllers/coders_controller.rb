@@ -86,10 +86,6 @@ class CodersController < ApplicationController
     end
   end
   
-  def all_cities
-    @cities = Coder.all_cities
-  end
-  
   def filter_by_cities  
     @coders = Coder.find(:all,:conditions => ["city like ?","#{params[:locations]}%"],:order => :rank)   
     render :action => "index"

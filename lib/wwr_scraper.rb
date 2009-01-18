@@ -130,6 +130,7 @@ class WWRScraper
       "boston, ma" => "Boston","boston ma" => "Boston", "austin, tx" => "Austin","austin tx" => "Austin", "jacksonville, fl" => "Jacksonville",
       "jacksonville/ fl" => "Jacksonville", "jacksonville, florida" => "Jacksonville",
       "rio de janeiro / rj" => "Rio de Janeiro","austin, tx, usa" => "Austin",
+      "austin, texas" => "Austin","austin / texas" => "Austin","austin (texas)" => "Austin",
       "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
       "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", 
       "new york, ny" => "New York City", "new york" => "New York City", "nyc" => "New York City", 
@@ -196,7 +197,7 @@ class WWRScraper
       name = doc.search('h2.item-title').inner_html.lstrip.rstrip
       name = name.titleize.split(' ')
       first_name = name[0]
-      last_name = name[1,name.length].join(" ") if name.size > 1
+      last_name = "#{name[1..(name.length - 1)]}" if name.size > 1
       location = normalize_location(doc.search('span.locality').inner_html)
       puts "name: #{name} location is #{location}"
       if doc.at("#person-about-summary/p/a.url")
@@ -251,7 +252,8 @@ class WWRScraper
                 :profile_url => url, :company_name => company_name,
                 :country => country_name,
                 :recommendation_count  => recs.to_i,
-                :delta => delta)
+                :delta => delta,
+                :slug => "#{coder.first_name} #{coder.last_name} #{coder.id}".dasherize)
     
       coder.save
             
@@ -279,6 +281,8 @@ class WWRScraper
         coder.nickname = "not_tobias"
       elsif coder.nickname.downcase == "sam" and (coder.first_name.downcase != "sam" or coder.last_name.downcase != "smoot")
         coder.nickname = "not_sam"
+      elsif coder.nickname.downcase == "chris" and coder.last_name != "Bailey"
+        coder.nickname = "not_chris"
       end
     end
   end

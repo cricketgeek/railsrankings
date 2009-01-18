@@ -1,0 +1,5 @@
+<% cache :all_coders do %>
+<ol>
+  <%= render :partial  => "top_coders_new_rank", :collection => Coder.ranked, :as => :coder  %>
+</ol>
+<% end %>
