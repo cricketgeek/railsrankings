@@ -274,3 +274,7 @@ li.github_watchers a {
 	clear: both;
 	height: 1px;
 }
+
+.nav_links {
+  padding-left: 10px;
+}
