@@ -1,7 +1,12 @@
 require 'ruby-github'
 
 class Coder < ActiveRecord::Base
-  #belongs_to :location
+  attr_accessor :last_five_commits
+
+  def initialize
+    @last_five_commits = []
+    super
+  end
   
   define_index do
     indexes [first_name,last_name], :as => :name
@@ -31,16 +36,17 @@ class Coder < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
   
+  
   def github_repos
     repos = []
     if valid_for_github?
       nicknames = nickname.split(",")
       nicknames.each do |nickname|
         begin
-          puts "processing github repo for nickname #{nickname}"
           nickname.strip!
           github_user = GitHub::API.user(nickname)
           repos = repos + github_user.repositories
+          retrieve_repo_commits(repos)
         rescue Exception => ex
           puts "error geting github repo, #{ex}"
         end
@@ -50,6 +56,21 @@ class Coder < ActiveRecord::Base
   end
   
   private
+  
+  def try_to_fill_last_five_commits(commit)
+    @last_five_commits ||= []
+    unless @last_five_commits.size > 4
+      @last_five_commits << commit.message
+    end
+  end
+  
+  def retrieve_repo_commits(repos)
+    repos.each do |repo|
+      repo.commits.first(5).each do |commit|
+        try_to_fill_last_five_commits(commit)
+      end
+    end    
+  end
 
   def valid_for_github?
     nickname and (not nickname.blank?) and nickname.upcase != "NONE"
