@@ -1,17 +1,19 @@
 <div class="graydivide"></div><!--graydivide-->
 <div id="show_container">
-  
+
   <div class="show_user">
     <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %></div>
     <div class="rank">
-      <ul>
-        <li class="ranknum">WWR Rank: <%= show_rank(@coder) %> <%= show_delta(@coder) %></li>
-        <li>Recommended by: <%= @coder.recommendation_count %></li>
-        <% if @coder.github_watchers > 0 %>
-          <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
-        <% end %>
-        <li><a href="<%= recommendation_url(@coder) %>">Recommend <%= @coder.first_name[0..20] %></a></li>
-      </ul>
+      <div class="wwr_rank"><a href="#"><%= show_rank(@coder) %> <%= show_delta(@coder) %></a></div>
+        <p><%= @coder.recommendation_count %> Recommendations</p>
+      <p><a href="#">Recommend <%= @coder.first_name[0..20] %></a></p>
+      <br class="clr" />   
+		<% if @coder.github_watchers > 0 %>
+			<ul class="github_rank rounded">
+				<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
+				<li>Total github watchers across [x] projects.</li>
+			</ul>
+		<% end %>
     </div>        
     <!--userpic-->
     <ul class="userinfo">
@@ -26,8 +28,8 @@
   </div>
 
   <div class="github_watchers">
-    <h2><%= @coder.full_name %>'s Github public repos</h2>
-    <div id="repos_container">
+    <h2>Public Repos</h2>
+    <div id="repos_all">
     <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
     </div>
   </div>

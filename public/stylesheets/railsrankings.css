@@ -4,7 +4,11 @@ body{
 	color:#333333;
 	font-size:12px;
 	line-height:160%;}
-	
+/* Only for supported browsers */
+.rounded {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
 #main{
 	width:1005px;
 	margin:0px auto;}	
@@ -141,29 +145,60 @@ a{
 	font-size:16px;}
 
 .rank{
-	width:135px;
+	width:235px;
 	height:98px;
-	background:#82b4eb;
-	border:1px solid #1a56b0;
 	float:right;
-	font-size:11px;
-	padding:5px;
+	font-size:12px;
 	}
-	
-.github_watchers {
-  width: 655px;
-  padding: 5px;
+.rank .wwr_rank {
+	background: url(/images/bg-wwrrank.gif) no-repeat left center;
+	height: 58px;
+	width: 58px;
+	line-height: 58px;
+	text-align: center;
+	font-weight: bold;
+	color: #CC3333;
+	font-size: 14px;
+	float: left;
+	margin-right: 10px;
 }
-
-.rank ul{
-	margin:0;
-	padding:0;
-	list-style-type:none;}
-	
-
-.ranknum{
-	font-size:16px;
-	font-weight:bold;}	
+.rank .wwr_rank a {
+	color: #CC3333;
+	text-decoration: none;
+}
+.rank p {
+	margin: 0px 0px 2px;
+}
+ul.github_rank {
+	border: 1px solid #666666;
+	margin: 12px 0px 0px;
+	list-style: none;
+	width: 100%;
+	position: relative;
+	height: 58px;
+	padding: 0px;
+}
+ul.github_rank li {
+	margin: 5px;
+	padding: 0px;
+}
+li.github_watchers {
+	background: url(/images/logo-github.gif) no-repeat center bottom;
+	width: 58px;
+	text-align: center;
+	padding-bottom: 25px;
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	display: block;
+}
+li.github_watchers a {
+	color: #000000;
+	text-decoration: none;
+	display: block;
+	padding-bottom: 25px;
+}
 
 .username{
 	font-weight:bold;}
@@ -234,4 +269,8 @@ a{
 
 .bolder {
   font-weight: bold;
+}
+.clr {
+	clear: both;
+	height: 1px;
 }
