@@ -11,7 +11,7 @@
 		<% if @coder.github_watchers > 0 %>
 			<ul class="github_rank rounded">
 				<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
-				<li>Total github watchers across [x] projects.</li>
+				<li>Total github watchers across [<%= @repos.size %>] projects.</li>
 			</ul>
 		<% end %>
     </div>        
@@ -30,7 +30,7 @@
   <div class="github_watchers">
     <h2>Public Repos</h2>
     <div id="repos_all">
-    <%= render :partial => "github_repos", :collection => @coder.github_repos, :as => :repo unless @coder.github_repos.empty? %>
+    <%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
     </div>
   </div>
 </div>
