@@ -283,6 +283,8 @@ class WWRScraper
         coder.nickname = "not_sam"
       elsif coder.nickname.downcase == "chris" and coder.last_name != "Bailey"
         coder.nickname = "not_chris"
+      elsif coder.nickname.downcase == "josh" and coder.last_name != "Peek"
+        coder.nickname = "not_josh"
       end
     end
   end
