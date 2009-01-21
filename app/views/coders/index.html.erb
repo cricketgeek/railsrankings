@@ -31,15 +31,17 @@
       <div class="<%= alternate_row_color(index) %>">
         <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
         <div class="rank">
-          <ul>
-            <li class="ranknum">WWR Rank: <%= show_rank(coder) %> <%= show_delta(coder) %></li>
-            <li>Recommended by: <%= coder.recommendation_count %></li>
-            <% if coder.github_watchers > 0 %>
-              <li><img src="/images/star.gif" /> GitHub Watchers: <a href="<%= coder.github_url %>" target="_new"><%= coder.github_watchers %></a></li>
-            <% end %>
-            <li><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></li>
-          </ul>
-        </div>        
+	      <div class="wwr_rank"><a href="#"><%= show_rank(coder) %> <%= show_delta(coder) %></a></div>
+	        <p><%= coder.recommendation_count %> Recommendations</p>
+	      <p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p>
+	      <br class="clr" />   
+			<% if coder.github_watchers > 0 %>
+				<ul class="github_rank rounded">
+					<li class="github_watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
+					<li>Total github watchers across [<%= @repos.size %>] projects.</li>
+				</ul>
+			<% end %>
+	    </div>      
         <!--userpic-->
         <ul class="userinfo">
           <li class="username"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
