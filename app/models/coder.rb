@@ -52,7 +52,7 @@ class Coder < ActiveRecord::Base
         end
       end
     end
-    repos
+    repos ||= []
   end
   
   private
