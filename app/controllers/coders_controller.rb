@@ -14,6 +14,7 @@ class CodersController < ApplicationController
       :order => :rank
     )
     
+    logger.debug("hello there")
     @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
     cookies[:search_term] = params[:search]
   end

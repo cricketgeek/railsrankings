@@ -5,6 +5,8 @@ class WWRScraper
   PROCESS_UPDATES = true
   WWR_BASE_URL = "http://www.workingwithrails.com"
   attr_accessor :processed_urls
+  @@logger = RAILS_DEFAULT_LOGGER
+  
   
   def initialize
     @processed_urls = {}
@@ -45,59 +47,60 @@ class WWRScraper
   
   def process_using_seed_data
     
-    puts "processing based on seed data"
+    @@logger.info "processing based on seed data"
     
     processing_array = [
+      "http://www.workingwithrails.com/person/5529-ronie-miguel-uliana"
       # "http://www.workingwithrails.com/person/6086-bj-rn-wolf",
       # "http://www.workingwithrails.com/person/5391-obie-fernandez",
-      "http://www.workingwithrails.com/person/5323-jeremy-kemper",
-      "http://www.workingwithrails.com/person/8677-sam-smoot",
-      "http://www.workingwithrails.com/person/6962-justin-palmer",
-      "http://www.workingwithrails.com/person/5554-pat-allan",
-      "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
-      "http://www.workingwithrails.com/person/5380-mike-clark",
-      "http://www.workingwithrails.com/person/5414-sam-stephenson",
-      "http://www.workingwithrails.com/person/5236-charles-brian-quinn",
-      "http://www.workingwithrails.com/person/4343-brendan-lim",
-      "http://www.workingwithrails.com/person/2892-akhil-bansal",
-      "http://www.workingwithrails.com/person/9530-jason-lee",
-      "http://www.workingwithrails.com/person/7440-lindsay-ucci",
-      "http://www.workingwithrails.com/person/9784-colin-harris",
-      "http://www.workingwithrails.com/person/7241-craig-webster",
-      "http://www.workingwithrails.com/person/5957-cheah-chu-yeow",
-      "http://www.workingwithrails.com/person/12003-les-hill",
-      "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
-      "http://www.workingwithrails.com/person/11125-asa-wilson",
-      "http://www.workingwithrails.com/person/5639-amy-hoy",
-      "http://www.workingwithrails.com/person/5306-james-duncan-davidson",      
-      "http://www.workingwithrails.com/person/12633-mark-jones",
-      "http://www.workingwithrails.com/person/13224-collin-vandyck",
-      "http://www.workingwithrails.com/person/15297-zack-adams",
-      "http://www.workingwithrails.com/person/15141-tommy-campbell", 
-      "http://www.workingwithrails.com/person/5414-sam-stephenson",
-      "http://www.workingwithrails.com/person/3942-charles-nutter",
-      "http://www.workingwithrails.com/person/5421-ezra-zygmuntowicz",
-      "http://www.workingwithrails.com/person/5426-dr-nic-williams",
-      "http://www.workingwithrails.com/person/4987-michael-koziarski",
-      "http://www.workingwithrails.com/person/6085-eric-hodel",
-      "http://www.workingwithrails.com/person/5595-stuart-halloway",
-      "http://www.workingwithrails.com/person/5296-geoffrey-grosenbach",
-      "http://www.workingwithrails.com/person/7739-evan-weaver",
-      "http://www.workingwithrails.com/person/6629-jeremy-mcanally",
-      "http://www.workingwithrails.com/person/12253-nathen-grass",
-      "http://www.workingwithrails.com/person/5416-rick-olson",
-      "http://www.workingwithrails.com/person/5260-dave-thomas",
-      "http://www.workingwithrails.com/person/5646--whytheluckystiff",
-      "http://www.workingwithrails.com/person/6766-neal-ford",
-      "http://www.workingwithrails.com/person/6491-ryan-bates",
-      "http://www.workingwithrails.com/person/7192-wayne-e-seguin",
-      "http://www.workingwithrails.com/person/4769-tobias-luetke",
-      "http://www.workingwithrails.com/person/871-jim-weirich",
-      "http://www.workingwithrails.com/person/13437-luigi-montanez",
-      "http://www.workingwithrails.com/person/2941-andrew-stone",
-      "http://www.workingwithrails.com/person/9252-hank-beaver",      
-      "http://www.workingwithrails.com/person/12062-jonathan-nelson",
-      "http://www.workingwithrails.com/person/14858-samuel-sayer"
+      # "http://www.workingwithrails.com/person/5323-jeremy-kemper",
+      # "http://www.workingwithrails.com/person/8677-sam-smoot",
+      # "http://www.workingwithrails.com/person/6962-justin-palmer",
+      # "http://www.workingwithrails.com/person/5554-pat-allan",
+      # "http://www.workingwithrails.com/person/6290-steven-a-bristol",      
+      # "http://www.workingwithrails.com/person/5380-mike-clark",
+      # "http://www.workingwithrails.com/person/5414-sam-stephenson",
+      # "http://www.workingwithrails.com/person/5236-charles-brian-quinn",
+      # "http://www.workingwithrails.com/person/4343-brendan-lim",
+      # "http://www.workingwithrails.com/person/2892-akhil-bansal",
+      # "http://www.workingwithrails.com/person/9530-jason-lee",
+      # "http://www.workingwithrails.com/person/7440-lindsay-ucci",
+      # "http://www.workingwithrails.com/person/9784-colin-harris",
+      # "http://www.workingwithrails.com/person/7241-craig-webster",
+      # "http://www.workingwithrails.com/person/5957-cheah-chu-yeow",
+      # "http://www.workingwithrails.com/person/12003-les-hill",
+      # "http://www.workingwithrails.com/person/5246-david-heinemeier-hansson",
+      # "http://www.workingwithrails.com/person/11125-asa-wilson",
+      # "http://www.workingwithrails.com/person/5639-amy-hoy",
+      # "http://www.workingwithrails.com/person/5306-james-duncan-davidson",      
+      # "http://www.workingwithrails.com/person/12633-mark-jones",
+      # "http://www.workingwithrails.com/person/13224-collin-vandyck",
+      # "http://www.workingwithrails.com/person/15297-zack-adams",
+      # "http://www.workingwithrails.com/person/15141-tommy-campbell", 
+      # "http://www.workingwithrails.com/person/5414-sam-stephenson",
+      # "http://www.workingwithrails.com/person/3942-charles-nutter",
+      # "http://www.workingwithrails.com/person/5421-ezra-zygmuntowicz",
+      # "http://www.workingwithrails.com/person/5426-dr-nic-williams",
+      # "http://www.workingwithrails.com/person/4987-michael-koziarski",
+      # "http://www.workingwithrails.com/person/6085-eric-hodel",
+      # "http://www.workingwithrails.com/person/5595-stuart-halloway",
+      # "http://www.workingwithrails.com/person/5296-geoffrey-grosenbach",
+      # "http://www.workingwithrails.com/person/7739-evan-weaver",
+      # "http://www.workingwithrails.com/person/6629-jeremy-mcanally",
+      # "http://www.workingwithrails.com/person/12253-nathen-grass",
+      # "http://www.workingwithrails.com/person/5416-rick-olson",
+      # "http://www.workingwithrails.com/person/5260-dave-thomas",
+      # "http://www.workingwithrails.com/person/5646--whytheluckystiff",
+      # "http://www.workingwithrails.com/person/6766-neal-ford",
+      # "http://www.workingwithrails.com/person/6491-ryan-bates",
+      # "http://www.workingwithrails.com/person/7192-wayne-e-seguin",
+      # "http://www.workingwithrails.com/person/4769-tobias-luetke",
+      # "http://www.workingwithrails.com/person/871-jim-weirich",
+      # "http://www.workingwithrails.com/person/13437-luigi-montanez",
+      # "http://www.workingwithrails.com/person/2941-andrew-stone",
+      # "http://www.workingwithrails.com/person/9252-hank-beaver",      
+      # "http://www.workingwithrails.com/person/12062-jonathan-nelson",
+      # "http://www.workingwithrails.com/person/14858-samuel-sayer"
     ]
     processing_array.each do |url_to_process|
       process_profile_page(url_to_process)
@@ -166,7 +169,6 @@ class WWRScraper
     
     return @companies[company.downcase] if @companies[company.downcase]
     return company
-    
   end
   
   def process_recommendations(full_recommendation_url,coder)
@@ -177,9 +179,7 @@ class WWRScraper
       recommender_link = rec_link.search('a').attr('href')
       recommendations << {:profile_link => recommender_link,:name => rec_link.inner_html}
       begin
-        process_profile_page(recommender_link) if should_process_url?(recommender_link) #and (coder.rank and coder.rank.to_i > 300)
-        #coder.recommendation_count = recommendations.size
-        #coder.save
+        process_profile_page(recommender_link) if should_process_url?(recommender_link)
       rescue Exception => ex
         puts "#{ex.message} for url: #{full_recommendation_url}"
       end
@@ -188,79 +188,66 @@ class WWRScraper
   end
   
   def process_profile_page(url)
-    
     if not @processed_urls[url]
       @processed_urls[url] = url
       puts "processing profile: #{url}"
-      open_url = open(url)
-      doc = Hpricot(open_url)
-      name = doc.search('h2.item-title').inner_html.lstrip.rstrip
-      name = name.titleize.split(' ')
-      first_name = name[0]
-      last_name = "#{name[1..(name.length - 1)]}" if name.size > 1
-      location = normalize_location(doc.search('span.locality').inner_html)
-      puts "name: #{name} location is #{location}"
-      if doc.at("#person-about-summary/p/a.url")
-        website = doc.search('#person-about-summary/p/a.url').attr('href')
-      end
-      # email = doc.search('#person-further-info/a').inner_html
-      # puts "email is #{email}"
-      #puts doc.at('img.photo')
-      img_url_el = doc.search('img.photo')
-      img_url = img_url_el.attr('src') if img_url_el.any?
-      company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
-      country_name = doc.search('a.country-name').inner_html
-      nickname = doc.search('td.nickname').inner_html
-      puts "nickname is: #{nickname}"
+      begin
+        open_url = open(url)
+        doc = Hpricot(open_url)
+        name = doc.search('h2.item-title').inner_html.lstrip.rstrip
+        name = name.titleize.split(' ')
+        first_name = name[0]
+        last_name = "#{name[1..(name.length - 1)]}" if name.size > 1
+        location = normalize_location(doc.search('span.locality').inner_html)
+        @@logger.info "name: #{name} location is #{location}"
+        if doc.at("#person-about-summary/p/a.url")
+          website = doc.search('#person-about-summary/p/a.url').attr('href')
+        end
+        # email = doc.search('#person-further-info/a').inner_html
+        # puts "email is #{email}"
+        #puts doc.at('img.photo')
+        img_url_el = doc.search('img.photo')
+        img_url = img_url_el.attr('src') if img_url_el.any?
+        company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
+        country_name = doc.search('a.country-name').inner_html
+        nickname = doc.search('td.nickname').inner_html      
+        rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
+        rank = MAX_RANK if rank.blank?
+        recs_url = url.sub("http://www.workingwithrails.com/", "http://www.workingwithrails.com/recommendation/for/")
+        recs = doc.search("#person-recommendation-for-summary/h3/a[@href='#{recs_url}']").inner_html
+        coder = Coder.find_by_profile_url(url)
+        coder = Coder.new if coder.nil?
+
+        coder.nickname = nickname
+        coder.first_name = first_name
+        coder.last_name = last_name
+        # rails_core_contrib_img = doc.search("img[@src='/images/rails-core-contributor.gif']")
+        # coder.core_contributor = !rails_core_contrib_img.nil?
+        # puts "#{last_name} is a core contrib" if coder.core_contributor
+        cleanse_bad_aliases(coder)
+        github_watchers(coder)
       
-      rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
-      rank = MAX_RANK if rank.blank?
-      puts "rank is #{rank.to_i}"
-      recs_url = url.sub("http://www.workingwithrails.com/", "http://www.workingwithrails.com/recommendation/for/")
-      recs = doc.search("#person-recommendation-for-summary/h3/a[@href='#{recs_url}']").inner_html
-      puts "has #{recs} recommendations"
-
-      #TODO: retain authority lines
-      # doc.search('ul.authority/li.tick').each do |authority|
-      #   
-      # end      
-
-      coder = Coder.find_by_profile_url(url)
-      puts "updating #{coder.full_name}" if coder
-      coder = Coder.new if coder.nil?
-
-      coder.nickname = nickname
-      coder.first_name = first_name
-      coder.last_name = last_name
-      puts "setting nickname on coder to #{coder.nickname}"
-      # rails_core_contrib_img = doc.search("img[@src='/images/rails-core-contributor.gif']")
-      # coder.core_contributor = !rails_core_contrib_img.nil?
-      # puts "#{last_name} is a core contrib" if coder.core_contributor
-      cleanse_bad_aliases(coder)
-
-      github_watchers(coder)
+        if not rank.blank? and rank.to_i < MAX_RANK
+          delta = (coder.rank.to_i - rank.to_i)
+          puts "rank was #{coder.rank} delta was #{delta}"
+        end
       
-      if not rank.blank? and rank.to_i < MAX_RANK
-        delta = (coder.rank.to_i - rank.to_i)
-        puts "rank was #{coder.rank} delta was #{delta}"
-      end
-      
-      coder.full_rank = determine_full_rank(coder)
-      puts "coder full_rank was #{coder.full_rank}"
-      coder.update_attributes(:website => website,
-                :image_path => img_url,:rank => rank, :city => location, 
-                :profile_url => url, :company_name => company_name,
-                :country => country_name,
-                :recommendation_count  => recs.to_i,
-                :delta => delta,
-                :slug => "#{coder.first_name} #{coder.last_name} #{coder.id}".dasherize)
+        coder.full_rank = determine_full_rank(coder)
+        coder.update_attributes(:website => website,
+                  :image_path => img_url,:rank => rank, :city => location, 
+                  :profile_url => url, :company_name => company_name,
+                  :country => country_name,
+                  :recommendation_count  => recs.to_i,
+                  :delta => delta,
+                  :slug => "#{coder.first_name} #{coder.last_name} #{coder.id}".dasherize)
     
-      coder.save
-            
-      puts "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
-      
-      crawl_recommendations(coder,url) if @crawling
-      open_url.close
+        coder.save
+        @@logger.error "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
+        crawl_recommendations(coder,url) if @crawling
+        open_url.close
+      rescue Exception => ex
+        @@logger.error("FFFAIL: #{ex} while processing #{url}")
+      end
     end
   end
   
@@ -285,6 +272,8 @@ class WWRScraper
         coder.nickname = "not_chris"
       elsif coder.nickname.downcase == "josh" and coder.last_name != "Peek"
         coder.nickname = "not_josh"
+      elsif coder.nickname.downcase == "tobi" and coder.last_name != "Schlottke"
+        coder.nickname = "not_tobi"
       end
     end
   end
@@ -311,7 +300,6 @@ class WWRScraper
       puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
       watchers += (repo.watchers - 1)
       github_url = repo.owner
-      puts "github_url will be #{repo.owner}"
     end
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
