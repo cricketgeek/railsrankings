@@ -3,6 +3,8 @@ require 'ruby-github'
 class Coder < ActiveRecord::Base
   attr_accessor :last_five_commits
 
+  has_many :github_repos
+  
   def initialize
     @last_five_commits = []
     super
