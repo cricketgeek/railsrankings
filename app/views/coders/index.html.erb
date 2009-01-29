@@ -1,11 +1,13 @@
 
 <% content_for :head do %>
-  <meta id="metaDescription" name="description" content="<%=  coder_metadata(@coders)%>"/>
+  <title>Search for Ruby on Rails developers, coders, companies and consultants on RailsRankings.com</title>
+  <meta name="description" content="<%=  coder_metadata(@coders)%>"/>
 <% end %>
 
 <div id="topbar">
   <div id="searchbox">
-    <h1 class="searchhdr">Whittle it down a bit</h1>
+    <!--<h1 class="searchhdr">Whittle it down a bit</h1>-->
+    <h1 class="searchhdr">Search for Ruby on Rails Developers</h1>
 
     <% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
@@ -21,35 +23,34 @@
 <div class="graydivide"></div><!--graydivide-->
 <div id="main">
   <div id="leftbar">
-    <h1><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h1>
+    <h2><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h2>
     
     <%= will_paginate @coders %>
-    <div style="clear:both;"></div>
+    <br class="clr" />
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
       
       <div class="<%= alternate_row_color(index) %>">
-        <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90"}), coder_path(coder) %></div>
+        <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90", :alt => coder.full_name}), coder_path(coder) %></div>
         <div class="rank">
-	      <div class="wwr_rank"><a href="#"><%= show_rank(coder) %> <%= show_delta(coder) %></a></div>
-	        <p><%= coder.recommendation_count %> Recommendations</p>
-	      <p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p>
-	      <br class="clr" />   
-			<% if coder.github_watchers > 0 %>
-				<ul class="github_rank rounded">
-					<li class="github_watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
-					<li>Total github watchers</li>
-				</ul>
-			<% end %>
+	      <div class="wwr_rank"><a href="#"><%= show_rank(coder) %></a></div>
+	        <!-- <%= show_delta(coder) %>
+			<p><%= coder.recommendation_count %> Recommendations</p>
+	      	<p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p> 
+			-->
+			<ul class="github_rank rounded">
+				<li class="github_watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
+			</ul>
 	    </div>      
         <!--userpic-->
         <ul class="userinfo">
-          <li class="username"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
-          <li class="userlocation"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
-          <li class="userlocation"><%=h coder.company_name %></li>
-          <li class="userlocation"><%=link_to coder.website, coder.website, :target => "_new" %></li>
-          <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></li>
+          <li class="name"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
+          <li class="city"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
+          <li class="company"><%=h coder.company_name %></li>
+          <li class="website"><%=link_to coder.website, coder.website, :target => "_new" %></li>
+          <li class="rr_points">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></li>
         </ul>
+		<br class="clr" />
       </div>
       <% end %>
     <% end %>
@@ -61,7 +62,7 @@
     <!--leftbar-->
     <div id="rightbar">
       
-      <h2><%= link_to "Top Rails Cities",all_cities_coders_path %></h2>
+      <h2><%= link_to "Top Ruby on Rails Cities",all_cities_coders_path, { :title => "Most Active Cities for Rails Application Development" } %></h2>
       <div>
         <p class="desc"><strong>Every</strong> ranked coder is counted.  Bonus points
           for being in the top 100 of WWR and 250 points for every github watcher. Sorted on RailsRankings Points in the top 20
@@ -71,13 +72,13 @@
       <ol id="rubycities">
         <%= render :partial => "city_rankings", :collection => Coder.cities, :as => :city %>
       </ol>
-      <h2><%= link_to "Top Ranked Companies",all_companies_coders_path %></h2>
+      <h2><%= link_to "Top Rails Development Companies",all_companies_coders_path, { :title => "Top Ranked Rails Development Companies" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_companies_cache do %>
         <%= render :partial => "company_rankings", :collection => Coder.companies, :as => :company %>
       <% end %>
       </ol>  
-      <h2><%= link_to "Top Coders", all_coders_coders_path %></h2>
+      <h2><%= link_to "Top Rails Coders", all_coders_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_coders do %>      
         <%= render :partial => "top_coders_new_rank", :collection => Coder.top_coders, :as => :coder %>

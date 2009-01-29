@@ -109,11 +109,10 @@ a{
 	color:#1a56b0;}	
 
 .user{
-	height:110px;
 	margin-bottom:10px;
 	width:665px;
-	padding:5px;}
-
+	padding:5px;
+}
 .show_user {
   height:155px;
 	margin-bottom:10px;
@@ -141,8 +140,11 @@ a{
 	margin:0px;
 	padding:0px;}	
 	
-.username, .userrank, .userlocation{
+.userinfo .name{
 	font-size:16px;}
+.userrank, .userlocation {
+	font-size:12px;
+}
 
 .rank{
 	width:235px;
@@ -178,6 +180,14 @@ ul.github_rank {
 	height: 58px;
 	padding: 0px;
 }
+.user .github_rank {
+	width: auto;
+	float: left;
+	margin: 0px;
+}
+.user .rank {
+	width: auto;
+}
 ul.github_rank li {
 	margin: 5px;
 	padding: 0px;
@@ -200,7 +210,7 @@ li.github_watchers a {
 	padding-bottom: 25px;
 }
 
-.username{
+.userinfo .name{
 	font-weight:bold;}
 
 .greybg{
