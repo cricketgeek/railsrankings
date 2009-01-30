@@ -34,7 +34,7 @@
       <div class="<%= alternate_row_color(index) %>">
         <div class="userpic">
 		<%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75", :alt => coder.full_name}), coder_path(coder) %>
-		<span class="rr_points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
+		<span class="rr_points" title="RailsRankings points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
 		</div>
         <div class="rank">
         	<% if coder.github_watchers > 0 %>
