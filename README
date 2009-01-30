@@ -1,5 +1,19 @@
+You'll need sphinx installed on the box of course:
+http://sphinxsearch.com/downloads.html
+
 This app relies on scraping data from Workingwithrails.com and using the ruby-github gem that wraps the github api.
 The search and thus the whole app depends on thinkingsphinx running
 rake ts:stop
 rake ts:index
 rake ts:start  -- bare minimum to get it running and have search work.
+
+To load data via the scraper:
+
+--scrape every coder using the browse by letter pages on WWR, A to Z
+rake wwr:remote:load_all  
+
+--scrape based on randomly selected seed data and the top 100 on WWR
+rake wwr:remote:load
+
+--scrape just one letter page
+rake wwr:remote:load_by_letter letter=A

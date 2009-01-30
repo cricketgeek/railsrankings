@@ -6,12 +6,12 @@
     <div class="rank">
       <div class="wwr_rank"><a href="#"><%= show_rank(@coder) %> <%= show_delta(@coder) %></a></div>
         <p><%= @coder.recommendation_count %> Recommendations</p>
-      <p><a href="#">Recommend <%= @coder.first_name[0..20] %></a></p>
+      <p><a href="#">Recommend <%= @coder.full_name[0..35] %></a></p>
       <br class="clr" />   
 		<% if @coder.github_watchers > 0 %>
 			<ul class="github_rank rounded">
 				<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
-				<li>Total github watchers across [<%= @repos.size %>] projects.</li>
+				<li>Total github <%= pluralize(@coder.github_watchers,"watcher") %> across [<%= @repos.size %>] projects.</li>
 			</ul>
 		<% end %>
     </div>        
