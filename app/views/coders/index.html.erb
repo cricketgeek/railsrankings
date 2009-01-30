@@ -31,7 +31,10 @@
       <% if coder %>
       
       <div class="<%= alternate_row_color(index) %>">
-        <div class="userpic"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "90x90", :alt => coder.full_name}), coder_path(coder) %></div>
+        <div class="userpic">
+		<%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75", :alt => coder.full_name}), coder_path(coder) %>
+		<span class="rr_points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
+		</div>
         <div class="rank">
 	      <div class="wwr_rank"><a href="#"><%= show_rank(coder) %></a></div>
 	        <!-- <%= show_delta(coder) %>
@@ -48,7 +51,6 @@
           <li class="city"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="company"><%=h coder.company_name %></li>
           <li class="website"><%=link_to coder.website, coder.website, :target => "_new" %></li>
-          <li class="rr_points">RailsRankings Points: <%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></li>
         </ul>
 		<br class="clr" />
       </div>

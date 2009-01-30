@@ -109,9 +109,9 @@ a{
 	color:#1a56b0;}	
 
 .user{
-	margin-bottom:10px;
 	width:665px;
-	padding:5px;
+	padding:8px;
+	height: 80px;
 }
 .show_user {
   height:155px;
@@ -121,10 +121,11 @@ a{
 }
 
 .userpic{
-	width:93px;
-	height:93px;
+	width:78px;
+	height:78px;
 	border:1px solid #1a56b0;
 	float:left;
+        position: relative;
 	margin-right:15px;}	
 	
 .userprofilepic {
@@ -152,11 +153,15 @@ a{
 	float:right;
 	font-size:12px;
 	}
+.user .rank {
+        height: auto;
+        padding-top: 10px;
+}
 .rank .wwr_rank {
-	background: url(/images/bg-wwrrank.gif) no-repeat left center;
+	background: url(/images/bg-wwrrank.png) no-repeat left center;
 	height: 58px;
 	width: 58px;
-	line-height: 58px;
+	line-height: 64px;
 	text-align: center;
 	font-weight: bold;
 	color: #CC3333;
@@ -188,12 +193,24 @@ ul.github_rank {
 .user .rank {
 	width: auto;
 }
+.rr_points {
+        position: absolute;
+        bottom: 1px;
+        left: 1px;
+        font-weight: bold;
+        border-top: solid 2px #1a56b0;
+        border-right: solid 2px #1a56b0;
+        padding: 2px;
+        background: #F5F5F5;
+        font-size: 10px;
+        line-height: 10px;
+}
 ul.github_rank li {
 	margin: 5px;
 	padding: 0px;
 }
 li.github_watchers {
-	background: url(/images/logo-github.gif) no-repeat center bottom;
+	background: url(/images/logo-github.png) no-repeat center bottom;
 	width: 58px;
 	text-align: center;
 	padding-bottom: 25px;
