@@ -36,14 +36,17 @@
 		<span class="rr_points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
 		</div>
         <div class="rank">
+        	<% if coder.github_watchers > 0 %>
+    			  <ul class="github_rank rounded">
+    				  <li class="github_watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
+    			  </ul>
+    			<% end %>  
 	      <div class="wwr_rank"><a href="#"><%= show_rank(coder) %></a></div>
 	        <!-- <%= show_delta(coder) %>
 			<p><%= coder.recommendation_count %> Recommendations</p>
 	      	<p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p> 
 			-->
-			<ul class="github_rank rounded">
-				<li class="github_watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
-			</ul>
+
 	    </div>      
         <!--userpic-->
         <ul class="userinfo">
