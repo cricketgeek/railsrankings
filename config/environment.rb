@@ -59,7 +59,7 @@ Rails::Initializer.run do |config|
 
   config.gem "mislav-will_paginate", :version => "~> 2.3.6", :lib => "will_paginate", :source => "http://gems.github.com"
   config.gem "mbleigh-ruby-github", :version => "~> 0.0.5", :lib => "ruby-github", :source => "http://gems.github.com"
-  
+  config.gem "friendly_id"
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")

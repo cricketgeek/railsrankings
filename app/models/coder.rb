@@ -1,8 +1,38 @@
+# == Schema Information
+# Schema version: 20090127025441
+#
+# Table name: coders
+#
+#  id                   :integer(4)      not null, primary key
+#  first_name           :string(255)
+#  last_name            :string(255)
+#  email                :string(255)
+#  city                 :string(255)
+#  rank                 :integer(4)
+#  website              :string(255)
+#  delta                :integer(4)
+#  recommendation_count :integer(4)
+#  image_path           :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  profile_url          :string(255)
+#  location_id          :integer(4)
+#  company_name         :string(255)
+#  country              :string(255)
+#  nickname             :string(255)
+#  github_watchers      :integer(4)      default(0)
+#  github_url           :string(255)
+#  full_rank            :integer(4)
+#  core_contributor     :boolean(1)
+#  slug                 :string(255)
+#
+
 require 'ruby-github'
 
 class Coder < ActiveRecord::Base
   attr_accessor :last_five_commits
 
+  has_friendly_id :slug, :strip_diacritics => true, :reserved => ["new", "index"]
   has_many :github_repos
   
   def initialize
