@@ -14,4 +14,6 @@
 class Commit < ActiveRecord::Base
   belongs_to :github_repo
   
+  named_scope :latest, lambda { |*args| { :limit => args.first || 5, :order => "committed_date" }}
+  
 end

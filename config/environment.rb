@@ -9,6 +9,8 @@ RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
 SEARCH_PER_PAGE = 10
 MAX_SEARCH_RESULTS = 15000
 MAX_RANK = 9999
+GITHUB_WATCHER_POINTS = 250
+TOP_100_WWR_BONUS = 10000
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

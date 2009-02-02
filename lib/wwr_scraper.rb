@@ -224,7 +224,7 @@ class WWRScraper
         # coder.core_contributor = !rails_core_contrib_img.nil?
         # puts "#{last_name} is a core contrib" if coder.core_contributor
         cleanse_bad_aliases(coder)
-        github_watchers(coder)
+        save_github_info(coder)
       
         if not rank.blank? and rank.to_i < MAX_RANK
           delta = (coder.rank.to_i - rank.to_i)
@@ -254,6 +254,7 @@ class WWRScraper
     
     if coder.first_name == "David" and coder.last_name == "Chelimsky"
       coder.nickname = "dchelimsky"
+      return
     end
     
     if coder.nickname and coder.last_name
@@ -285,11 +286,49 @@ class WWRScraper
   def determine_full_rank(coder)
     
     coder.rank = coder.rank.blank? ? MAX_RANK : coder.rank.to_i
-    bonus = coder.rank < 100 ? 10000 : 0 if not coder.rank.blank?
+    bonus = coder.rank < 100 ? TOP_100_WWR_BONUS : 0 if not coder.rank.blank?
     #core_contrib_bonus = 2500 if coder.core_contributor
     #puts "adding core contrib bonus #{core_contrib_bonus}"
-    (MAX_RANK - coder.rank) + (coder.github_watchers * 250) + bonus # + core_contrib_bonus
+    (MAX_RANK - coder.rank) + (coder.github_watchers * GITHUB_WATCHER_POINTS) + bonus # + core_contrib_bonus
     
+  end
+  
+  def save_github_info(coder)
+    watchers = 0
+    github_url = ""
+    
+    coder.retrieve_github_repos.each do |repo|
+      github_repo = coder.github_repos.find_by_name(repo.name)
+      github_repo.commits.delete if github_repo
+      github_repo ||= github_repo = coder.github_repos.build
+      
+      puts "updating github repo watchers for #{coder.full_name} to #{repo.watchers}"
+      watchers += (repo.watchers - 1)
+      github_url = repo.owner
+        
+      github_repo.description = repo.description
+      github_repo.watchers = (repo.watchers - 1)
+      github_repo.name = repo.name
+      github_repo.url = repo.url
+      github_repo.save
+      save_commits(github_repo,repo.commits)
+    end
+    
+    coder.github_watchers = watchers
+    coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0    
+    puts "coder now has #{watchers} github watchers for a total of #{watchers * GITHUB_WATCHER_POINTS} points"
+  end
+  
+  def save_commits(github_repo,commits)
+    puts "adding first 5 commits in to the repo #{github_repo.name}"
+    commits.each do |commit|
+      new_commit = github_repo.commits.build
+      new_commit.author = commit.author.name
+      new_commit.message = commit.message
+      new_commit.committed_date = commit.committed_date
+      github_repo.commits << new_commit
+    end
+    github_repo.save
   end
   
   def github_watchers(coder)

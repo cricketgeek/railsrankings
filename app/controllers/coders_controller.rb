@@ -24,6 +24,7 @@ class CodersController < ApplicationController
   def show
     @coder = Coder.find(params[:id])
     @repos = @coder.github_repos
+    @commits = @coder.recent_commits
   end
 
   # GET /coders/new
