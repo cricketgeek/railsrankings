@@ -311,16 +311,14 @@ class WWRScraper
       github_repo.name = repo.name
       github_repo.url = repo.url
       github_repo.save
-      save_commits(github_repo,repo.commits)
+      save_commits(github_repo,repo.commits.first(5))
     end
     
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0    
-    puts "coder now has #{watchers} github watchers for a total of #{watchers * GITHUB_WATCHER_POINTS} points"
   end
   
   def save_commits(github_repo,commits)
-    puts "adding first 5 commits in to the repo #{github_repo.name}"
     commits.each do |commit|
       new_commit = github_repo.commits.build
       new_commit.author = commit.author.name

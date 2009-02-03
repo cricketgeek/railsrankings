@@ -63,7 +63,8 @@ class Coder < ActiveRecord::Base
   end
   
   def recent_commits
-    github_repos.size > 0 ? github_repos.first.commits.latest(5) : []
+    #github_repos.first.commits.latest(5) : []
+    github_repos.size > 0 ? Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date limit 5",github_repo_ids]) : []
   end
   
   def retrieve_github_repos

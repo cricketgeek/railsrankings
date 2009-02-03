@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :locations
-
   map.resources :coders, :collection => {:filter_by_cities  => [:get,:post],
     :all_companies => :get,
     :all_cities => :get,
