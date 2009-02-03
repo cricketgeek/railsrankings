@@ -25,11 +25,13 @@ class WWRScraper
       process_name_page(page_url)
     end
     base_page_url.close
+    remove_phony_chacon
   end
     
   def process_name_browse_by_letter(letter)
     @crawling = false
     process_name_page("http://www.workingwithrails.com/browse/people/name/#{letter}")
+    remove_phony_chacon if letter == 'S' or letter == 's'
   end  
   
   def process_main_popular_page
@@ -42,6 +44,7 @@ class WWRScraper
       process_profile_page(next_prof_url)
     end
     main_open_url.close
+    remove_phony_chacon
   end
   
   
@@ -116,6 +119,14 @@ class WWRScraper
       process_profile_page(profile_url.get_attribute("href"))
     end
     name_page_url.close
+  end
+  
+  def remove_phony_chacon
+    coders = Coder.find(:all,:conditions => "last_name = 'Chacon'")
+    if coders.size == 2
+      coder = coders.last
+      coder.delete
+    end
   end
   
   def should_process_url?(url)
