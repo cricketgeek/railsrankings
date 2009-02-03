@@ -45,6 +45,17 @@ class Coder < ActiveRecord::Base
   validates_uniqueness_of :profile_url
   validates_presence_of :profile_url
   
+  generator_for :profile_url, :start => 'www.wwr.com/test' do |prev|
+      base, user = prev.split('/')
+      "#{base}/#{user.succ}"
+  end
+  
+  generator_for :slug, :start => "first-last" do |prev|
+    first, last = prev.split('-')
+    "#{first.succ}-#{last.succ}"
+  end
+  
+  
   named_scope :cities, lambda { |*args| { :select => "city, sum(full_rank) as total,count(*) as count", 
       :conditions => "city is not null AND city <> ''", :limit => args.first || 20, :group => "city", :order => "total DESC" } }
   named_scope :all_cities, :select => "city, sum(full_rank) as total,count(*) as count", 
@@ -57,6 +68,8 @@ class Coder < ActiveRecord::Base
   named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "full_rank DESC"
   
   before_create :default_rank
+  
+
   
   def full_name
     "#{first_name} #{last_name}"
