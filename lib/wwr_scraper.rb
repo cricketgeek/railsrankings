@@ -206,8 +206,8 @@ class WWRScraper
         doc = Hpricot(open_url)
         name = doc.search('h2.item-title').inner_html.lstrip.rstrip
         name = name.titleize.split(' ')
-        first_name = name[0]
-        last_name = "#{name[1..(name.length - 1)]}" if name.size > 1
+        first_name = name[0].gsub("."," ")
+        last_name = "#{name[1..(name.length - 1)]}".gsub("."," ") if name.size > 1
         location = normalize_location(doc.search('span.locality').inner_html)
         @@logger.info "name: #{name} location is #{location}"
         if doc.at("#person-about-summary/p/a.url")

@@ -12,6 +12,7 @@ namespace :wwr do
     task :load_all => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_name_browse_pages
+      
     end
 
     desc "load data by a specific first letter of the first name on WWR"

@@ -1,6 +1,7 @@
 class CodersController < ApplicationController
   
   #before_filter :load_locations, :only => [:index, :filter_by_cities]
+  caches_page :all_coders, :all_cities, :all_companies
   
   # GET /coders
   # GET /coders.xml
@@ -16,6 +17,15 @@ class CodersController < ApplicationController
     
     @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
     cookies[:search_term] = params[:search]
+  end
+  
+  def all_coders
+  end
+  
+  def all_cities
+  end
+  
+  def all_companies
   end
 
   # GET /coders/1
