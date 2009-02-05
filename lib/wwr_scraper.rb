@@ -248,8 +248,7 @@ class WWRScraper
                   :profile_url => url, :company_name => company_name,
                   :country => country_name,
                   :recommendation_count  => recs.to_i,
-                  :delta => delta,
-                  :slug => "#{coder.first_name} #{coder.last_name} #{coder.id}".dasherize)
+                  :delta => delta)
     
         coder.save
         @@logger.error "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
