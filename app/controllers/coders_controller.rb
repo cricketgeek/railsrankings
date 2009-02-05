@@ -1,6 +1,5 @@
 class CodersController < ApplicationController
   
-  #before_filter :load_locations, :only => [:index, :filter_by_cities]
   caches_page :all_coders, :all_cities, :all_companies
   
   # GET /coders
@@ -34,6 +33,19 @@ class CodersController < ApplicationController
     @coder = Coder.find(params[:id])
     @repos = @coder.github_repos
     @commits = @coder.recent_commits
+    
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => [@coder,@repos,@commits]}
+      format.json { render :json => [@coder,@repos,@commits]}
+    end
+  end
+  
+  def get_coders
+    coder_params = params[:coders].split(",")
+    coders_by_alias = get_coders_by_nickname(coder_params)
+    coders_by_name = get_coders_by_name(coder_params)
+    render :json  => [coders_by_alias + coders_by_name].compact
   end
 
   # GET /coders/new
@@ -98,16 +110,20 @@ class CodersController < ApplicationController
     end
   end
   
-  def filter_by_cities  
-    @coders = Coder.find(:all,:conditions => ["city like ?","#{params[:locations]}%"],:order => :rank)   
-    render :action => "index"
-  end
-  
   private
   
-  def load_locations
-    @locations = Coder.find(:all, :select => "city",:conditions => "city is not null",:order => "city")
-    @locations = @locations.collect {|coder| [coder.city,coder.city]}
-    [@locations.uniq!]
+  def get_coders_by_nickname(coder_params)
+    coders_found = []
+    coder_params.each do |param|
+      new_coder = Coder.find(:first, :conditions => ["nickname = ?",param])
+      coders_found << new_coder if new_coder
+    end
+    coders_found
   end
+  
+  def get_coders_by_name(coder_params)
+    []
+  end
+  
+  
 end
