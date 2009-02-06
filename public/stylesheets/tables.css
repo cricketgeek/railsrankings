@@ -1,0 +1,41 @@
+/* Table style, should be moved to separate sheet */
+table {
+	width:100%;
+	font-size: 12px;
+}
+table, th, td {
+	border: 1px solid #D4E0EE;
+	border-collapse: collapse;
+	color: #555;
+	text-align: left;
+}
+caption {
+	font-size: 100%;
+	font-weight: bold;
+	margin: 5px;
+}
+td, th {
+	padding: 4px;
+}
+thead th {
+	background: #E6EDF5;
+	color: #1a56b0;
+	font-size: 100% !important;
+	font-size: 14px;
+}
+tbody th {
+	font-weight: bold;
+}
+tbody tr { background: #FCFDFE; }
+
+tbody tr.odd { background: #F7F9FC; }
+
+table a:link, table a:visited, table a:active {
+	color: #718ABE;
+}
+table a:hover {
+	color: #1a56b0;
+}
+tfoot th, tfoot td {
+	font-size: 85%;
+}

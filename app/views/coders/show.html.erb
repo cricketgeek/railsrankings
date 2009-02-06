@@ -1,20 +1,24 @@
 <% content_for :head do %>
 	<title><%=h "#{@coder.full_name}" %>, Developer on RailsRankings.com | Ruby on Rails Developer, Company and Consultant Rankings</title>
 	<meta name="description" content="Get more information on <%=h "#{@coder.full_name}" %>. Find other Rails developers based on our unique ranking system. Search Ruby on Rails development companies by city. Top Rails developers, coders, consultants and companies listed." />
+	<%= stylesheet_link_tag "tables" %>
 <% end %>
 
 <div id="page" class="top_rule">
 	<div id="content">
 	  	<div class="profile">
 			<div class="profile_pic">
-				<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %>
+				<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150", :alt => @coder.full_name}), coder_path(@coder) %>
 			</div>
 			<div class="rank">
 				<div class="wwr_rank">
-					<a href="#"><%= show_rank(@coder) %> <%= show_delta(@coder) %></a>
+					<%= link_to show_rank(@coder), @coder.profile_url %>
+					<div class="rank_change rounded">
+						<%= show_delta(@coder) %>
+					</div>
 				</div>
 				<p><%= @coder.recommendation_count %> Recommendations</p>
-				<p><a href="#">Recommend <%= @coder.full_name[0..35] %></a></p>
+				<p><%= link_to "Recommend #{ @coder.full_name[0..35] }", @coder.profile_url %></p>
 				<br class="clr" />   
 
 				<% if @coder.github_watchers > 0 %>
@@ -33,7 +37,7 @@
 				<li class="userlocation"><%=h @coder.company_name %></li>
 				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
 				<li class="userlocation">alias: <%= h @coder.nickname %></li>
-				<li class="userlocation">  <%= link_to "WWR Profile",@coder.profile_url %></li>
+				<li class="userlocation">  <%= link_to "View My WWR Profile",@coder.profile_url, { :title => "View My Profile on Working With Rails"} %></li>
 			</ul>
 		 </div>
 
