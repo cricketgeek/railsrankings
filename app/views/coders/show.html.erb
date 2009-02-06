@@ -43,7 +43,8 @@
 
 		<div class="github_watchers">
 			<h2>Public Repos</h2>
-			<table id="github_repos" cellspacing="0" cellpadding="0">
+			<div id="github_repos">
+			<table cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
 						<th>Repo Name</th>
@@ -55,6 +56,11 @@
 					<%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
 				</tbody>
 			</table>
+			</div>
+			<div id="github_latest">
+				<%= render :partial => "github_commits", :locals => { :commits => @commits } unless @commits.empty? %>
+			</div>
+			<br class="clr" />
 		</div>
 		<div class="nav_links">
 			<%= link_to "Back to search", coders_path(:search => cookies[:search_term]) %>
