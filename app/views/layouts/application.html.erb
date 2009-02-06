@@ -2,7 +2,6 @@
 <head>
 <%= stylesheet_link_tag "railsrankings" %>
 <%= yield :head %>
-<title>Rails Rankings</title>
 </head>
 <body>
 <div id="header">
@@ -10,6 +9,7 @@
 		<%= link_to image_tag("/images/logo.gif", :class => "plain_image"),coders_path %>
 	</div>
 </div>
+
 <%= yield %>
 
 <div id="footer" class="top_rule">
