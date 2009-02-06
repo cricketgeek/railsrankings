@@ -232,6 +232,7 @@ ul.github_rank {
 }
 .user .rank {
 	width: auto;
+        border: none;
 }
 .rr_points {
 	position: absolute;
@@ -244,6 +245,19 @@ ul.github_rank {
 	background: #F5F5F5;
 	font-size: 10px;
 	line-height: 10px;
+}
+#github_repos {
+        float: left;
+        width: 635px;
+}
+#github_latest {
+        float: right;
+        width: 325px;
+        background: #F5F5F5;
+        padding: 0px 20px;
+}
+#github_latest h3 {
+        color: #555;
 }
 ul.github_rank li {
 	margin: 5px;

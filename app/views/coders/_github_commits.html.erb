@@ -1,0 +1,4 @@
+<h3>Recent Activity:</h3>
+<% commits.each do |commit| %>
+<p><strong><%= commit.author %></strong>: <%= commit.message %> <em>at</em> <%= commit.committed_date %></p>
+<% end %>
