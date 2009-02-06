@@ -6,24 +6,22 @@
 	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
 <% end %>
 
-<div id="topbar">
+<div id="topbar" class="bottom_rule">
   <div id="searchbox">
-    <!--<h1 class="searchhdr">Whittle it down a bit</h1>-->
-    <h1 class="searchhdr">Search for Ruby on Rails Developers</h1>
-
+    <h1>Search for Ruby on Rails Developers</h1>
+    <div id="search_form">
     <% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
-      <input name="" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
+      <input name="search" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
     <% end %>
-    <div>
-      <p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
+    </div>
+	<p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
       and the number of public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.  RailsRankings Points is a better measuring stick.
       </p>
-    </div>
   </div><!--search-->
 </div>
-<div class="graydivide"></div><!--graydivide-->
-<div id="main">
+<div id="page">
+  <div id="content">
   <div id="leftbar">
     <h2><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h2>
     
@@ -51,7 +49,7 @@
 
 	    </div>      
         <!--userpic-->
-        <ul class="userinfo">
+        <ul class="user_info">
           <li class="name"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
           <li class="city"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
           <li class="company"><%=h coder.company_name %></li>
@@ -95,9 +93,8 @@
       </ol>  
     </div>
     <!--rightbar-->
-    <div style="clear:both;"></div>
-    <!--clearing div-->
-  </div>
-  <!--main-->
+    <br class="clr" />
+    </div>
+  </div><!--main-->
 
 

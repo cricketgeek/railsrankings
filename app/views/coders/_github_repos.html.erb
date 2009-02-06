@@ -1,8 +1,5 @@
-
-<div class="repo_container">
-<div class="repo_title"><%= link_to repo.name, repo.url %> : <span class="watchers"><%= pluralize(repo.watchers,"watcher") %>
-  </span>
-</div>
-<div class="repo_description"><%= repo.description %></div>
-
-</div>
+<tr>
+	<td><%= link_to repo.name, repo.url %></td>
+	<td><%= repo.description %></td>
+	<td class="watchers"><%= repo.watchers %></td>
+</tr>

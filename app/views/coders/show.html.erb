@@ -3,43 +3,57 @@
 	<meta name="description" content="Get more information on <%=h "#{@coder.full_name}" %>. Find other Rails developers based on our unique ranking system. Search Ruby on Rails development companies by city. Top Rails developers, coders, consultants and companies listed." />
 <% end %>
 
-<div class="graydivide"></div><!--graydivide-->
-<div id="show_container">
+<div id="page" class="top_rule">
+	<div id="content">
+	  	<div class="profile">
+			<div class="profile_pic">
+				<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %>
+			</div>
+			<div class="rank">
+				<div class="wwr_rank">
+					<a href="#"><%= show_rank(@coder) %> <%= show_delta(@coder) %></a>
+				</div>
+				<p><%= @coder.recommendation_count %> Recommendations</p>
+				<p><a href="#">Recommend <%= @coder.full_name[0..35] %></a></p>
+				<br class="clr" />   
 
-  <div class="show_user">
-    <div class="userprofilepic"><%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150"}), coder_path(@coder) %></div>
-    <div class="rank">
-      <div class="wwr_rank"><a href="#"><%= show_rank(@coder) %> <%= show_delta(@coder) %></a></div>
-        <p><%= @coder.recommendation_count %> Recommendations</p>
-      <p><a href="#">Recommend <%= @coder.full_name[0..35] %></a></p>
-      <br class="clr" />   
-		<% if @coder.github_watchers > 0 %>
-			<ul class="github_rank rounded">
-				<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
-				<li>Total github <%= pluralize(@coder.github_watchers,"watcher") %> across [<%= @repos.size %>] projects.</li>
+				<% if @coder.github_watchers > 0 %>
+				<ul class="github_rank rounded">
+					<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
+					<li>Total github <%= pluralize(@coder.github_watchers,"watcher") %> across [<%= @repos.size %>] projects.</li>
+				</ul>
+				<% end %>
+			</div>
+
+			<!--userinfo-->
+			<ul class="user_info">
+				<li class="username"><%=h "#{@coder.full_name}" %></li>
+				<li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>      
+				<li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
+				<li class="userlocation"><%=h @coder.company_name %></li>
+				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
+				<li class="userlocation">alias: <%= h @coder.nickname %></li>
+				<li class="userlocation">  <%= link_to "WWR Profile",@coder.profile_url %></li>
 			</ul>
-		<% end %>
-    </div>        
-    <!--userpic-->
-    <ul class="userinfo">
-      <li class="username"><%=h "#{@coder.full_name}" %></li>
-      <li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>      
-      <li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
-      <li class="userlocation"><%=h @coder.company_name %></li>
-      <li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
-      <li class="userlocation">alias: <%= h @coder.nickname %></li>
-      <li class="userlocation">  <%= link_to "WWR Profile",@coder.profile_url %></li>
-    </ul>
-  </div>
+		 </div>
 
-  <div class="github_watchers">
-    <h2>Public Repos</h2>
-    <div id="repos_all">
-    <%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
-    </div>
-  </div>
-</div>
-
-<div class="nav_links">
-  <%= link_to "Back to search", coders_path(:search => cookies[:search_term]) %>
-</div>
+		<div class="github_watchers">
+			<h2>Public Repos</h2>
+			<table id="github_repos" cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>Repo Name</th>
+						<th>Description</th>
+						<th>Watchers</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
+				</tbody>
+			</table>
+		</div>
+		<div class="nav_links">
+			<%= link_to "Back to search", coders_path(:search => cookies[:search_term]) %>
+		</div>
+	</div><!-- Close Content -->
+</div><!-- Close Page -->
