@@ -3,3 +3,5 @@ lib/.DS_Store
 db/schema.rb
 config/development.sphinx.conf
 db/sphinx/*
+log/mongrel*
+log/searchd.development.pid
