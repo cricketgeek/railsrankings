@@ -29,9 +29,9 @@ module CodersHelper
     return "" if coder.nil? or coder.delta.nil? or coder.delta == 0
     case 
     when coder.delta > 0
-      "<span class='green bolder'>(+#{coder.delta})</span>"
+      "<span class='positive'>+#{coder.delta}</span>"
     when coder.delta < 0
-      "<span class='red bolder'>(#{coder.delta})</span>"      
+      "<span class='negative'>#{coder.delta}</span>"      
     end
   end
   

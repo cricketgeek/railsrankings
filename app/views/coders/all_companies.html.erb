@@ -1,5 +1,9 @@
-<% cache :all_companies do %>
-<ol>
-  <%= render :partial  => "company_rankings", :collection => Coder.all_companies, :as => :company  %>
-</ol>
-<% end %>
+<div id="page" class="top_rule">
+	<div id="content">
+		<% cache :all_companies do %>
+		<ol>
+		  <%= render :partial  => "company_rankings", :collection => Coder.all_companies, :as => :company  %>
+		</ol>
+		<% end %>
+	</div>
+</div>

@@ -1,6 +1,6 @@
 body {
 	margin:0px;
-	font-family:Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	color:#333333;
 	font-size:12px;
 	line-height:160%;
@@ -137,8 +137,10 @@ a {
 .profile {
 	height:155px;
 	margin-bottom:10px;
-	width:665px;
-	padding:5px;
+        border: solid 1px #CCC;
+        width: 700px;
+        padding: 20px;
+   
 }
 .userpic {
 	width:78px;
@@ -168,9 +170,10 @@ a {
 }
 .rank {
 	width:235px;
-	height:98px;
 	float:right;
 	font-size:12px;
+        padding-left: 15px;
+        border-left: solid 1px #CCC;
 }
 .user .rank {
 	height: auto;
@@ -187,10 +190,28 @@ a {
 	font-size: 14px;
 	float: left;
 	margin-right: 10px;
+        position: relative;
 }
 .rank .wwr_rank a {
 	color: #CC3333;
 	text-decoration: none;
+}
+.rank .wwr_rank .rank_change {
+        font-size: 9px;
+        font-weight: normal;
+        padding: 2px;
+        border: solid 1px #fcecc9;
+        position: absolute;
+        line-height: 9px;
+        top: 5px;
+        left: 25px;
+        background: #FFF;	
+}
+.positive {
+	color: green;
+}
+.negative {
+	color: red;
 }
 .rank p {
 	margin: 0px 0px 2px;
@@ -291,18 +312,12 @@ li.github_watchers a {
 	padding: 10px;
 	background: #FFF;
 }
-.green {
-	color: green;
-}
 .plain_link {
 	text-decoration:none;
 	border: none;
 }
 .plain_image {
 	border: 0px;
-}
-.red {
-	color: red;
 }
 .bolder {
 	font-weight: bold;
@@ -314,46 +329,4 @@ li.github_watchers a {
 .nav_links {
 	padding-left: 10px;
 	margin-top: 25px;
-}
-
-/* Table style, should be moved to separate sheet */
-table {
-	width:100%;
-	font-size: 12px;
-}
-table, th, td {
-	border: 1px solid #D4E0EE;
-	border-collapse: collapse;
-	color: #555;
-	text-align: left;
-}
-caption {
-	font-size: 100%;
-	font-weight: bold;
-	margin: 5px;
-}
-td, th {
-	padding: 4px;
-}
-thead th {
-	background: #E6EDF5;
-	color: #1a56b0;
-	font-size: 100% !important;
-	font-size: 14px;
-}
-tbody th {
-	font-weight: bold;
-}
-tbody tr { background: #FCFDFE; }
-
-tbody tr.odd { background: #F7F9FC; }
-
-table a:link, table a:visited, table a:active {
-	color: #718ABE;
-}
-table a:hover {
-	color: #1a56b0;
-}
-tfoot th, tfoot td {
-	font-size: 85%;
 }
