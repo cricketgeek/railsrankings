@@ -16,6 +16,13 @@ class CodersController < ApplicationController
     
     @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
     cookies[:search_term] = params[:search]
+    
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @coders }
+      format.json { render :json => @coders }     
+    end
+    
   end
   
   def all_coders
