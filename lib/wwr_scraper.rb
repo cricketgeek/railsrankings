@@ -320,12 +320,13 @@ class WWRScraper
       github_repo.watchers = (repo.watchers - 1)
       github_repo.name = repo.name
       github_repo.url = repo.url
-      github_repo.save
+      github_repo.save if coder.new_record?
       save_commits(github_repo,repo.commits.first(5))
     end
     
     coder.github_watchers = watchers
-    coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0    
+    coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
+    coder.save
   end
   
   def save_commits(github_repo,commits)
