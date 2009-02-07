@@ -52,7 +52,18 @@ class CodersController < ApplicationController
     coder_params = params[:coders].split(",")
     coders_by_alias = get_coders_by_nickname(coder_params)
     coders_by_name = get_coders_by_name(coder_params)
-    render :json  => [coders_by_alias + coders_by_name].compact
+    
+    #puts coders_by_name.to_xml
+    #puts coders_by_name.to_json
+    combo_coders = coders_by_name + coders_by_alias
+    
+    combo_coders.sort! { |first,second| first.rank <=> second.rank}
+    
+    respond_to do |format|
+      format.html
+      format.json {render :json  => combo_coders}
+      format.xml  {render :xml   => combo_coders}
+    end
   end
 
   # GET /coders/new
@@ -129,7 +140,13 @@ class CodersController < ApplicationController
   end
   
   def get_coders_by_name(coder_params)
-    []
+    coders_found = []
+    coder_params.each do |name|
+      new_coder = Coder.find(name)
+      coders_found << new_coder if new_coder
+    end
+    
+    coders_found
   end
   
   
