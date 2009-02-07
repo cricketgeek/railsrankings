@@ -321,7 +321,7 @@ class WWRScraper
       github_repo.name = repo.name
       github_repo.url = repo.url
       github_repo.save if coder.new_record?
-      save_commits(github_repo,repo.commits.first(5))
+      save_commits(github_repo,repo.commits.first(8))
     end
     
     coder.github_watchers = watchers

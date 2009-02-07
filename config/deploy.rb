@@ -38,9 +38,9 @@ namespace :deploy do
     transaction do
       deploy.update
       
-      #deploy.stop
+      deploy.stop
       sleep(3)
-      #deploy.start
+      deploy.start
       deploy.cleanup
     end
   end
