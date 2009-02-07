@@ -340,16 +340,4 @@ class WWRScraper
     github_repo.save
   end
   
-  def github_watchers(coder)
-    watchers = 0
-    github_url = ""
-    coder.github_repos.each do |repo|
-      puts "found #{repo.watchers} github repo watchers for #{coder.full_name}"
-      watchers += (repo.watchers - 1)
-      github_url = repo.owner
-    end
-    coder.github_watchers = watchers
-    coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
-  end
-  
 end
