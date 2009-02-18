@@ -11,6 +11,7 @@ class WWRScraper
   def initialize
     @processed_urls = {}
     @crawling = true
+    @rails_rankings = []
   end
   
   def process_using_name_browse_pages
@@ -26,6 +27,7 @@ class WWRScraper
     end
     base_page_url.close
     remove_phony_chacon
+    output_rankings
   end
     
   def process_name_browse_by_letter(letter)
@@ -35,6 +37,7 @@ class WWRScraper
   end  
   
   def process_main_popular_page
+    @crawling = false
     main_open_url = open("http://www.workingwithrails.com/browse/popular/people")
     doc = Hpricot(main_open_url)
     doc.search('#Main/table/tr/td/a').each do |prof_url|
@@ -45,6 +48,7 @@ class WWRScraper
     end
     main_open_url.close
     remove_phony_chacon
+    output_rankings
   end
   
   
@@ -108,6 +112,16 @@ class WWRScraper
       process_profile_page(url_to_process)
     end
     
+  end
+  
+  def output_rankings
+    @rails_rankings.sort!
+     
+    @rails_rankings.each_with_index do |coder,index|
+      coder.railsrank = index + 1
+      coder.save
+      puts "coder #{coder.full_name} is RRanked #{index} with a full rank of #{coder.full_rank}"
+    end
   end
   
   private
@@ -204,6 +218,7 @@ class WWRScraper
       begin
         open_url = open(url)
         doc = Hpricot(open_url)
+        wwr_id = url.split("/").last
         name = doc.search('h2.item-title').inner_html.lstrip.rstrip
         name = name.titleize.split(' ')
         first_name = name[0].gsub("."," ")
@@ -223,17 +238,21 @@ class WWRScraper
         nickname = doc.search('td.nickname').inner_html      
         rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
         rank = MAX_RANK if rank.blank?
+        
+        is_available_for_hire = doc.at("a[@href='/person/#{wwr_id}/enquire/new']") != nil
+
         recs_url = url.sub("http://www.workingwithrails.com/", "http://www.workingwithrails.com/recommendation/for/")
         recs = doc.search("#person-recommendation-for-summary/h3/a[@href='#{recs_url}']").inner_html
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
-
+        coder.is_available_for_hire = is_available_for_hire
+        puts "is available for hire" if is_available_for_hire
         coder.nickname = nickname
         coder.first_name = first_name
         coder.last_name = last_name
-        # rails_core_contrib_img = doc.search("img[@src='/images/rails-core-contributor.gif']")
-        # coder.core_contributor = !rails_core_contrib_img.nil?
-        # puts "#{last_name} is a core contrib" if coder.core_contributor
+        rails_core_contrib_img = doc.at("img[@alt='rails core contributor']")
+        coder.core_contributor = !rails_core_contrib_img.nil?
+        puts "#{last_name} is a core contrib" if coder.core_contributor
         cleanse_bad_aliases(coder)
         save_github_info(coder)
       
@@ -242,7 +261,7 @@ class WWRScraper
           puts "rank was #{coder.rank} delta was #{delta}"
         end
       
-        coder.full_rank = determine_full_rank(coder)
+        coder.full_rank = calculate_full_rank(coder)
         coder.update_attributes(:website => website,
                   :image_path => img_url,:rank => rank, :city => location, 
                   :profile_url => url, :company_name => company_name,
@@ -251,7 +270,13 @@ class WWRScraper
                   :delta => delta)
     
         coder.save
-        @@logger.error "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
+        
+        if coder.valid?
+          add_to_rails_rank(coder)
+        else
+          @@logger.error "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
+        end
+        
         crawl_recommendations(coder,url) if @crawling
         open_url.close
       rescue Exception => ex
@@ -293,14 +318,17 @@ class WWRScraper
     process_recommendations(full_recommendation_url,coder)
   end
   
-  def determine_full_rank(coder)
+  def calculate_full_rank(coder)
     
     coder.rank = coder.rank.blank? ? MAX_RANK : coder.rank.to_i
     bonus = coder.rank < 100 ? TOP_100_WWR_BONUS : 0 if not coder.rank.blank?
-    #core_contrib_bonus = 2500 if coder.core_contributor
-    #puts "adding core contrib bonus #{core_contrib_bonus}"
-    (MAX_RANK - coder.rank) + (coder.github_watchers * GITHUB_WATCHER_POINTS) + bonus # + core_contrib_bonus
+    core_contrib_bonus = coder.core_contributor ? 2500 : 0
+    (MAX_RANK - coder.rank) + (coder.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
     
+  end
+  
+  def add_to_rails_rank(coder)
+    @rails_rankings << coder
   end
   
   def save_github_info(coder)
@@ -315,7 +343,7 @@ class WWRScraper
       puts "updating github repo watchers for #{coder.full_name} to #{repo.watchers}"
       watchers += (repo.watchers - 1)
       github_url = repo.owner
-        
+      
       github_repo.description = repo.description
       github_repo.watchers = (repo.watchers - 1)
       github_repo.name = repo.name

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090127025441
+# Schema version: 20090215220047
 #
 # Table name: commits
 #
@@ -9,6 +9,7 @@
 #  github_repo_id :integer(4)
 #  created_at     :datetime
 #  updated_at     :datetime
+#  committed_date :datetime
 #
 
 class Commit < ActiveRecord::Base

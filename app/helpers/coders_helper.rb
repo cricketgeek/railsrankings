@@ -22,7 +22,7 @@ module CodersHelper
   end
   
   def show_rank(coder)
-    coder.rank < MAX_RANK ? coder.rank : "nil"
+    coder.railsrank < MAX_RANK ? coder.railsrank : "nil"
   end
   
   def show_delta(coder)

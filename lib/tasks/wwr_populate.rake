@@ -8,6 +8,12 @@ namespace :wwr do
       wwr_scraper.process_main_popular_page
     end
     
+    desc "load only the top 100 page"
+    task :load_top_100 => :environment do
+      wwr_scraper = WWRScraper.new
+      wwr_scraper.process_main_popular_page
+    end
+    
     desc "loading data starting with the browse people letter pages"
     task :load_all => :environment do
       wwr_scraper = WWRScraper.new

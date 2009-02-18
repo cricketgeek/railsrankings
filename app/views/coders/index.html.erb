@@ -41,7 +41,12 @@
     				  <li class="github_watchers" title="public repo github watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
     			  </ul>
     			<% end %>  
-	      <div class="wwr_rank" title="workingwithrails.com rank"><a href="#"><%= show_rank(coder) %></a></div>
+	      <div class="wwr_rank" title="workingwithrails.com rank">
+	        <a href="#"><%= show_rank(coder) %></a>	
+	        <div class="rank_change rounded">
+						<%= show_delta(@coder) %>
+					</div>
+				</div>
 	        <!-- <%= show_delta(coder) %>
 			<p><%= coder.recommendation_count %> Recommendations</p>
 	      	<p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p> 

@@ -11,10 +11,10 @@ class CodersController < ApplicationController
       :per_page => SEARCH_PER_PAGE,
       :max_matches => MAX_SEARCH_RESULTS,
       :match_mode => :boolean,
-      :order => :rank
+      :order => :railsrank
     )
     
-    @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :rank, :max_matches => MAX_SEARCH_RESULTS)
+    @count = ThinkingSphinx::Search.count(params[:search],:match_mode => :boolean, :order => :railsrank, :max_matches => MAX_SEARCH_RESULTS)
     cookies[:search_term] = params[:search]
     
     respond_to do |format|
@@ -57,7 +57,7 @@ class CodersController < ApplicationController
     #puts coders_by_name.to_json
     combo_coders = coders_by_name + coders_by_alias
     combo_coders.compact!
-    combo_coders.sort! { |first,second| first.rank <=> second.rank}
+    combo_coders.sort! { |first,second| first.railsrank <=> second.railsrank}
     
     respond_to do |format|
       format.html

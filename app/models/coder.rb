@@ -1,36 +1,38 @@
 # == Schema Information
-# Schema version: 20090127025441
+# Schema version: 20090215220047
 #
 # Table name: coders
 #
-#  id                   :integer(4)      not null, primary key
-#  first_name           :string(255)
-#  last_name            :string(255)
-#  email                :string(255)
-#  city                 :string(255)
-#  rank                 :integer(4)
-#  website              :string(255)
-#  delta                :integer(4)
-#  recommendation_count :integer(4)
-#  image_path           :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
-#  profile_url          :string(255)
-#  location_id          :integer(4)
-#  company_name         :string(255)
-#  country              :string(255)
-#  nickname             :string(255)
-#  github_watchers      :integer(4)      default(0)
-#  github_url           :string(255)
-#  full_rank            :integer(4)
-#  core_contributor     :boolean(1)
-#  slug                 :string(255)
+#  id                    :integer(4)      not null, primary key
+#  first_name            :string(255)
+#  last_name             :string(255)
+#  email                 :string(255)
+#  city                  :string(255)
+#  rank                  :integer(4)
+#  website               :string(255)
+#  delta                 :integer(4)
+#  recommendation_count  :integer(4)
+#  image_path            :string(255)
+#  created_at            :datetime
+#  updated_at            :datetime
+#  profile_url           :string(255)
+#  location_id           :integer(4)
+#  company_name          :string(255)
+#  country               :string(255)
+#  nickname              :string(255)
+#  github_watchers       :integer(4)      default(0)
+#  github_url            :string(255)
+#  full_rank             :integer(4)
+#  core_contributor      :boolean(1)
+#  slug                  :string(255)
+#  is_available_for_hire :boolean(1)
 #
 
 require 'ruby-github'
 
 class Coder < ActiveRecord::Base
-
+  include Comparable
+  
   has_friendly_id :slug, :strip_diacritics => true, :reserved => ["new", "index"]
   has_many :github_repos
   
@@ -40,6 +42,7 @@ class Coder < ActiveRecord::Base
     
     has rank
     has full_rank
+    has railsrank
   end
   
   validates_uniqueness_of :profile_url
@@ -56,16 +59,26 @@ class Coder < ActiveRecord::Base
   end
   
   
-  named_scope :cities, lambda { |*args| { :select => "city, sum(full_rank) as total,count(*) as count", 
-      :conditions => "city is not null AND city <> ''", :limit => args.first || 20, :group => "city", :order => "total DESC" } }
+  def <=>(other)
+    if other.full_rank > self.full_rank
+      return 1
+    elsif other.full_rank < self.full_rank
+      return -1
+    else
+      return other.github_repos.size <=> self.github_repos.size
+    end
+  end
+  
+  named_scope :cities, lambda { |*args| { :select => "city, railsrank, sum(full_rank) as total,count(*) as count", 
+      :conditions => "city is not null AND city <> ''", :limit => args.first || 20, :group => "city", :order => "railsrank ASC" } }
   named_scope :all_cities, :select => "city, sum(full_rank) as total,count(*) as count", 
           :conditions => "city is not null AND city <> ''", :group => "city", :order => "total DESC"
-  named_scope :companies, lambda { |*args| { :select => "company_name, sum(full_rank) as total, count(*) as count", 
-    :conditions => "company_name is not null AND company_name <> ''", :limit => args.first || 20, :group => "company_name", :order => "total DESC"} }
-  named_scope :all_companies, :select => "company_name, sum(full_rank) as total, count(*) as count", 
-      :conditions => "company_name is not null AND company_name <> ''", :group => "company_name having total > 0", :order => "total DESC"
-  named_scope :top_coders, lambda { |*args| { :limit => args.first || 20, :order => "full_rank DESC" } }
-  named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "full_rank DESC"
+  named_scope :companies, lambda { |*args| { :select => "company_name, railsrank, sum(full_rank) as total, count(*) as count", 
+    :conditions => "company_name is not null AND company_name <> ''", :limit => args.first || 20, :group => "company_name", :order => "railsrank ASC"} }
+  named_scope :all_companies, :select => "company_name, railsrank, sum(full_rank) as total, count(*) as count", 
+      :conditions => "company_name is not null AND company_name <> ''", :group => "company_name having total > 0", :order => "railsrank ASC"
+  named_scope :top_coders, lambda { |*args| { :limit => args.first || 20, :order => "railsrank ASC" } }
+  named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "railsrank ASC"
   
   before_create :default_rank
   

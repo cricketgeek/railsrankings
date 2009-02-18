@@ -11,12 +11,13 @@
 				<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150", :alt => @coder.full_name}), coder_path(@coder) %>
 			</div>
 			<div class="rank">
-				<div class="wwr_rank" title="Workinwithrails.com ranking">
+				<div class="wwr_rank" title="RailsRanking Rank">
 					<%= link_to show_rank(@coder), @coder.profile_url %>
 					<div class="rank_change rounded">
 						<%= show_delta(@coder) %>
 					</div>
 				</div>
+				<p>workingwithrails rank: <%= @coder.rank %></p>	
 				<p><%= @coder.recommendation_count %> WWR Recommendations</p>
 				<p><%= link_to "Recommend #{ @coder.full_name[0..35] }", @coder.profile_url %></p>
 				<br class="clr" />   
@@ -37,6 +38,7 @@
 				<li class="userlocation"><%=h @coder.company_name %></li>
 				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
 				<li class="userlocation">alias: <%= h @coder.nickname %></li>
+			
 				<li class="userlocation">  <%= link_to "View My WWR Profile",@coder.profile_url, { :title => "View My Profile on Working With Rails"} %></li>
 			</ul>
 		 </div>

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090127025441
+# Schema version: 20090215220047
 #
 # Table name: github_repos
 #
