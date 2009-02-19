@@ -45,3 +45,25 @@ Spec::Runner.configure do |config|
   # 
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
+
+def create_coder(attribs={})
+  valid_attributes = {
+    :first_name => "Mark",
+    :last_name => "Jones",
+    :profile_url => "http://www.wwr.com/mark-jones"
+  }
+  
+  Coder.new(valid_attributes.merge!(attribs))
+  
+end
+
+def create_github_repo(attribs={})
+  default_attribs = {
+   :name => "repo_man",
+   :watchers  => 0,
+   :url => "http://github.com/reponame"
+  }
+  
+  GithubRepo.new(default_attribs.merge!(attribs))
+  
+end

@@ -17,11 +17,18 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Commit do
   before(:each) do
     @valid_attributes = {
-      :message => "value for message"
+      :message => "value for message",
+      :author => "sam i am",
+      :committed_date => DateTime.now
     }
   end
 
-  it "should create a new instance given valid attributes" do
-    Commit.create!(@valid_attributes)
+  it "should create a new commit for a github repo" do
+    commit = Commit.new(@valid_attributes)
+    repo = create_github_repo
+    repo.commits << commit
+    repo.save
+    repo.should be_valid
+    repo.commits.size.should == 1
   end
 end

@@ -60,29 +60,6 @@ describe Coder do
     end
 
   end  
-  
-  private
-  
-  def create_coder(attribs={})
-    valid_attributes = {
-      :first_name => "Mark",
-      :last_name => "Jones",
-      :profile_url => "http://www.wwr.com/mark-jones"
-    }
-    
-    Coder.new(valid_attributes.merge!(attribs))
-    
-  end
-  
-  def create_github_repo(attribs={})
-    default_attribs = {
-     :name => "repo_man",
-     :watchers  => 0 
-    }
-    
-    GithubRepo.new(default_attribs.merge!(attribs))
-    
-  end
-  
+
   
 end

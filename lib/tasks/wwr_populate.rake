@@ -5,7 +5,7 @@ namespace :wwr do
     task :load => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_seed_data
-      wwr_scraper.process_main_popular_page
+      #wwr_scraper.process_main_popular_page
     end
     
     desc "load only the top 100 page"

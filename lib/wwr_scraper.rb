@@ -53,7 +53,7 @@ class WWRScraper
   
   
   def process_using_seed_data
-    
+    @crawling = false
     @@logger.info "processing based on seed data"
     
     processing_array = [
