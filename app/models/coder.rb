@@ -92,24 +92,65 @@ class Coder < ActiveRecord::Base
     github_repos.size > 0 ? Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date limit 8",github_repo_ids]) : []
   end
   
-  def retrieve_github_repos
-    repos = []
+  def clean_nicknames
     if valid_for_github?
-      nicknames = nickname.split(",")
-      nicknames.each do |nickname|
-        begin
-          nickname.strip!
-          github_user = GitHub::API.user(nickname)
-          repos = repos + github_user.repositories
-        rescue Exception => ex
-          puts "error geting github repo, #{ex}"
-        end
+      parse_string = nickname.gsub(","," ").gsub(";"," ").gsub("."," ")
+      nicknames = parse_string.split
+      nicknames.reject! { |name| ["on","at","@","the","github"].include?(name)} 
+      nicknames 
+    else
+      []
+    end
+  end
+  
+  def cleanse_bad_aliases(alias_name)
+    clean_name = alias_name
+    
+    if alias_name and self.last_name
+      if self.first_name and self.first_name == 'Maciafts'
+        clean_name = "not_sam"
+      elsif alias_name.downcase == "rails"
+        clean_name = "not_rails"
+      elsif alias_name.downcase == "pieter" and self.last_name.downcase == "botha"
+        clean_name = "not_pieter"
+      elsif alias_name.downcase == "tobias" and self.last_name.downcase == "Kahre"
+        clean_name = "not_tobias"
+      elsif alias_name.downcase == "sam" and (self.first_name.downcase != "sam" or self.last_name.downcase != "smoot")
+        clean_name = "not_sam"
+      elsif alias_name.downcase == "chris" and self.last_name != "Bailey"
+        clean_name = "not_chris"
+      elsif alias_name.downcase == "josh" and self.last_name != "Peek"
+        clean_name = "not_josh"
+      elsif alias_name.downcase == "tobi" and self.last_name != "Schlottke"
+        clean_name = "not_tobi"
       end
     end
+    return clean_name
+  end  
+  
+  
+  def retrieve_github_repos
+    repos = []
+
+    nicks_to_use = clean_nicknames
+    nicks_to_use.each do |nickname|
+      begin
+        nickname = cleanse_bad_aliases(nickname)
+        puts "trying github with alias #{nickname}"
+        nickname.strip!
+        github_user = GitHub::API.user(nickname)
+        repos = repos + github_user.repositories
+      rescue Exception => ex
+        puts "error geting github repo, #{ex}"
+      end
+    end
+
     repos ||= []
   end
   
   private
+  
+  
 
   def valid_for_github?
     nickname and (not nickname.blank?) and nickname.upcase != "NONE"

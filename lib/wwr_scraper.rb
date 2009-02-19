@@ -34,7 +34,18 @@ class WWRScraper
     @crawling = false
     process_name_page("http://www.workingwithrails.com/browse/people/name/#{letter}")
     remove_phony_chacon if letter == 'S' or letter == 's'
-  end  
+  end
+  
+  def reprocess_for_one_person(profile_url)
+    @crawling = false
+    process_profile_page(profile_url)
+    rerun_rankings
+  end
+  
+  def rerun_rankings
+    @rails_rankings = Coder.all
+    output_rankings    
+  end
   
   def process_main_popular_page
     @crawling = false
@@ -253,7 +264,7 @@ class WWRScraper
         rails_core_contrib_img = doc.at("img[@alt='rails core contributor']")
         coder.core_contributor = !rails_core_contrib_img.nil?
         puts "#{last_name} is a core contrib" if coder.core_contributor
-        cleanse_bad_aliases(coder)
+        add_known_aliases(coder)
         save_github_info(coder)
       
         if not rank.blank? and rank.to_i < MAX_RANK
@@ -285,32 +296,17 @@ class WWRScraper
     end
   end
   
-  def cleanse_bad_aliases(coder)
-    
+  def add_known_aliases(coder)
     if coder.first_name == "David" and coder.last_name == "Chelimsky"
       coder.nickname = "dchelimsky"
       return
     end
     
-    if coder.nickname and coder.last_name
-      if coder.first_name and coder.first_name == 'Maciafts'
-        coder.nickname = "not_sam"
-      elsif coder.nickname.downcase == "rails"
-        coder.nickname = "not_rails"
-      elsif coder.nickname.downcase == "pieter" and coder.last_name.downcase == "botha"
-        coder.nickname = "not_pieter"
-      elsif coder.nickname.downcase == "tobias" and coder.last_name.downcase == "Kahre"
-        coder.nickname = "not_tobias"
-      elsif coder.nickname.downcase == "sam" and (coder.first_name.downcase != "sam" or coder.last_name.downcase != "smoot")
-        coder.nickname = "not_sam"
-      elsif coder.nickname.downcase == "chris" and coder.last_name != "Bailey"
-        coder.nickname = "not_chris"
-      elsif coder.nickname.downcase == "josh" and coder.last_name != "Peek"
-        coder.nickname = "not_josh"
-      elsif coder.nickname.downcase == "tobi" and coder.last_name != "Schlottke"
-        coder.nickname = "not_tobi"
-      end
+    if coder.first_name == "Sam" and coder.last_name = "Smoot"
+      coder.nickname = "sam"
+      return
     end
+    
   end
 
   def crawl_recommendations(coder,url)
@@ -334,13 +330,12 @@ class WWRScraper
   def save_github_info(coder)
     watchers = 0
     github_url = ""
-    
     coder.retrieve_github_repos.each do |repo|
       github_repo = coder.github_repos.find_by_name(repo.name)
       github_repo.commits.delete if github_repo
       github_repo ||= github_repo = coder.github_repos.build
       
-      puts "updating github repo watchers for #{coder.full_name} to #{repo.watchers}"
+      puts "updating github repo #{repo.name} by #{coder.full_name} to have #{repo.watchers} watchers"
       watchers += (repo.watchers - 1)
       github_url = repo.owner
       

@@ -20,7 +20,26 @@ namespace :wwr do
       wwr_scraper.process_using_name_browse_pages
       
     end
+    
+    desc "process just one profile url, re-run rankings sort"
+    task :reload_one, [:profile_url] => :environment do
+      unless ENV.include?("profile_url")
+          raise "usage: rake profile_url=http://www.workingwithrails.com/person/8914-russell-norris" 
+      end
+      profile_url = ENV['profile_url']
+      puts "processing just profile #{profile_url} page"
+      wwr_scraper = WWRScraper.new
+      wwr_scraper.reprocess_for_one_person(profile_url)      
+      Rake::Task["data_helpers:slugify"].invoke
+    end
 
+    desc "re-run rankings algo"
+    task :rerun_rankings => :environment do
+      wwr_scraper = WWRScraper.new
+      wwr_scraper.rerun_rankings      
+    end
+    
+    
     desc "load data by a specific first letter of the first name on WWR"
     task :load_by_letter, [:letter] => :environment do
       unless ENV.include?("letter")
