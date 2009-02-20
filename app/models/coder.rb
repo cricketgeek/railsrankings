@@ -106,6 +106,10 @@ class Coder < ActiveRecord::Base
   def cleanse_bad_aliases(alias_name)
     clean_name = alias_name
     
+    if alias_name.downcase == "rails"
+      return "not_rails"
+    end
+    
     if alias_name and self.last_name
       if self.first_name and self.first_name == 'Maciafts'
         clean_name = "not_sam"
