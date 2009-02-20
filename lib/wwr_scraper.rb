@@ -302,7 +302,7 @@ class WWRScraper
       return
     end
     
-    if coder.first_name == "Sam" and coder.last_name = "Smoot"
+    if coder.first_name == "Sam" and coder.last_name == "Smoot"
       coder.nickname = "sam"
       return
     end
