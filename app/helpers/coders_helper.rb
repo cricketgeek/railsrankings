@@ -25,6 +25,14 @@ module CodersHelper
     coder.railsrank < MAX_RANK ? coder.railsrank : "nil"
   end
   
+  def available_for_hire?(coder)
+    coder.is_available_for_hire ? "You can try, kind sir." : "No, too busy at the moment"
+  end
+  
+  def is_core_contributor?(coder)
+    coder.core_contributor ? "Yes" : "No"
+  end
+  
   def show_delta(coder)
     return "" if coder.nil? or coder.delta.nil? or coder.delta == 0
     case 

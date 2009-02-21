@@ -1,5 +1,7 @@
 <tr>
 	<td><%= link_to repo.name, repo.url %></td>
+	<td><%= repo.forked ? "Yes" : "No" %>
 	<td><%= repo.description %></td>
+	<td><%= repo.forks %>
 	<td class="watchers"><%= repo.watchers %></td>
 </tr>

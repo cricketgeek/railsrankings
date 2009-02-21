@@ -21,6 +21,6 @@ class GithubRepo < ActiveRecord::Base
   validates_presence_of :url
   
   named_scope :alphabetical, :order => :name
-  named_scope :popular, :order => :watchers
+  named_scope :popular, :order => "watchers DESC"
   
 end

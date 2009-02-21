@@ -38,7 +38,7 @@ class CodersController < ApplicationController
   # GET /coders/1.xml
   def show
     @coder = Coder.find(params[:id])
-    @repos = @coder.github_repos
+    @repos = @coder.github_repos.popular
     @commits = @coder.recent_commits
     
     respond_to do |format|

@@ -37,9 +37,10 @@
 				<li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
 				<li class="userlocation"><%=h @coder.company_name %></li>
 				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
-				<li class="userlocation">alias: <%= h @coder.nickname %></li>
+				<li class="userlocation">Rails core contributor: <%= is_core_contributor?(@coder) %></li>
+				<li class="userlocation">Can you hire <%="#{@coder.first_name}"%>? <%= available_for_hire?(@coder) %></li>								
 			
-				<li class="userlocation">  <%= link_to "View My WWR Profile",@coder.profile_url, { :title => "View My Profile on Working With Rails"} %></li>
+				<li class="userlocation">  <%= link_to "Check out #{@coder.first_name}'s WWR Profile",@coder.profile_url, { :title => "View #{@coder.first_name}'s Profile on Working With Rails"} %></li>
 			</ul>
 		 </div>
 
@@ -50,7 +51,9 @@
 				<thead>
 					<tr>
 						<th>Repo Name</th>
+						<th>Forked?</th>
 						<th>Description</th>
+						<th>Forks</th>
 						<th>Watchers</th>
 					</tr>
 				</thead>

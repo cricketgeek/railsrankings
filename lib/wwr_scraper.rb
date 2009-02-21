@@ -315,12 +315,7 @@ class WWRScraper
   end
   
   def calculate_full_rank(coder)
-    
-    coder.rank = coder.rank.blank? ? MAX_RANK : coder.rank.to_i
-    bonus = coder.rank < 100 ? TOP_100_WWR_BONUS : 0 if not coder.rank.blank?
-    core_contrib_bonus = coder.core_contributor ? 2500 : 0
-    (MAX_RANK - coder.rank) + (coder.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
-    
+    coder.recalculate_full_rank
   end
   
   def add_to_rails_rank(coder)
@@ -332,7 +327,7 @@ class WWRScraper
     github_url = ""
     coder.retrieve_github_repos.each do |repo|
       github_repo = coder.github_repos.find_by_name(repo.name)
-      github_repo.commits.delete if github_repo
+      github_repo.commits.delete_all if github_repo
       github_repo ||= github_repo = coder.github_repos.build
       
       puts "updating github repo #{repo.name} by #{coder.full_name} to have #{repo.watchers} watchers"
@@ -343,8 +338,11 @@ class WWRScraper
       github_repo.watchers = (repo.watchers - 1)
       github_repo.name = repo.name
       github_repo.url = repo.url
+      github_repo.forked = repo.forked
+      github_repo.forks = repo.forks
       github_repo.save if coder.new_record?
-      save_commits(github_repo,repo.commits.first(8))
+      
+      save_commits(github_repo,repo.commits.first(10))
     end
     
     coder.github_watchers = watchers
@@ -353,11 +351,14 @@ class WWRScraper
   end
   
   def save_commits(github_repo,commits)
-    commits.each do |commit|
+    commits.each_with_index do |commit,index|
       new_commit = github_repo.commits.build
       new_commit.author = commit.author.name
+      new_commit.commit_sha = commit.id
+      new_commit.user = commit.user
       new_commit.message = commit.message
       new_commit.committed_date = commit.committed_date
+      new_commit.github_repo = github_repo
       github_repo.commits << new_commit
     end
     github_repo.save

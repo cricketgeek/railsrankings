@@ -89,7 +89,7 @@ class Coder < ActiveRecord::Base
   end
   
   def recent_commits
-    github_repos.size > 0 ? Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date limit 8",github_repo_ids]) : []
+    github_repos.size > 0 ? Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date DESC limit 8",github_repo_ids]) : []
   end
   
   def clean_nicknames
@@ -101,6 +101,11 @@ class Coder < ActiveRecord::Base
     else
       []
     end
+  end
+  
+  def has_alias?(alias_name)
+    known_nicknames = clean_nicknames
+    known_nicknames.include?(alias_name)
   end
   
   def cleanse_bad_aliases(alias_name)
@@ -130,7 +135,14 @@ class Coder < ActiveRecord::Base
       end
     end
     return clean_name
-  end  
+  end
+  
+  def recalculate_full_rank
+    self.rank.blank? ? MAX_RANK : self.rank.to_i
+    bonus = self.rank < 100 ? TOP_100_WWR_BONUS : 0 if not self.rank.blank?
+    core_contrib_bonus = self.core_contributor ? 2500 : 0
+    (MAX_RANK - self.rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
+  end
   
   
   def retrieve_github_repos
@@ -140,7 +152,6 @@ class Coder < ActiveRecord::Base
     nicks_to_use.each do |nickname|
       begin
         nickname = cleanse_bad_aliases(nickname)
-        puts "trying github with alias #{nickname}"
         nickname.strip!
         github_user = GitHub::API.user(nickname)
         repos = repos + github_user.repositories

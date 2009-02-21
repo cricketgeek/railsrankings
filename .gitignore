@@ -1,7 +1,11 @@
 *.log
-lib/.DS_Store
 db/schema.rb
 config/development.sphinx.conf
 db/sphinx/*
-log/mongrel*
-log/searchd.development.pid
+log/*
+tmp/**/*
+db/*.sqlite3
+public/system
+*.DS_Store
+coverage/*
+*.swp
