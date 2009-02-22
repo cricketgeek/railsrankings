@@ -57,6 +57,16 @@ def create_coder(attribs={})
   
 end
 
+def create_company(attribs={})
+  valid_attributes = {
+    :name => "thoughtbot",
+    :wwr_profile => "http://www.wwr.com/thoughtbot"
+  }
+  
+  Company.new(valid_attributes.merge!(attribs))
+  
+end
+
 def create_github_repo(attribs={})
   default_attribs = {
    :name => "repo_man",

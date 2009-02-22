@@ -34,6 +34,7 @@ class WWRScraper
     @crawling = false
     process_name_page("http://www.workingwithrails.com/browse/people/name/#{letter}")
     remove_phony_chacon if letter == 'S' or letter == 's'
+    rerun_rankings
   end
   
   def reprocess_for_one_person(profile_url)
@@ -59,7 +60,7 @@ class WWRScraper
     end
     main_open_url.close
     remove_phony_chacon
-    output_rankings
+    rerun_rankings
   end
   
   
@@ -161,34 +162,52 @@ class WWRScraper
   
   def normalize_location(location)
     
-    @locations = {"norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
-      "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlanta georgia" => "Atlanta","atlanta, georgia" => "Atlanta",
-      "decatur, ga" => "Atlanta", "decatur" => "Atlanta","greater atlanta area, georgia" => "Atlanta", "chicago, il" => "Chicago","wheaton, il" => "Chicago",
-      "chicago, illinois" => "Chicago","chicago il" => "Chicago", "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco",
-      "boston, ma" => "Boston","boston ma" => "Boston", "austin, tx" => "Austin","austin tx" => "Austin", "jacksonville, fl" => "Jacksonville",
-      "jacksonville/ fl" => "Jacksonville", "jacksonville, florida" => "Jacksonville",
-      "rio de janeiro / rj" => "Rio de Janeiro","austin, tx, usa" => "Austin",
-      "austin, texas" => "Austin","austin / texas" => "Austin","austin (texas)" => "Austin",
-      "london" => "London", "london, uk" => "London", "seattle, wa" => "Seattle", "portland, or" => "Portland",
-      "san diego, ca" => "San Diego","san diego, usa" => "San Diego","new york city" => "New York City", 
-      "new york, ny" => "New York City", "new york" => "New York City", "nyc" => "New York City", 
-      "portland, oregon" => "Portland", "portland or" => "Portland","toronto, ontario" => "Toronto",
-      "denver, co" => "Denver", "denver, colorado" => "Denver", "nashville, tn" => "Nashville",
-      "los angeles, ca" => "Los Angeles", "los angeles / california" => "Los Angeles", "brooklyn, ny" => "New York City",
-      "orlando, fl" => "Orlando", "orlando, florida" => "Orlando", "berkeley, ca" => "San Francisco", "cambridge, ma" => "Boston",
+    @locations = {
+      "norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
+      "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlana ga" => "Atlanta",
+      "atlanta georgia" => "Atlanta", "atlanta, georgia" => "Atlanta",
+      "decatur, ga" => "Atlanta", "decatur" => "Atlanta",
+      "greater atlanta area, georgia" => "Atlanta", 
+      "chicago, il" => "Chicago","wheaton, il" => "Chicago","chicago, illinois" => "Chicago","chicago il" => "Chicago",
+      "chicago / il" => "Chicago",
+      "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco", "san francisco bay area" => "San Francisco",
+      "berkeley, ca" => "San Francisco","san francisco, california" => "San Francisco", "san francisco / ca" => "San Francisco",
+      "boston, ma" => "Boston","boston ma" => "Boston", "boston, massachusetts" => "Boston", "boston/ma" => "Boston",
+      "austin, tx" => "Austin","austin tx" => "Austin", "austin, tx, usa" => "Austin",
+      "austin, texas" => "Austin","austin / texas" => "Austin","austin (texas)" => "Austin", "austin,, tx" => "Austin",
+      "jacksonville, fl" => "Jacksonville","jacksonville/ fl" => "Jacksonville", "jacksonville, florida" => "Jacksonville",
+      "jacksonville beach, fl" => "Jacksonville",
+      "rio de janeiro / rj" => "Rio de Janeiro",
+      "london" => "London", "london, uk" => "London", "london / london / uk " => "London",
+      "seattle, wa" => "Seattle", "seattle, washington"  => "Seattle",
+      "portland, or" => "Portland","portland, oregon" => "Portland", "portland or" => "Portland",
+      "san diego, ca" => "San Diego","san diego, usa" => "San Diego",
+      "new york city" => "New York City", "new york, ny" => "New York City", "new york" => "New York City", "nyc" => "New York City",
+      "brooklyn, ny" => "New York City","new york city, ny" => "New York City", "nyc metro" => "New York City",
+      "toronto, ontario" => "Toronto","toronto, on" => "Toronto","toronto / ontario" => "Toronto",
+      "denver, co" => "Denver", "denver, colorado" => "Denver", "longmont, co" => "Denver", "longmont, colorado" => "Denver",
+      "nashville, tn" => "Nashville",
+      "los angeles, ca" => "Los Angeles", "los angeles / california" => "Los Angeles", "los angeles, california" => "Los Angeles",
+      "orlando, fl" => "Orlando", "orlando, florida" => "Orlando", "cambridge, ma" => "Boston",
       "washington dc" => "Washington, DC", "washington dc area" => "Washington, DC", "toronto (ontario)" => "Toronto",
-      "washington, d.c." => "Washington, DC","são paulo, sp" => "São Paulo",
-      "São Paulo - SP" => "São Paulo", "winchester" => "Southampton, UK",
-      "hamburg, germany" => "Hamburg", "montreal / quebec" => "Montreal",
-      "longmont, co" => "Denver", "dallas, tx" => "Dallas", "dallas tx" => "Dallas",
+      "washington, d.c." => "Washington, DC","washington d.c. metro area" => "Washington, DC","dc area" => "Washington, DC",
+      "São Paulo - SP" => "São Paulo", "sao paulo/sp" => "São Paulo", "são paulo, sp" => "São Paulo",
+      "winchester" => "Southampton, UK",
+      "hamburg, germany" => "Hamburg", 
+      "montreal / quebec" => "Montreal",
+      "dallas, tx" => "Dallas", "dallas tx" => "Dallas","dallas, texas" => "Dallas",
       "chapel hill, nc" => "Chapel Hill", "chapel hill, north carolina" => "Chapel Hill", "Chapel Hill NC" => "Chapel Hill",
       "stillwater, oklahoma" => "Stillwater", "stillwater, ok" => "Stillwater, Oklahoma",
-      "columbus, ohio" => "Columbus, OH", "baltimore/md" => "Baltimore", "baltimore, md" => "Baltimore",
-      "baltimore md" => "Baltimore", "cracow" => "Kraków", "krakow" => "Kraków", 
+      "columbus, ohio" => "Columbus, OH", 
+      "baltimore/md" => "Baltimore", "baltimore, md" => "Baltimore",
+      "baltimore md" => "Baltimore", 
+      "cracow" => "Kraków", "krakow" => "Kraków", 
+      "huntsville / alabama" => "Huntsville, AL", "Huntsville / al" => "Huntsville, AL",
       "kansas city, mo, usa" => "Kansas City", "kansas city, mo" => "Kansas City","kansas city mo" => "Kansas City",
-      "santa barabara" =>"Santa Barbara", "Santa Barbara, CA" => "Santa Barbara", "Santa Barbara, California" => "Santa Barbara",
-      "winnipeg, manitoba" => "Winnipeg"
-      
+      "santa barabara" =>"Santa Barbara", "santa barbara, cA" => "Santa Barbara", "santa barbara, california" => "Santa Barbara",
+      "winnipeg, manitoba" => "Winnipeg","winnipeg (mb)" => "Winnipeg",
+      "raleigh, nc" => "Raleigh", "raleigh, north carolina" => "Raleigh",
+      "paris, france" => "Paris", "paris, fr" => "Paris", "paris / france" => "Paris"
      }
     
     return @locations[location.downcase] if @locations[location.downcase]
@@ -244,7 +263,7 @@ class WWRScraper
         #puts doc.at('img.photo')
         img_url_el = doc.search('img.photo')
         img_url = img_url_el.attr('src') if img_url_el.any?
-        company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)
+        company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)        
         country_name = doc.search('a.country-name').inner_html
         nickname = doc.search('td.nickname').inner_html      
         rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
@@ -273,6 +292,8 @@ class WWRScraper
         end
       
         coder.full_rank = calculate_full_rank(coder)
+        process_company(company_name,coder)
+                
         coder.update_attributes(:website => website,
                   :image_path => img_url,:rank => rank, :city => location, 
                   :profile_url => url, :company_name => company_name,
@@ -293,6 +314,17 @@ class WWRScraper
       rescue Exception => ex
         @@logger.error("FFFAIL: #{ex} while processing #{url}")
       end
+    end
+  end
+  
+  def process_company(company_name, coder)
+    company = @companies[company_name] || Company.find(:first,:conditions => {:name => company_name})
+    if company.nil?
+      company = Company.new(:name => company_name)
+      company.coders << coder
+      company.full_rank += coder.full_rank
+      company.save
+      @companies[company_name] = company
     end
   end
   

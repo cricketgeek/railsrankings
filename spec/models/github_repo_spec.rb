@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090215220047
+# Schema version: 20090221173936
 #
 # Table name: github_repos
 #
@@ -11,6 +11,8 @@
 #  coder_id    :integer(4)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  forked      :boolean(1)
+#  forks       :integer(4)
 #
 
 

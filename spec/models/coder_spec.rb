@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090215220047
+# Schema version: 20090221173936
 #
 # Table name: coders
 #
@@ -22,10 +22,12 @@
 #  nickname              :string(255)
 #  github_watchers       :integer(4)      default(0)
 #  github_url            :string(255)
-#  full_rank             :integer(4)
+#  full_rank             :integer(4)      default(0)
 #  core_contributor      :boolean(1)
 #  slug                  :string(255)
 #  is_available_for_hire :boolean(1)
+#  railsrank             :integer(4)      default(9999)
+#  company_id            :integer(4)
 #
 
 

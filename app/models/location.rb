@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090215220047
+# Schema version: 20090221173936
 #
 # Table name: locations
 #
