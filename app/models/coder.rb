@@ -134,7 +134,7 @@ class Coder < ActiveRecord::Base
         clean_name = "not_chris"
       elsif alias_name.downcase == "josh" and self.last_name != "Peek"
         clean_name = "not_josh"
-      elsif alias_name.downcase == "tobi" and self.last_name != "Schlottke"
+      elsif alias_name.downcase == "tobi" and self.last_name == "Schlottke"
         clean_name = "not_tobi"
       end
     end
