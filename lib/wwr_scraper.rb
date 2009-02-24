@@ -331,12 +331,10 @@ class WWRScraper
   def add_known_aliases(coder)
     if coder.first_name == "David" and coder.last_name == "Chelimsky"
       coder.nickname = "dchelimsky"
-      return
-    end
-    
-    if coder.first_name == "Sam" and coder.last_name == "Smoot"
+    elsif coder.first_name == "Sam" and coder.last_name == "Smoot"
       coder.nickname = "sam"
-      return
+    elsif coder.first_name == "Tobias" and coder.last_name == "Luetke"
+      coder.nickname = "tobi"
     end
     
   end
