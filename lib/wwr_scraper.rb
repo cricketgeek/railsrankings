@@ -26,14 +26,14 @@ class WWRScraper
       process_name_page(page_url)
     end
     base_page_url.close
-    remove_phony_chacon
+    remove_phonies
     output_rankings
   end
     
   def process_name_browse_by_letter(letter)
     @crawling = false
     process_name_page("http://www.workingwithrails.com/browse/people/name/#{letter}")
-    remove_phony_chacon if letter == 'S' or letter == 's'
+    remove_phonies if letter == 'S' or letter == 's'
     rerun_rankings
   end
   
@@ -59,7 +59,7 @@ class WWRScraper
       process_profile_page(next_prof_url)
     end
     main_open_url.close
-    remove_phony_chacon
+    remove_phonies
     rerun_rankings
   end
   
@@ -147,12 +147,15 @@ class WWRScraper
     name_page_url.close
   end
   
-  def remove_phony_chacon
+  def remove_phonies
     coders = Coder.find(:all,:conditions => "last_name = 'Chacon'")
     if coders.size == 2
       coder = coders.last
       coder.delete
     end
+    
+    Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
+    
   end
   
   def should_process_url?(url)
@@ -317,6 +320,11 @@ class WWRScraper
     end
   end
   
+  def process_recent_rails_commits_on_github
+    rails_github_user = GitHub::API.user(nickname)
+    rails_repo = 
+  end
+  
   def process_company(company_name, coder)
     company = @companies[company_name] || Company.find(:first,:conditions => {:name => company_name})
     if company.nil?
@@ -337,6 +345,8 @@ class WWRScraper
       coder.nickname = "tobi"
     elsif coder.first_name == "Tobias" and coder.last_name == "Crawley"
       coder.nickname = "tobias"
+    elsif coder.first_name == "Steven" and coder.last_name == "ABristol"
+      coder.nickname = "stevenbristol"
     end
     
   end
