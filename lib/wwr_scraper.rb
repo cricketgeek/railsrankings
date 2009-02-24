@@ -335,6 +335,8 @@ class WWRScraper
       coder.nickname = "sam"
     elsif coder.first_name == "Tobias" and coder.last_name == "Luetke"
       coder.nickname = "tobi"
+    elsif coder.first_name == "Tobias" and coder.last_name == "Crawley"
+      coder.nickname = "tobias"
     end
     
   end
