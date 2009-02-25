@@ -85,5 +85,15 @@ describe Coder do
     end
     
   end
+  
+  describe "determine nicknames to use with github api" do
+    
+    it "should return just one nickname for matt" do
+      @coder = Coder.new(:first_name => "Matt", :last_name => "Aimonetti", :nickname => "mattetti", :profile_url => "http://www.workingwithrails.com/person/6065-matt-aimonetti")
+      @coder.clean_nicknames.should == ["mattetti"]
+    end
+  end
+  
+  
 
 end

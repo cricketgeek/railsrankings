@@ -101,7 +101,9 @@ class Coder < ActiveRecord::Base
       parse_string = nickname.gsub(","," ").gsub(";"," ").gsub("."," ")
       nicknames = parse_string.split
       nicknames.reject! { |name| ["on","at","@","the","github"].include?(name)} 
-      nicknames 
+      puts "valid nicknames found #{nicknames.join(" ")}" if nicknames
+      nicknames
+      
     else
       []
     end

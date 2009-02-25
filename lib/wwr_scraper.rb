@@ -385,6 +385,7 @@ class WWRScraper
     watchers = 0
     github_url = ""
     coder.retrieve_github_repos.each do |repo|
+      puts "saving data for github repo #{repo.name}"
       github_repo = coder.github_repos.find_by_name(repo.name)
       github_repo.commits.delete_all if github_repo
       github_repo ||= github_repo = coder.github_repos.build
