@@ -40,7 +40,7 @@ class WWRScraper
   def reprocess_for_one_person(profile_url)
     @crawling = false
     process_profile_page(profile_url)
-    #rerun_rankings
+    rerun_rankings
   end
   
   def rerun_rankings
