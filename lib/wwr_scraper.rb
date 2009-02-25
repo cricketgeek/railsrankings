@@ -279,26 +279,24 @@ class WWRScraper
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
         coder.is_available_for_hire = is_available_for_hire
-        puts "is available for hire" if is_available_for_hire
         coder.nickname = nickname
         coder.first_name = first_name
         coder.last_name = last_name
         rails_core_contrib_img = doc.at("img[@alt='rails core contributor']")
         coder.core_contributor = !rails_core_contrib_img.nil?
-        puts "#{last_name} is a core contrib" if coder.core_contributor
         add_known_aliases(coder)
         save_github_info(coder)
       
         if not rank.blank? and rank.to_i < MAX_RANK
           delta = (coder.rank.to_i - rank.to_i)
-          puts "rank was #{coder.rank} delta was #{delta}"
         end
       
+        coder.rank = rank
         coder.full_rank = calculate_full_rank(coder)
         process_company(company_name,coder)
                 
         coder.update_attributes(:website => website,
-                  :image_path => img_url,:rank => rank, :city => location, 
+                  :image_path => img_url, :city => location, 
                   :profile_url => url, :company_name => company_name,
                   :country => country_name,
                   :recommendation_count  => recs.to_i,
@@ -320,10 +318,13 @@ class WWRScraper
     end
   end
   
-  def process_recent_rails_commits_on_github
-    rails_github_user = GitHub::API.user(nickname)
-    rails_repo = 
-  end
+  # def process_recent_rails_commits_on_github
+  #   rails_github_user = GitHub::API.user("rails")
+  #   repo = rails_github_user.repositories.find { |repo| repo.name == "rails" }
+  #   
+  #   rails_repo = GithubRepo.find_or_create_by_url(repo.url)
+  #   
+  # end
   
   def process_company(company_name, coder)
     company = @companies[company_name] || Company.find(:first,:conditions => {:name => company_name})
@@ -372,7 +373,7 @@ class WWRScraper
       github_repo.commits.delete_all if github_repo
       github_repo ||= github_repo = coder.github_repos.build
       
-      puts "updating github repo #{repo.name} by #{coder.full_name} to have #{repo.watchers} watchers"
+      #puts "updating github repo #{repo.name} by #{coder.full_name} to have #{repo.watchers} watchers"
       watchers += (repo.watchers - 1)
       github_url = repo.owner
       

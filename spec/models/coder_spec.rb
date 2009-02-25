@@ -34,7 +34,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Coder do
-
   
   it "should create a new instance given valid attributes" do
     coder = create_coder
@@ -42,12 +41,11 @@ describe Coder do
   end
   
   describe  "Sorting coders" do
-  
     before :each do
       @coder_big = create_coder({:first_name => "Rein",:last_name => "Heinrichs", :profile_url => "http://wwr.com/reinh",:full_rank => 250000})
       @coder_small = create_coder({:first_name => "Mark",:last_name => "Jones", :profile_url => "http://wwr.com/markj",:full_rank => 2500})
-      @coders = [@coder_small,@coder_big]
-    end
+      @coders = [@coder_small,@coder_big] 
+    end  
   
     it "should sort coders by full_rank" do
       @coders.sort!
@@ -61,7 +59,31 @@ describe Coder do
       @coders.first.should == @coder_small
     end
 
-  end  
-
+  end
   
+  describe "determining rank" do
+    
+    before :each do
+      @coder_big = create_coder({:first_name => "Rein",:last_name => "Heinrichs", :profile_url => "http://wwr.com/reinh",:full_rank => 250000})
+      @coder_big.rank = 250
+      @coder_big.github_watchers = 100
+      @coder_big.core_contributor = false
+    end
+    
+    it "should correctly determine full rank based on wwr rank and github_watchers" do
+      @coder_big.recalculate_full_rank.should == 34749
+    end
+    
+    it "should correctly add the core contributor bonus" do
+      @coder_big.core_contributor = true      
+      @coder_big.recalculate_full_rank.should == (34749 + CORE_CONTRIBUTOR_BONUS)      
+    end
+    
+    it "should correctly add the top 100 on WWR bonus" do
+      @coder_big.rank = 75
+      @coder_big.recalculate_full_rank.should == (34924 + TOP_100_WWR_BONUS)      
+    end
+    
+  end
+
 end

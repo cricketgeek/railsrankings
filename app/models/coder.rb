@@ -142,10 +142,10 @@ class Coder < ActiveRecord::Base
   end
   
   def recalculate_full_rank
-    self.rank.blank? ? MAX_RANK : self.rank.to_i
-    bonus = self.rank < 100 ? TOP_100_WWR_BONUS : 0 if not self.rank.blank?
-    core_contrib_bonus = self.core_contributor ? 2500 : 0
-    (MAX_RANK - self.rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
+    rank = self.rank.blank? ? MAX_RANK : self.rank.to_i
+    bonus = rank < 100 ? TOP_100_WWR_BONUS : 0
+    core_contrib_bonus = self.core_contributor ? CORE_CONTRIBUTOR_BONUS : 0
+    total_rank = (MAX_RANK - rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
   end
   
   
