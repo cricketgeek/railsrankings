@@ -12,6 +12,7 @@ MAX_RANK = 9999
 GITHUB_WATCHER_POINTS = 250
 TOP_100_WWR_BONUS = 10000
 CORE_CONTRIBUTOR_BONUS = 2500
+CORE_TEAM_BONUS = 20000
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

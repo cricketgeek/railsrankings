@@ -395,12 +395,14 @@ class WWRScraper
       save_commits(github_repo,repo.commits.first(10))
     end
     
+    puts "for #{coder.full_name} adding #{watchers} github watchers total"
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
     coder.save
   end
   
   def save_commits(github_repo,commits)
+    puts "saving commits"
     commits.each_with_index do |commit,index|
       new_commit = github_repo.commits.build
       new_commit.author = commit.author.name

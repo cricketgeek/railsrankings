@@ -147,7 +147,10 @@ class Coder < ActiveRecord::Base
     rank = self.rank.blank? ? MAX_RANK : self.rank.to_i
     bonus = rank < 100 ? TOP_100_WWR_BONUS : 0
     core_contrib_bonus = self.core_contributor ? CORE_CONTRIBUTOR_BONUS : 0
-    total_rank = (MAX_RANK - rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus
+    core_team_member_bonus = self.core_team_member ? CORE_TEAM_BONUS : 0
+    total_rank = (MAX_RANK - rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus + core_team_member_bonus
+    puts "total rank is #{total_rank}"
+    total_rank
   end
   
   
