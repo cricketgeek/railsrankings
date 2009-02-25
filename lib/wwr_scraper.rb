@@ -283,7 +283,12 @@ class WWRScraper
         coder.first_name = first_name
         coder.last_name = last_name
         rails_core_contrib_img = doc.at("img[@alt='rails core contributor']")
+        rails_core_team_member_img = doc.at("img[@alt='rails core team member']")
+        
         coder.core_contributor = !rails_core_contrib_img.nil?
+        coder.core_team_member = !rails_core_team_member_img.nil?
+        
+        puts "#{coder.full_name} is a core team member" if coder.core_team_member
         add_known_aliases(coder)
         save_github_info(coder)
       
