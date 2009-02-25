@@ -373,6 +373,7 @@ class WWRScraper
   end
   
   def save_github_info(coder)
+    puts "saving github info data for coder"
     watchers = 0
     github_url = ""
     coder.retrieve_github_repos.each do |repo|
