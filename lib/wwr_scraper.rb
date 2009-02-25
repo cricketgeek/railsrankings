@@ -40,7 +40,7 @@ class WWRScraper
   def reprocess_for_one_person(profile_url)
     @crawling = false
     process_profile_page(profile_url)
-    rerun_rankings
+    #rerun_rankings
   end
   
   def rerun_rankings
@@ -252,10 +252,15 @@ class WWRScraper
         open_url = open(url)
         doc = Hpricot(open_url)
         wwr_id = url.split("/").last
-        name = doc.search('h2.item-title').inner_html.lstrip.rstrip
-        name = name.titleize.split(' ')
-        first_name = name[0].gsub("."," ")
-        last_name = "#{name[1..(name.length - 1)]}".gsub("."," ") if name.size > 1
+        name = doc.search("h2.item-title").inner_html
+        
+        if name && name.length > 0
+          name = name.gsub(/\n/,"").lstrip.rstrip
+          name = name.titleize.split(' ')
+          first_name = name[0].gsub("."," ")
+          last_name = "#{name[1..(name.length - 1)]}".gsub("."," ") if name.size > 1
+        end
+        
         location = normalize_location(doc.search('span.locality').inner_html)
         @@logger.info "name: #{name} location is #{location}"
         if doc.at("#person-about-summary/p/a.url")
@@ -269,6 +274,7 @@ class WWRScraper
         company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)        
         country_name = doc.search('a.country-name').inner_html
         nickname = doc.search('td.nickname').inner_html      
+        puts "nickname is #{nickname} "
         rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
         rank = MAX_RANK if rank.blank?
         
@@ -290,6 +296,7 @@ class WWRScraper
         
         puts "#{coder.full_name} is a core team member" if coder.core_team_member
         add_known_aliases(coder)
+        puts "about to save github data"
         save_github_info(coder)
       
         if not rank.blank? and rank.to_i < MAX_RANK
@@ -318,6 +325,7 @@ class WWRScraper
         crawl_recommendations(coder,url) if @crawling
         open_url.close
       rescue Exception => ex
+        puts "exception #{ex}"
         @@logger.error("FFFAIL: #{ex} while processing #{url}")
       end
     end
