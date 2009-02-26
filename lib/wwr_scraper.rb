@@ -412,6 +412,8 @@ class WWRScraper
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
     coder.save
+    puts "failed saving coder #{coder.errors.inspect}" if !coder.valid?
+    @@logger.error("couldn't save coder validation errors #{coder.errors.inspect}") if !coder.valid?
   end
   
   def save_commits(github_repo,commits)
