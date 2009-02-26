@@ -305,7 +305,7 @@ class WWRScraper
       
         coder.rank = rank
         coder.full_rank = calculate_full_rank(coder)
-        process_company(company_name,coder)
+        #process_company(company_name,coder)
                 
         coder.update_attributes(:website => website,
                   :image_path => img_url, :city => location, 
@@ -340,9 +340,8 @@ class WWRScraper
   # end
   
   def process_company(company_name, coder)
-    company = @companies[company_name] || Company.find(:first,:conditions => {:name => company_name})
-    if company.nil?
-      company = Company.new(:name => company_name)
+    company = @companies[company_name] || Company.find_or_create_by_name(:first,:conditions => {:name => company_name})
+    if company
       company.coders << coder
       company.full_rank += coder.full_rank
       company.save
