@@ -386,23 +386,21 @@ class WWRScraper
     coder.retrieve_github_repos.each do |repo|
       puts "saving data for github repo #{repo.name}"
       begin
-        github_repo = coder.github_repos.find_by_name(repo.name)
-        github_repo.commits.delete_all if github_repo
-        github_repo ||= github_repo = coder.github_repos.build
-      
-        #puts "updating github repo #{repo.name} by #{coder.full_name} to have #{repo.watchers} watchers"
+        github_repo = coder.github_repos.find_or_create_by_name(repo.name)
+        github_repo.commits.delete_all if !github_repo.new_record?      
         watchers += (repo.watchers - 1)
         github_url = repo.owner
-      
         github_repo.description = repo.description
         github_repo.watchers = (repo.watchers - 1)
         github_repo.name = repo.name
         github_repo.url = repo.url
         github_repo.forked = repo.forked
         github_repo.forks = repo.forks
-        github_repo.save if coder.new_record?
-      
-        save_commits(github_repo,repo.commits.first(10))
+        github_repo.save
+        if github_repo.valid?
+          coder.github_repos << github_repo
+          save_commits(github_repo,repo.commits.first(10))
+        end
       rescue Exception => ex
         @@logger.error("#{repo.name} busted up with error:#{ex} either accessing the repo data or getting and saving commits")
       end
