@@ -408,7 +408,7 @@ class WWRScraper
       end
     end
     
-    puts "for #{coder.full_name} adding #{watchers} github watchers total"
+    puts "adding #{watchers} github watchers total for #{github_url}"
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
     coder.save
