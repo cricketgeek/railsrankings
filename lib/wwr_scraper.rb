@@ -284,6 +284,7 @@ class WWRScraper
         recs = doc.search("#person-recommendation-for-summary/h3/a[@href='#{recs_url}']").inner_html
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
+        coder.profile_url = url
         coder.is_available_for_hire = is_available_for_hire
         coder.nickname = nickname
         coder.first_name = first_name
@@ -309,7 +310,7 @@ class WWRScraper
                 
         coder.update_attributes(:website => website,
                   :image_path => img_url, :city => location, 
-                  :profile_url => url, :company_name => company_name,
+                  :company_name => company_name,
                   :country => country_name,
                   :recommendation_count  => recs.to_i,
                   :delta => delta)
@@ -383,12 +384,18 @@ class WWRScraper
     puts "saving github info data for coder"
     watchers = 0
     github_url = ""
+    coder.save
     coder.retrieve_github_repos.each do |repo|
       puts "saving data for github repo #{repo.name}"
       begin
         github_repo = coder.github_repos.find_or_create_by_name(repo.name)
-        github_repo.commits.delete_all if !github_repo.new_record?      
+        
+        github_repo.commits.delete_all if !github_repo.new_record?  
+        github_repo.coder_id = coder.id    
+        
         watchers += (repo.watchers - 1)
+        puts "github repo #{repo.name} with watchers #{watchers}"
+        
         github_url = repo.owner
         github_repo.description = repo.description
         github_repo.watchers = (repo.watchers - 1)
@@ -397,11 +404,14 @@ class WWRScraper
         github_repo.forked = repo.forked
         github_repo.forks = repo.forks
         github_repo.save
+        puts "github_repo was valid and saved" if github_repo.valid?
+        #puts y github_repo
         if github_repo.valid?
           coder.github_repos << github_repo
           save_commits(github_repo,repo.commits.first(10))
         end
       rescue Exception => ex
+        puts "error for repo #{repo.name}  #{ex}"
         @@logger.error("#{repo.name} busted up with error:#{ex} either accessing the repo data or getting and saving commits")
       end
     end
