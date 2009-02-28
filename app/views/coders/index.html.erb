@@ -95,7 +95,13 @@
       <% cache :top_coders do %>      
         <%= render :partial => "top_coders_new_rank", :collection => Coder.top_coders, :as => :coder %>
       <% end %>
-      </ol>  
+      </ol>
+      <h2><%= link_to "Top Github Repos", all_repos_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
+      <ol id="rubycompanies">
+      <% cache :top_repos do %>      
+        <%= render :partial => "top_repos", :collection => GithubRepo.popular(15), :as => :repo %>
+      <% end %>
+      </ol>      
     </div>
     <!--rightbar-->
     <br class="clr" />

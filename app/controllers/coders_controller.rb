@@ -33,6 +33,9 @@ class CodersController < ApplicationController
   
   def all_companies
   end
+  
+  def all_repos
+  end
 
   # GET /coders/1
   # GET /coders/1.xml

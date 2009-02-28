@@ -25,6 +25,14 @@ module CodersHelper
     coder.railsrank < MAX_RANK ? coder.railsrank : "nil"
   end
   
+  def show_repo_name(repo)
+    repo && repo.name ? link_to(repo.name,repo.url, :target => "_new") : "unknown"
+  end
+  
+  def show_repo_points(repo)
+    repo ? (repo.watchers * GITHUB_WATCHER_POINTS) : 0
+  end
+  
   def available_for_hire?(coder)
     coder.is_available_for_hire ? "You can try, kind sir." : "No, too busy at the moment"
   end

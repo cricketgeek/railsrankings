@@ -13,9 +13,6 @@
 #  updated_at  :datetime
 #  forked      :boolean(1)
 #  forks       :integer(4)
-#
-
-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GithubRepo do
@@ -31,5 +28,19 @@ describe GithubRepo do
     repo = GithubRepo.new(@valid_attributes)
     repo.coder = @coder_big
     repo.save!
+  end
+  
+  describe "should return different lists of github repos" do
+    before do
+      @repos = []
+      12.times do
+        @repos << GithubRepo.generate.save
+      end
+      
+    end
+    
+    it "should return the top 10 by watchers" do
+      GithubRepo.all.size.should == 12
+    end
   end
 end

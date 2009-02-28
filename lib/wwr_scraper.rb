@@ -259,6 +259,7 @@ class WWRScraper
           name = name.titleize.split(' ')
           first_name = name[0].gsub("."," ")
           last_name = "#{name[1..(name.length - 1)]}".gsub("."," ") if name.size > 1
+          puts "coder's name #{name}"
         end
         
         location = normalize_location(doc.search('span.locality').inner_html)
@@ -389,9 +390,10 @@ class WWRScraper
       puts "saving data for github repo #{repo.name}"
       begin
         github_repo = coder.github_repos.find_or_create_by_name(repo.name)
+        github_repo.coder_id = coder.id
         
-        github_repo.commits.delete_all if !github_repo.new_record?  
-        github_repo.coder_id = coder.id    
+        github_repo.commits.delete_all #if !github_repo.new_record?  
+        puts "github_repo #{github_repo.id} now has #{github_repo.commits.size} commits"
         
         watchers += (repo.watchers - 1)
         puts "github repo #{repo.name} with watchers #{watchers}"
@@ -427,14 +429,21 @@ class WWRScraper
   def save_commits(github_repo,commits)
     puts "saving commits"
     commits.each_with_index do |commit,index|
-      new_commit = github_repo.commits.build
-      new_commit.author = commit.author.name
-      new_commit.commit_sha = commit.id
-      new_commit.user = commit.user
-      new_commit.message = commit.message
-      new_commit.committed_date = commit.committed_date
-      new_commit.github_repo = github_repo
-      github_repo.commits << new_commit
+      begin
+        new_commit = github_repo.commits.build
+        new_commit.author = commit.author.name
+        new_commit.github_repo_id = github_repo.id
+        new_commit.commit_sha = commit.id
+        puts "commit sha is #{new_commit.commit_sha}"
+        new_commit.user = commit.user
+        new_commit.message = commit.message
+        new_commit.committed_date = commit.committed_date
+        new_commit.github_repo_id = github_repo.id
+        new_commit.save!
+        github_repo.commits << new_commit
+      rescue Exception => ex
+        puts "error saving commit #{ex}"
+      end
     end
     github_repo.save
   end

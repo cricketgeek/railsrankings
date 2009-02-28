@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
       :all_companies => :get,
       :all_cities => :get,
       :all_coders => :get,
+      :all_repos  => :get,
       :get_coders => :get      
     }
   

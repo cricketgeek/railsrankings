@@ -23,6 +23,18 @@ class GithubRepo < ActiveRecord::Base
   validates_presence_of :url
   
   named_scope :alphabetical, :order => :name
-  named_scope :popular, :order => "watchers DESC"
+  named_scope :popular, lambda { |*args| { :limit => args.first || 10, :order => "watchers DESC"} } 
   
+  generator_for :watchers, :start => 1 do |watcher|
+    watcher.succ
+  end
+  
+  generator_for :name, :start => "test_repo" do |name|
+    name.succ
+  end
+
+  generator_for :url, :start => "http://github.com/test" do |url|
+    url.succ
+  end
+    
 end

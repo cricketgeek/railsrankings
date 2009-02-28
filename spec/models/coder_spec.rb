@@ -89,8 +89,20 @@ describe Coder do
   describe "determine nicknames to use with github api" do
     
     it "should return just one nickname for matt" do
-      @coder = Coder.new(:first_name => "Matt", :last_name => "Aimonetti", :nickname => "mattetti", :profile_url => "http://www.workingwithrails.com/person/6065-matt-aimonetti")
+      @coder = Coder.new( :first_name => "Matt", 
+                          :last_name => "Aimonetti", 
+                          :nickname => "mattetti", 
+                          :profile_url => "http://www.workingwithrails.com/person/6065-matt-aimonetti")
       @coder.clean_nicknames.should == ["mattetti"]
+    end
+  end
+  
+  describe "clean an invalid nickname, Andre" do
+    
+    it "should return nicknames array but cleanse the one nickname andre" do
+      coder = Coder.generate(:first_name => "Andre",:last_name => "buffon", :nickname => "andre pilaf rice")
+      coder.clean_nicknames.should_not include("andre")
+      coder.clean_nicknames.should include("pilaf","rice","not_andre_lewis")
     end
   end
   

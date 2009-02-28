@@ -18,7 +18,7 @@ namespace :wwr do
     task :load_all => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_name_browse_pages
-      
+      Rake::Task["data_helpers:slugify"].invoke      
     end
     
     desc "process just one profile url, re-run rankings sort"
@@ -29,14 +29,14 @@ namespace :wwr do
       profile_url = ENV['profile_url']
       puts "processing just profile #{profile_url} page"
       wwr_scraper = WWRScraper.new
-      wwr_scraper.reprocess_for_one_person(profile_url)      
+      wwr_scraper.reprocess_for_one_person(profile_url) 
       Rake::Task["data_helpers:slugify"].invoke
     end
 
     desc "re-run rankings algo"
     task :rerun_rankings => :environment do
       wwr_scraper = WWRScraper.new
-      wwr_scraper.rerun_rankings      
+      wwr_scraper.rerun_rankings
     end
     
     
@@ -49,6 +49,19 @@ namespace :wwr do
       puts "processing just letter #{letter} page"
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_name_browse_by_letter(letter)
+      Rake::Task["data_helpers:slugify"].invoke
+      
     end
+    
+    desc "remove bad repos and commits"
+    task :cleanup  => :environment do
+      repos = GithubRepo.find(:all,:conditions => "coder_id IS NULL")
+      repos.each do |repo|
+        repo.commits.delete_all
+        repo.delete
+      end
+      Commit.delete_all("github_repo_id is NULL")
+    end
+    
   end
 end

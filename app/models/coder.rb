@@ -74,14 +74,14 @@ class Coder < ActiveRecord::Base
   end
   
   named_scope :cities, lambda { |*args| { :select => "city, railsrank, sum(full_rank) as total,count(*) as count", 
-      :conditions => "city is not null AND city <> ''", :limit => args.first || 20, :group => "city", :order => "total DESC" } }
+      :conditions => "city is not null AND city <> ''", :limit => args.first || 15, :group => "city", :order => "total DESC" } }
   named_scope :all_cities, :select => "city, sum(full_rank) as total,count(*) as count", 
           :conditions => "city is not null AND city <> ''", :group => "city", :order => "total DESC"
   named_scope :companies, lambda { |*args| { :select => "company_name, railsrank, sum(full_rank) as total, count(*) as count", 
-    :conditions => "company_name is not null AND company_name <> ''", :limit => args.first || 20, :group => "company_name", :order => "total DESC"} }
+    :conditions => "company_name is not null AND company_name <> ''", :limit => args.first || 15, :group => "company_name", :order => "total DESC"} }
   named_scope :all_companies, :select => "company_name, railsrank, sum(full_rank) as total, count(*) as count", 
       :conditions => "company_name is not null AND company_name <> ''", :group => "company_name having total > 0", :order => "total DESC"
-  named_scope :top_coders, lambda { |*args| { :limit => args.first || 20, :order => "full_rank DESC" } }
+  named_scope :top_coders, lambda { |*args| { :limit => args.first || 15, :order => "full_rank DESC" } }
   named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "full_rank DESC"
   
   before_create :default_rank
@@ -100,10 +100,8 @@ class Coder < ActiveRecord::Base
     if valid_for_github?
       parse_string = nickname.gsub(","," ").gsub(";"," ").gsub("."," ")
       nicknames = parse_string.split
-      nicknames.reject! { |name| ["on","at","@","the","github"].include?(name)} 
-      puts "valid nicknames found #{nicknames.join(" ")}" if nicknames
-      nicknames
-      
+      nicknames.reject! { |name| ["on","at","@","the","github"].include?(name)}
+      nicknames.map{|nick| cleanse_bad_aliases(nick)}
     else
       []
     end
@@ -138,7 +136,7 @@ class Coder < ActiveRecord::Base
         clean_name = "not_josh"
       elsif alias_name.downcase == "tobi" and self.last_name == "Schlottke"
         clean_name = "not_tobi"
-      elsif alias_name.downcase == "andre" and (self.first_name != "Andre" && self.last_name != "Lewis")
+      elsif alias_name.downcase == "andre" and (self.first_name != "Andre" || self.last_name != "Lewis")
         clean_name = "not_andre_lewis"
       end
     end
@@ -158,7 +156,6 @@ class Coder < ActiveRecord::Base
   
   def retrieve_github_repos
     repos = []
-
     nicks_to_use = clean_nicknames
     nicks_to_use.each do |nickname|
       begin
