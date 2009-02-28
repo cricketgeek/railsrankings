@@ -2,7 +2,7 @@
 	<div id="content">
 		<% cache :all_repos do %>
 		<ol>
-		  <%= render :partial  => "top_repos", :collection => GithubRepo.popular, :as => :repo  %>
+		  <%= render :partial  => "top_repos", :collection => GithubRepo.popular(200), :as => :repo  %>
 		</ol>
 		<% end %>
 	</div>
