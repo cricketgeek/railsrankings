@@ -391,10 +391,7 @@ class WWRScraper
       begin
         github_repo = coder.github_repos.find_or_create_by_name(repo.name)
         github_repo.coder_id = coder.id
-        
         github_repo.commits.delete_all #if !github_repo.new_record?  
-        puts "github_repo #{github_repo.id} now has #{github_repo.commits.size} commits"
-        
         watchers += (repo.watchers - 1)
         puts "github repo #{repo.name} with watchers #{watchers}"
         
@@ -406,8 +403,7 @@ class WWRScraper
         github_repo.forked = repo.forked
         github_repo.forks = repo.forks
         github_repo.save
-        puts "github_repo was valid and saved" if github_repo.valid?
-        #puts y github_repo
+
         if github_repo.valid?
           coder.github_repos << github_repo
           save_commits(github_repo,repo.commits.first(10))
@@ -434,7 +430,6 @@ class WWRScraper
         new_commit.author = commit.author.name
         new_commit.github_repo_id = github_repo.id
         new_commit.commit_sha = commit.id
-        puts "commit sha is #{new_commit.commit_sha}"
         new_commit.user = commit.user
         new_commit.message = commit.message
         new_commit.committed_date = commit.committed_date
