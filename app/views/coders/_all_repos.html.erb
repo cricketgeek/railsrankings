@@ -1,9 +1,0 @@
-<div id="page" class="top_rule">
-	<div id="content">
-		<% cache :all_repos do %>
-		<ol>
-		  <%= render :partial  => "top_repos", :collection => GithubRepo.all, :as => :repo  %>
-		</ol>
-		<% end %>
-	</div>
-</div>
