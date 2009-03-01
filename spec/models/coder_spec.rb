@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090221173936
+# Schema version: 20090301191852
 #
 # Table name: coders
 #
@@ -28,6 +28,13 @@
 #  is_available_for_hire :boolean(1)
 #  railsrank             :integer(4)      default(9999)
 #  company_id            :integer(4)
+#  core_team_member      :boolean(1)
+#  github_email          :string(255)
+#  github_location       :string(255)
+#  github_full_name      :string(255)
+#  latitude              :float
+#  longitude             :float
+#  whole_name            :string(255)
 #
 
 

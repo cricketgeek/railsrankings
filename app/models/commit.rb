@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090221173936
+# Schema version: 20090301191852
 #
 # Table name: commits
 #

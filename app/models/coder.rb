@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090221173936
+# Schema version: 20090301191852
 #
 # Table name: coders
 #
@@ -28,6 +28,13 @@
 #  is_available_for_hire :boolean(1)
 #  railsrank             :integer(4)      default(9999)
 #  company_id            :integer(4)
+#  core_team_member      :boolean(1)
+#  github_email          :string(255)
+#  github_location       :string(255)
+#  github_full_name      :string(255)
+#  latitude              :float
+#  longitude             :float
+#  whole_name            :string(255)
 #
 
 require 'ruby-github'
@@ -43,6 +50,7 @@ class Coder < ActiveRecord::Base
   define_index do
     indexes [first_name,last_name], :as => :name
     indexes city, company_name, country, nickname
+    indexes github_repos.name, :as => :repo_names
     
     has rank
     has full_rank
@@ -100,7 +108,7 @@ class Coder < ActiveRecord::Base
     if valid_for_github?
       parse_string = nickname.gsub(","," ").gsub(";"," ").gsub("."," ")
       nicknames = parse_string.split
-      nicknames.reject! { |name| ["on","at","@","the","github"].include?(name)}
+      nicknames.reject! { |name| ["on","at","@","the","github","code","rails"].include?(name)}
       nicknames.map{|nick| cleanse_bad_aliases(nick)}
     else
       []
@@ -138,6 +146,14 @@ class Coder < ActiveRecord::Base
         clean_name = "not_tobi"
       elsif alias_name.downcase == "andre" and (self.first_name != "Andre" || self.last_name != "Lewis")
         clean_name = "not_andre_lewis"
+      elsif alias_name.downcase == "clemens" and (self.first_name != "Clemens" || self.last_name != "Kofler")
+        clean_name = "not_clemens_kofler"
+      elsif alias_name.downcase == "gabriel" and (self.first_name != "Gabriel" || self.last_name != "Handford")
+        clean_name = "not_gabriel_handford"
+      elsif alias_name.downcase == "code"
+        clean_name = "code_is_an_invalid_alias"
+      elsif alias_name.downcase == "robin" and (self.first_name != "Robin" || self.last_name != "Lu")
+        clean_name = "not_robin_lu"
       end
     end
     return clean_name
@@ -149,31 +165,36 @@ class Coder < ActiveRecord::Base
     core_contrib_bonus = self.core_contributor ? CORE_CONTRIBUTOR_BONUS : 0
     core_team_member_bonus = self.core_team_member ? CORE_TEAM_BONUS : 0
     total_rank = (MAX_RANK - rank) + (self.github_watchers * GITHUB_WATCHER_POINTS) + bonus + core_contrib_bonus + core_team_member_bonus
-    puts "total rank is #{total_rank}"
-    total_rank
   end
-  
   
   def retrieve_github_repos
     repos = []
     nicks_to_use = clean_nicknames
+    got_github_ident_info = false
     nicks_to_use.each do |nickname|
       begin
         nickname = cleanse_bad_aliases(nickname)
-        nickname.strip!
         github_user = GitHub::API.user(nickname)
+        unless got_github_ident_info
+          get_github_ident_info(github_user) 
+          got_github_ident_info = true
+        end
         repos = repos + github_user.repositories
       rescue Exception => ex
         puts "error geting github repo, #{ex}"
       end
     end
-
     repos ||= []
   end
   
   private
   
-  
+  def get_github_ident_info(github_user)
+    self.github_email = github_user.email
+    self.github_full_name = github_user.name
+    self.github_location = github_user.location
+    self.save
+  end
 
   def valid_for_github?
     nickname and (not nickname.blank?) and nickname.upcase != "NONE"

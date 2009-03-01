@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090221173936
+# Schema version: 20090301191852
 #
 # Table name: github_repos
 #
@@ -24,6 +24,10 @@ class GithubRepo < ActiveRecord::Base
   
   named_scope :alphabetical, :order => :name
   named_scope :popular, lambda { |*args| { :limit => args.first || 10, :order => "watchers DESC"} } 
+  
+  def self.valid_repo_name_and_description?(repo)
+    !repo.name.include?("django") || !repo.description.include?("django")
+  end
   
   generator_for :watchers, :start => 1 do |watcher|
     watcher.succ

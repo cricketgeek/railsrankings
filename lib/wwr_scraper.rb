@@ -7,7 +7,6 @@ class WWRScraper
   attr_accessor :processed_urls
   @@logger = RAILS_DEFAULT_LOGGER
   
-  
   def initialize
     @processed_urls = {}
     @crawling = true
@@ -23,11 +22,15 @@ class WWRScraper
       puts "================================================================"
       puts "processing #{page_url} next"
       puts "================================================================"
+      @@logger.info "processing pages for letter #{letter_page}"
       process_name_page(page_url)
     end
     base_page_url.close
+    @@logger.info "done scraping profile pages"
     remove_phonies
+    @@logger.info "done removing phonies"
     output_rankings
+    @@logger.info "done processing and rerunning rankings algo"
   end
     
   def process_name_browse_by_letter(letter)
@@ -62,7 +65,6 @@ class WWRScraper
     remove_phonies
     rerun_rankings
   end
-  
   
   def process_using_seed_data
     @crawling = false
@@ -123,10 +125,10 @@ class WWRScraper
     processing_array.each do |url_to_process|
       process_profile_page(url_to_process)
     end
-    
   end
   
   def output_rankings
+    @@logger.info "running output rankings"
     @rails_rankings.sort!
      
     @rails_rankings.each_with_index do |coder,index|
@@ -153,81 +155,14 @@ class WWRScraper
       coder = coders.last
       coder.delete
     end
-    
     Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
-    
   end
   
   def should_process_url?(url)
     coder = Coder.find_by_profile_url(url)
     coder.nil? or PROCESS_UPDATES
   end
-  
-  def normalize_location(location)
     
-    @locations = {
-      "norcross"  =>  "Atlanta", "norcross, ga" => "Atlanta",
-      "atlanta, ga" => "Atlanta", "atlanta ga" => "Atlanta", "atlana ga" => "Atlanta",
-      "atlanta georgia" => "Atlanta", "atlanta, georgia" => "Atlanta",
-      "decatur, ga" => "Atlanta", "decatur" => "Atlanta",
-      "greater atlanta area, georgia" => "Atlanta", 
-      "chicago, il" => "Chicago","wheaton, il" => "Chicago","chicago, illinois" => "Chicago","chicago il" => "Chicago",
-      "chicago / il" => "Chicago",
-      "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco", "san francisco bay area" => "San Francisco",
-      "berkeley, ca" => "San Francisco","san francisco, california" => "San Francisco", "san francisco / ca" => "San Francisco",
-      "boston, ma" => "Boston","boston ma" => "Boston", "boston, massachusetts" => "Boston", "boston/ma" => "Boston",
-      "austin, tx" => "Austin","austin tx" => "Austin", "austin, tx, usa" => "Austin",
-      "austin, texas" => "Austin","austin / texas" => "Austin","austin (texas)" => "Austin", "austin,, tx" => "Austin",
-      "jacksonville, fl" => "Jacksonville","jacksonville/ fl" => "Jacksonville", "jacksonville, florida" => "Jacksonville",
-      "jacksonville beach, fl" => "Jacksonville",
-      "rio de janeiro / rj" => "Rio de Janeiro",
-      "london" => "London", "london, uk" => "London", "london / london / uk " => "London",
-      "seattle, wa" => "Seattle", "seattle, washington"  => "Seattle",
-      "portland, or" => "Portland","portland, oregon" => "Portland", "portland or" => "Portland",
-      "san diego, ca" => "San Diego","san diego, usa" => "San Diego",
-      "new york city" => "New York City", "new york, ny" => "New York City", "new york" => "New York City", "nyc" => "New York City",
-      "brooklyn, ny" => "New York City","new york city, ny" => "New York City", "nyc metro" => "New York City",
-      "toronto, ontario" => "Toronto","toronto, on" => "Toronto","toronto / ontario" => "Toronto",
-      "denver, co" => "Denver", "denver, colorado" => "Denver", "longmont, co" => "Denver", "longmont, colorado" => "Denver",
-      "nashville, tn" => "Nashville",
-      "los angeles, ca" => "Los Angeles", "los angeles / california" => "Los Angeles", "los angeles, california" => "Los Angeles",
-      "orlando, fl" => "Orlando", "orlando, florida" => "Orlando", "cambridge, ma" => "Boston",
-      "washington dc" => "Washington, DC", "washington dc area" => "Washington, DC", "toronto (ontario)" => "Toronto",
-      "washington, d.c." => "Washington, DC","washington d.c. metro area" => "Washington, DC","dc area" => "Washington, DC",
-      "São Paulo - SP" => "São Paulo", "sao paulo/sp" => "São Paulo", "são paulo, sp" => "São Paulo",
-      "winchester" => "Southampton, UK",
-      "hamburg, germany" => "Hamburg", 
-      "montreal / quebec" => "Montreal",
-      "dallas, tx" => "Dallas", "dallas tx" => "Dallas","dallas, texas" => "Dallas",
-      "chapel hill, nc" => "Chapel Hill", "chapel hill, north carolina" => "Chapel Hill", "Chapel Hill NC" => "Chapel Hill",
-      "stillwater, oklahoma" => "Stillwater", "stillwater, ok" => "Stillwater, Oklahoma",
-      "columbus, ohio" => "Columbus, OH", 
-      "baltimore/md" => "Baltimore", "baltimore, md" => "Baltimore",
-      "baltimore md" => "Baltimore", 
-      "cracow" => "Kraków", "krakow" => "Kraków", 
-      "huntsville / alabama" => "Huntsville, AL", "Huntsville / al" => "Huntsville, AL",
-      "kansas city, mo, usa" => "Kansas City", "kansas city, mo" => "Kansas City","kansas city mo" => "Kansas City",
-      "santa barabara" =>"Santa Barbara", "santa barbara, cA" => "Santa Barbara", "santa barbara, california" => "Santa Barbara",
-      "winnipeg, manitoba" => "Winnipeg","winnipeg (mb)" => "Winnipeg",
-      "raleigh, nc" => "Raleigh", "raleigh, north carolina" => "Raleigh",
-      "paris, france" => "Paris", "paris, fr" => "Paris", "paris / france" => "Paris"
-     }
-    
-    return @locations[location.downcase] if @locations[location.downcase]
-    return location
-    
-  end
-  
-  def normalize_company_name(company)
-    @companies = {"active reload, llc." => "Active Reload","thoughtworks, inc." => "ThoughtWorks",
-      "atlantic dominion solutions, llc" => "Atlantic Dominion Solutions",
-      "37 signals" => "37signals","consumer source inc" => "Primedia", 
-      "intridea, inc" => "Intridea"}
-    
-    return @companies[company.downcase] if @companies[company.downcase]
-    return company
-  end
-  
   def process_recommendations(full_recommendation_url,coder)
     recommendations = [] 
     recommender_url_doc = open(full_recommendation_url)
@@ -249,83 +184,40 @@ class WWRScraper
       @processed_urls[url] = url
       puts "processing profile: #{url}"
       begin
-        open_url = open(url)
-        doc = Hpricot(open_url)
-        wwr_id = url.split("/").last
-        name = doc.search("h2.item-title").inner_html
-        
-        if name && name.length > 0
-          name = name.gsub(/\n/,"").lstrip.rstrip
-          name = name.titleize.split(' ')
-          first_name = name[0].gsub("."," ")
-          last_name = "#{name[1..(name.length - 1)]}".gsub("."," ") if name.size > 1
-          puts "coder's name #{name}"
-        end
-        
-        location = normalize_location(doc.search('span.locality').inner_html)
-        @@logger.info "name: #{name} location is #{location}"
-        if doc.at("#person-about-summary/p/a.url")
-          website = doc.search('#person-about-summary/p/a.url').attr('href')
-        end
-        # email = doc.search('#person-further-info/a').inner_html
-        # puts "email is #{email}"
-        #puts doc.at('img.photo')
-        img_url_el = doc.search('img.photo')
-        img_url = img_url_el.attr('src') if img_url_el.any?
-        company_name = normalize_company_name(doc.search('td/a.organization_name').inner_html)        
-        country_name = doc.search('a.country-name').inner_html
-        nickname = doc.search('td.nickname').inner_html      
-        puts "nickname is #{nickname} "
-        rank = doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
-        rank = MAX_RANK if rank.blank?
-        
-        is_available_for_hire = doc.at("a[@href='/person/#{wwr_id}/enquire/new']") != nil
-
-        recs_url = url.sub("http://www.workingwithrails.com/", "http://www.workingwithrails.com/recommendation/for/")
-        recs = doc.search("#person-recommendation-for-summary/h3/a[@href='#{recs_url}']").inner_html
         coder = Coder.find_by_profile_url(url)
-        coder = Coder.new if coder.nil?
+        coder = Coder.new if coder.nil?        
+        
+        wwr_profile = WorkingProfile.new(url)
+        
+        coder.first_name = wwr_profile.first_name
+        coder.last_name = wwr_profile.last_name
+        coder.whole_name = wwr_profile.name
+        recs = wwr_profile.recommendation_count
+
         coder.profile_url = url
-        coder.is_available_for_hire = is_available_for_hire
-        coder.nickname = nickname
-        coder.first_name = first_name
-        coder.last_name = last_name
-        rails_core_contrib_img = doc.at("img[@alt='rails core contributor']")
-        rails_core_team_member_img = doc.at("img[@alt='rails core team member']")
-        
-        coder.core_contributor = !rails_core_contrib_img.nil?
-        coder.core_team_member = !rails_core_team_member_img.nil?
-        
-        puts "#{coder.full_name} is a core team member" if coder.core_team_member
-        add_known_aliases(coder)
-        puts "about to save github data"
-        save_github_info(coder)
-      
-        if not rank.blank? and rank.to_i < MAX_RANK
-          delta = (coder.rank.to_i - rank.to_i)
-        end
-      
-        coder.rank = rank
-        coder.full_rank = calculate_full_rank(coder)
-        #process_company(company_name,coder)
+        coder.nickname = wwr_profile.nickname
+        coder.core_contributor =  wwr_profile.core_contributor?
+        coder.core_team_member =  wwr_profile.core_team_member?
+        coder.is_available_for_hire = wwr_profile.is_available_for_hire?
                 
-        coder.update_attributes(:website => website,
-                  :image_path => img_url, :city => location, 
-                  :company_name => company_name,
-                  :country => country_name,
-                  :recommendation_count  => recs.to_i,
-                  :delta => delta)
-    
-        coder.save
+        add_known_aliases(coder)
+        save_github_info(coder)
         
-        if coder.valid?
-          add_to_rails_rank(coder)
-        else
-          @@logger.error "couldn't save coder because #{coder.errors.inspect}" if not coder.valid?
-        end
-        
+        delta = coder.rank - wwr_profile.rank if coder.rank
+        coder.rank = wwr_profile.rank
+        coder.full_rank = calculate_full_rank(coder)
+        coder.website = wwr_profile.website
+        coder.image_path = wwr_profile.image_path
+        coder.city = wwr_profile.location
+        coder.company_name = wwr_profile.company_name
+        coder.country = wwr_profile.country_name
+        coder.recommendation_count = wwr_profile.recommendation_count
+        coder.delta = delta
+        coder.save!
+        add_to_rails_rank(coder)
         crawl_recommendations(coder,url) if @crawling
-        open_url.close
+        
+        wwr_profile.close
       rescue Exception => ex
         puts "exception #{ex}"
         @@logger.error("FFFAIL: #{ex} while processing #{url}")
@@ -364,6 +256,10 @@ class WWRScraper
       coder.nickname = "stevenbristol"
     elsif coder.first_name == "Andre" and coder.last_name == "Lewis"
       coder.nickname = "andre"
+    elsif coder.first_name == "Clemens" and coder.last_name == "Kofler"
+      coder.nickname = "clemens"
+    elsif coder.first_name == "Mike" and coder.last_name == "Clark"
+      coder.nickname = "clarkware"
     end
     
   end
@@ -382,48 +278,40 @@ class WWRScraper
   end
   
   def save_github_info(coder)
-    puts "saving github info data for coder"
     watchers = 0
     github_url = ""
     coder.save
     coder.retrieve_github_repos.each do |repo|
-      puts "saving data for github repo #{repo.name}"
-      begin
-        github_repo = coder.github_repos.find_or_create_by_name(repo.name)
-        github_repo.coder_id = coder.id
-        github_repo.commits.delete_all #if !github_repo.new_record?  
-        watchers += (repo.watchers - 1)
-        puts "github repo #{repo.name} with watchers #{watchers}"
-        
-        github_url = repo.owner
-        github_repo.description = repo.description
-        github_repo.watchers = (repo.watchers - 1)
-        github_repo.name = repo.name
-        github_repo.url = repo.url
-        github_repo.forked = repo.forked
-        github_repo.forks = repo.forks
-        github_repo.save
-
-        if github_repo.valid?
-          coder.github_repos << github_repo
-          save_commits(github_repo,repo.commits.first(10))
+      if GithubRepo.valid_repo_name_and_description?(repo)
+        begin
+          github_repo = coder.github_repos.find_or_create_by_name(repo.name)
+          github_repo.coder_id = coder.id
+          github_repo.commits.delete_all
+          watchers += (repo.watchers - 1)
+          github_url = repo.owner
+          github_repo.description = repo.description
+          github_repo.watchers = (repo.watchers - 1)
+          github_repo.name = repo.name
+          github_repo.url = repo.url
+          github_repo.forked = repo.forked
+          github_repo.forks = repo.forks
+          github_repo.save
+          if github_repo.valid?
+            coder.github_repos << github_repo
+            save_commits(github_repo,repo.commits.first(10))
+          end
+        rescue Exception => ex
+          puts "error for repo #{repo.name}  #{ex}"
+          @@logger.error("#{repo.name} busted up with error:#{ex} either accessing the repo data or getting and saving commits")
         end
-      rescue Exception => ex
-        puts "error for repo #{repo.name}  #{ex}"
-        @@logger.error("#{repo.name} busted up with error:#{ex} either accessing the repo data or getting and saving commits")
       end
     end
-    
-    puts "adding #{watchers} github watchers total for #{github_url}"
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
-    coder.save
-    puts "failed saving coder #{coder.errors.inspect}" if !coder.valid?
     @@logger.error("couldn't save coder validation errors #{coder.errors.inspect}") if !coder.valid?
   end
   
   def save_commits(github_repo,commits)
-    puts "saving commits"
     commits.each_with_index do |commit,index|
       begin
         new_commit = github_repo.commits.build
@@ -438,6 +326,7 @@ class WWRScraper
         github_repo.commits << new_commit
       rescue Exception => ex
         puts "error saving commit #{ex}"
+        @@logger.error "error saving commit #{ex}"
       end
     end
     github_repo.save

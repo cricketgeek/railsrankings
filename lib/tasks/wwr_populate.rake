@@ -55,7 +55,7 @@ namespace :wwr do
     
     desc "remove bad repos and commits"
     task :cleanup  => :environment do
-      repos = GithubRepo.find(:all,:conditions => "coder_id IS NULL")
+      repos = GithubRepo.find(:all,:conditions => "coder_id IS NULL OR name like '%django%' OR description like '%django%'")
       repos.each do |repo|
         repo.commits.delete_all
         repo.delete
