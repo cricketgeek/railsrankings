@@ -252,7 +252,7 @@ class WWRScraper
       coder.nickname = "tobi"
     elsif coder.first_name == "Tobias" and coder.last_name == "Crawley"
       coder.nickname = "tobias"
-    elsif coder.first_name == "Steven" and coder.last_name == "ABristol"
+    elsif coder.first_name == "Steven" and coder.last_name == "Bristol"
       coder.nickname = "stevenbristol"
     elsif coder.first_name == "Andre" and coder.last_name == "Lewis"
       coder.nickname = "andre"
