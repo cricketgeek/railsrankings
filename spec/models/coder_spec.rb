@@ -111,6 +111,8 @@ describe Coder do
       coder.clean_nicknames.should_not include("andre")
       coder.clean_nicknames.should include("pilaf","rice","not_andre_lewis")
     end
+    
+    
   end
   
   
