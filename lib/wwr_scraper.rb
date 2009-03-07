@@ -47,7 +47,7 @@ class WWRScraper
   end
   
   def rerun_rankings
-    @rails_rankings = Coder.all
+    @rails_rankings = Coder.ranked
     output_rankings    
   end
   
@@ -130,13 +130,21 @@ class WWRScraper
   def output_rankings
     @@logger.info "running output rankings"
     @rails_rankings.sort!
-     
+    puts "running calculations on all coders' rankings"
     @rails_rankings.each_with_index do |coder,index|
       coder.railsrank = index + 1
       coder.save
-      puts "coder #{coder.full_name} is RRanked #{index} with a full rank of #{coder.full_rank}"
     end
   end
+  
+  def remove_phonies
+    coders = Coder.find(:all,:conditions => "last_name = 'Chacon'")
+    if coders.size == 2
+      coder = coders.last
+      coder.delete
+    end
+    Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
+  end  
   
   private
   
@@ -147,15 +155,6 @@ class WWRScraper
       process_profile_page(profile_url.get_attribute("href"))
     end
     name_page_url.close
-  end
-  
-  def remove_phonies
-    coders = Coder.find(:all,:conditions => "last_name = 'Chacon'")
-    if coders.size == 2
-      coder = coders.last
-      coder.delete
-    end
-    Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
   end
   
   def should_process_url?(url)
@@ -185,8 +184,7 @@ class WWRScraper
       puts "processing profile: #{url}"
       begin
         coder = Coder.find_by_profile_url(url)
-        coder = Coder.new if coder.nil?        
-        
+        coder = Coder.new if coder.nil?
         wwr_profile = WorkingProfile.new(url)
         
         coder.first_name = wwr_profile.first_name
@@ -199,7 +197,7 @@ class WWRScraper
         coder.core_contributor =  wwr_profile.core_contributor?
         coder.core_team_member =  wwr_profile.core_team_member?
         coder.is_available_for_hire = wwr_profile.is_available_for_hire?
-                
+        
         add_known_aliases(coder)
         save_github_info(coder)
         
@@ -213,10 +211,9 @@ class WWRScraper
         coder.country = wwr_profile.country_name
         coder.recommendation_count = wwr_profile.recommendation_count
         coder.delta = delta
-        coder.save!
+        coder.save!        
         add_to_rails_rank(coder)
         crawl_recommendations(coder,url) if @crawling
-        
         wwr_profile.close
       rescue Exception => ex
         puts "exception #{ex}"
@@ -260,6 +257,8 @@ class WWRScraper
       coder.nickname = "clemens"
     elsif coder.first_name == "Mike" and coder.last_name == "Clark"
       coder.nickname = "clarkware"
+    elsif coder.first_name == "Giles" and coder.last_name == "Bowkett"
+      coder.nickname = "gilesbowkett"
     end
     
   end
@@ -326,7 +325,7 @@ class WWRScraper
         github_repo.commits << new_commit
       rescue Exception => ex
         puts "error saving commit #{ex}"
-        @@logger.error "error saving commit #{ex}"
+        # @@logger.error "error saving commit #{ex}"
       end
     end
     github_repo.save

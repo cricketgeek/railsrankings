@@ -17,7 +17,7 @@
 						<%= show_delta(@coder) %>
 					</div>
 				</div>
-				<p>workingwithrails rank: <%= @coder.rank %></p>	
+				<p><%= link_to("workingwithrails rank: #{@coder.rank}", @coder.profile_url, { :title => "View #{@coder.first_name}'s Profile on Working With Rails"}) %></p>	
 				<p><%= @coder.recommendation_count %> WWR Recommendations</p>
 				<p><%= link_to "Recommend #{ @coder.full_name[0..35] }", @coder.profile_url %></p>
 				<br class="clr" />   
@@ -33,14 +33,13 @@
 			<!--userinfo-->
 			<ul class="user_info">
 				<li class="username"><%=h "#{@coder.full_name}" %></li>
-				<li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>      
+				<li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>
+				<li class="userlocation"><strong>Last Updated: <%= distance_of_time_in_words(@coder.updated_at,Time.now,true) %> ago</strong></li>   
 				<li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
 				<li class="userlocation"><%=h @coder.company_name %></li>
 				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
-				<li class="userlocation">Rails core contributor: <%= is_core_contributor?(@coder) %></li>
-				<li class="userlocation">Can you hire <%="#{@coder.first_name}"%>? <%= available_for_hire?(@coder) %></li>								
-			
-				<li class="userlocation">  <%= link_to "Check out #{@coder.first_name}'s WWR Profile",@coder.profile_url, { :title => "View #{@coder.first_name}'s Profile on Working With Rails"} %></li>
+				<li class="userlocation"><strong><%= rails_core_status(@coder) %></strong></li>
+				<li class="userlocation"><%= available_for_hire?(@coder) %></li>
 			</ul>
 		 </div>
 

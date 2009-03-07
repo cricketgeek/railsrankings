@@ -43,9 +43,7 @@
     			<% end %>  
 	      <div class="wwr_rank" title="railsranking rank">
 	        <a href="#"><%= show_rank(coder) %></a>	
-	        <div class="rank_change rounded">
-						<%= show_delta(@coder) %>
-					</div>
+
 				</div>
 	        <!-- <%= show_delta(coder) %>
 			<p><%= coder.recommendation_count %> Recommendations</p>
@@ -93,7 +91,7 @@
       <h2><%= link_to "Top Rails Coders", all_coders_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_coders do %>      
-        <%= render :partial => "top_coders_new_rank", :collection => Coder.top_coders, :as => :coder %>
+        <%= render :partial => "top_coders_new_rank", :collection => Coder.ranked.top_coders, :as => :coder %>
       <% end %>
       </ol>
       <h2><%= link_to "Top Github Repos", all_repos_coders_path, { :title => "All Rails Coders by Rank" } %></h2>

@@ -34,11 +34,25 @@ module CodersHelper
   end
   
   def available_for_hire?(coder)
-    coder.is_available_for_hire ? "You can try, kind sir." : "No, too busy at the moment"
+    coder.is_available_for_hire ? "Available for hire at the moment." : "Not available for hire, a bit busy just now."
   end
   
   def is_core_contributor?(coder)
     coder.core_contributor ? "Yes" : "No"
+  end
+  
+  def is_core_team?(coder)
+    coder.core_team_member ? "Yes" : "No"
+  end
+  
+  def rails_core_status(coder)
+    if coder.core_team_member
+      "Rails Core Team Member"
+    elsif coder.core_contributor
+      "Rails Core Contributor"
+    else
+      ""
+    end
   end
   
   def show_delta(coder)
