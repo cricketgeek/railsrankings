@@ -5,6 +5,7 @@ class CodersController < ApplicationController
   # GET /coders
   # GET /coders.xml
   def index
+    
     @coders = Coder.search(
       (params[:search] || ""),
       :page => (params[:page] || 1),

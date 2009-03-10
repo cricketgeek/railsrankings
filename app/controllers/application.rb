@@ -7,8 +7,7 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'd59b651ef4ce6957caee0dfc59f326a3'
-  
-  include HoptoadNotifier::Catcher
+
   
   
   # See ActionController::Base for details 

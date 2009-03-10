@@ -132,7 +132,9 @@ class WWRScraper
     @rails_rankings.sort!
     puts "running calculations on all coders' rankings"
     @rails_rankings.each_with_index do |coder,index|
-      coder.railsrank = index + 1
+      new_rank = index + 1
+      coder.delta = coder.railsrank - new_rank
+      coder.railsrank = new_rank
       coder.save
     end
   end
@@ -201,7 +203,7 @@ class WWRScraper
         add_known_aliases(coder)
         save_github_info(coder)
         
-        delta = coder.rank - wwr_profile.rank if coder.rank
+        #delta = coder.rank - wwr_profile.rank if coder.rank
         coder.rank = wwr_profile.rank
         coder.full_rank = calculate_full_rank(coder)
         coder.website = wwr_profile.website
