@@ -49,7 +49,7 @@ class Coder < ActiveRecord::Base
   
   define_index do
     indexes [first_name,last_name], :as => :name
-    indexes city, company_name, country, nickname
+    indexes whole_name, city, company_name, country, nickname
     indexes github_repos.name, :as => :repo_names
     
     has rank
@@ -97,7 +97,8 @@ class Coder < ActiveRecord::Base
 
   
   def full_name
-    "#{first_name} #{last_name}"
+    return "#{whole_name}" if whole_name
+    return "#{first_name} #{last_name}"
   end
   
   def recent_commits

@@ -41,7 +41,7 @@
 				<li class="userlocation"><strong><%= rails_core_status(@coder) %></strong></li>
 				<li class="userlocation"><%= available_for_hire?(@coder) %></li>
 				<% if @coder.twitter_name %>
-				  <li class="userlocation">Twitter: <%=link_to @coder.twitter_name, "http://twitter.com/#{@coder.twitter_name}" %></li>
+				  <li class="userlocation">Twitter: <%=link_to @coder.twitter_name, "http://twitter.com/#{@coder.twitter_name}", :target => "_new" %></li>
 			  <% end %>
 			</ul>
 		 </div>
