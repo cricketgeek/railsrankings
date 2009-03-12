@@ -326,7 +326,7 @@ class WWRScraper
         new_commit.save!
         github_repo.commits << new_commit
       rescue Exception => ex
-        puts "error saving commit #{ex}"
+        #puts "error saving commit #{ex}"
         # @@logger.error "error saving commit #{ex}"
       end
     end
