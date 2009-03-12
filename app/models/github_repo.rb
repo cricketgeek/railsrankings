@@ -23,7 +23,8 @@ class GithubRepo < ActiveRecord::Base
   validates_presence_of :url
   
   named_scope :alphabetical, :order => :name
-  named_scope :popular, lambda { |*args| { :limit => args.first || 10, :order => "watchers DESC"} } 
+  named_scope :popular, lambda { |*args| { :limit => args.first || 10, :order => "watchers DESC"} }
+  named_scope :all_popular, :order => "watchers DESC"
   
   def self.valid_repo_name_and_description?(repo)
     !repo.name.include?("django") || !repo.description.include?("django")
