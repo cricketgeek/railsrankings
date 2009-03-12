@@ -203,7 +203,7 @@ class WWRScraper
         add_known_aliases(coder)
         save_github_info(coder)
         
-        #delta = coder.rank - wwr_profile.rank if coder.rank
+        delta = coder.rank - wwr_profile.rank if coder.rank
         coder.rank = wwr_profile.rank
         coder.full_rank = calculate_full_rank(coder)
         coder.website = wwr_profile.website

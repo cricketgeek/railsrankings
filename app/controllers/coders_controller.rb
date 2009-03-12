@@ -57,8 +57,6 @@ class CodersController < ApplicationController
     coders_by_alias = get_coders_by_nickname(coder_params)
     coders_by_name = get_coders_by_name(coder_params)
     
-    #puts coders_by_name.to_xml
-    #puts coders_by_name.to_json
     combo_coders = coders_by_name + coders_by_alias
     combo_coders.compact!
     combo_coders.sort! { |first,second| first.railsrank <=> second.railsrank}
