@@ -29,8 +29,8 @@ class WWRScraper
     @@logger.info "done scraping profile pages"
     remove_phonies
     @@logger.info "done removing phonies"
-    output_rankings
-    @@logger.info "done processing and rerunning rankings algo"
+    #output_rankings
+    #@@logger.info "done processing and rerunning rankings algo"
   end
     
   def process_name_browse_by_letter(letter)

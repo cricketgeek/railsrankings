@@ -4,7 +4,7 @@ set :user, "root"
 set :application, "railsrankings"
 set :domain, "209.20.84.38"
 set :scm_verbose, true
-set :keep_releases, 8
+set :keep_releases, 5
 
 default_run_options[:pty] = true
 set :repository,  "git@github.com:cricketgeek/railsrankings.git"
@@ -45,16 +45,16 @@ namespace :deploy do
     end
   end
   
-  %w(start stop restart).each do |action|
+  %w(stop start).each do |action|
     desc "#{action} the Mongrel cluster"
     task action.to_sym do
-      find_and_execute_task("mongrel:cluster:#{action}")
+      find_and_execute_task("mongrel_cluster_ctl #{action}")
     end
   end
 
 end
 
-namespace :add_tasks do
+namespace :sphinx do
 
   desc "reset sphinx"
   task :reset_ts, :roles => :app do

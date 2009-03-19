@@ -18,7 +18,12 @@ namespace :wwr do
     task :load_all => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_name_browse_pages
-      Rake::Task["data_helpers:slugify"].invoke      
+      #Rake::Task["data_helpers:slugify"].invoke
+      run "cd #{current_path} && rake data_helpers:slugify RAILS_ENV=#{rails_env}"
+      # run "cd #{current_path} && rake ts:stop RAILS_ENV=#{rails_env}"
+      # run "cd #{current_path} && rake ts:index RAILS_ENV=#{rails_env}"
+      # run "cd #{current_path} && rake ts:start RAILS_ENV=#{rails_env}"
+
     end
     
     desc "process just one profile url, re-run rankings sort"
