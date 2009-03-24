@@ -50,7 +50,7 @@ class Coder < ActiveRecord::Base
   define_index do
     indexes [first_name,last_name], :as => :name
     indexes whole_name, city, company_name, country, nickname
-    indexes github_repos.name, :as => :repo_names
+    #indexes github_repos.name, :as => :repo_names
     
     has rank
     has full_rank
