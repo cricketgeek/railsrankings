@@ -1,9 +1,7 @@
 <div id="page" class="top_rule">
 	<div id="content">
 		<% cache :all_cities do %>
-		<ol>
 		  <%= render :partial  => "city_rankings", :collection => Coder.all_cities, :as => :city  %>
-		</ol>
 		<% end %>
 	</div>
 </div>
