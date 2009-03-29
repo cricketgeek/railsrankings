@@ -1,0 +1,295 @@
+/* Meyer Reset, Modified */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* RailsRankings Core Styles */
+.rounded {
+	-moz-border-radius:12px;
+	-webkit-border-radius:12px;
+}
+body {
+	font: 12px/120% Tahoma, "Lucida Grande", sans-serif;
+	background: #2E4479 url(../images/new/bg_header.gif) repeat-x left top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+	font-family: "Times New Roman", Times, serif;
+	line-height: 120%;
+}
+
+h1 {
+	font-size:3em;
+	line-height:1;
+	margin-bottom:0.5em;
+}
+
+h2 {
+	font: 12px Tahoma, "Lucida Grande", sans-serif;
+}
+
+h3 {
+	font-size:18px;
+}
+
+h4 {
+	font-size:16px;
+}
+
+h5 {
+	font-size:14px;
+}
+
+h6 {
+	font-size:12px;
+	font-weight:bold;
+}
+
+h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {
+	margin:0;
+}
+
+p {
+	margin:0 0 12px;
+}
+
+.content {
+	width: 980px;
+	position: relative;
+	margin: 0px auto;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: #598456;
+}
+
+#header {
+	width: 980px;
+	height: 120px;
+	margin: 0px auto;
+	position: relative;
+}
+
+#header h1 {
+	background: url(../images/new/logo_railsrankings.png) no-repeat left top;
+	height: 66px;
+	width: 293px;
+	position: relative;
+	margin: 0px;
+	padding-top: 30px;
+}
+
+#header h1 a {
+	display: block;
+	height: 66px;
+	text-indent: -9999px;
+}
+
+#header h2 {
+	color: #555;
+	margin: -12px 0px 0px;
+}
+
+#header #search {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+#page {
+	float: left;
+	width: 100%;
+	border-bottom: 7px solid #206cbe;
+	padding-bottom: 24px;
+	background: #FFFFFF;
+	padding-top: 24px;
+}
+
+#top_coders {
+	background: url(../images/new/bg_topcoders.gif);
+	height: 180px;
+	width: 100%;
+}
+
+.home #top_cities, .home #top_companies {
+	width: 365px;
+	margin-right: 20px;
+	float: left;
+}
+
+.home #sponsors {
+	float: left;
+	width: 210px;
+}
+
+#rank_formula {
+	background: #fffbf3;
+	padding: 18px;
+	position: relative;
+	margin-bottom: 24px;
+}
+
+#rank_formula h3 {
+	color: #e97110;
+}
+
+#rank_formula p {
+	width: 350px;
+	color: #555;
+}
+
+#rank_formula img.formula {
+	float: right;
+}
+
+.rank_list h3 {
+	color: #2e4479;
+	background: url(../images/new/bg_rankheadline.png) no-repeat left top;
+	height: 29px;
+	padding-left: 55px;
+	line-height: 29px;
+	margin-bottom: 12px;
+	border-bottom: 1px solid #d6d6d6;
+}
+
+.rank_list a {
+	background: url(../images/new/bg_linkstar.png) no-repeat left center;
+	padding-left: 12px;
+	display: block;
+}
+
+#top_coders ul {
+	width: 980px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 24px;
+}
+#top_coders ul li.coder  {
+	text-align: center;
+	width: 150px;
+	float: left;
+	margin-right: 10px;
+	display: block;
+}
+
+.coder .photo {
+	background: url(../images/new/bg_coderphoto.png);
+	height: 92px;
+	width: 87px;
+	text-align: center;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.coder .photo img {
+	margin-top: 8px;
+}
+
+.coder .photo .points {
+	background: url(../images/new/bg_points.png) no-repeat center top;
+	height: 16px;
+	width: 70px;
+	font-size: 9px;
+	color: #467f32;
+	line-height: 16px;
+	font-weight: bold;
+	position: absolute;
+	bottom: 0px;
+	left: 8px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#top_coders .coder .rank_name {
+	font-size: 12px;
+	color: #206cbe;
+}
+
+.coder .rank_name em {
+	display: block;
+	font-style: normal;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.coder .locale {
+	font-size: 10px;
+	color: #999;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer {
+	background-color: #2e4479;
+	border-top: 4px solid #2b3f70;
+	clear: both;
+	color: #FFFFFF;
+	font-size: 10px;
+	height: 100%;
+}
+
+#footer p {
+	width: 750px;
+}
+
+#footer a:link {
+	font-weight: bold;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+#footer .content {
+	background: transparent url(../images/new/logo_railsrankings_icon.png) no-repeat left top;
+	margin-top: 25px;
+	padding-left: 40px;
+	width: 940px;
+}
+
+#footer ul {
+	width: 175px;
+	float: right;
+}
+
+#footer ul li {
+	height: 20px;
+	display: block;
+	line-height: 20px;
+}
+
+#footer ul li a {
+	background: url(../images/new/bg_linkstar_white.png) no-repeat left center;
+	display: block;
+	line-height: 20px;
+	height: 20px;
+	padding-left: 12px;
+}
