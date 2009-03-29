@@ -19,8 +19,7 @@ describe WWRScraper do
       coder.github_repos.size.should == 3
       coder.nickname.downcase.should == "cricketgeek"
       
-    end
-    
+    end    
     
   end
   
