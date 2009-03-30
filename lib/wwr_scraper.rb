@@ -30,7 +30,7 @@ class WWRScraper
     remove_phonies
     @@logger.info "done removing phonies"
     output_rankings
-    @@logger.info "done processing and rerunning rankings algo"
+    #@@logger.info "done processing and rerunning rankings algo"
   end
     
   def process_name_browse_by_letter(letter)

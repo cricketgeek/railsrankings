@@ -86,4 +86,7 @@ module CodersHelper
     coders.join(",")
   end
   
+  def determine_rank_for_paging(index)
+    params[:page] == "1" ? index + 1 : (params[:page].to_i - 1) * TOP_PAGES_PER + index + 1
+  end
 end

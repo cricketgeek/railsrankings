@@ -50,7 +50,7 @@ class Coder < ActiveRecord::Base
   define_index do
     indexes [first_name,last_name], :as => :name
     indexes whole_name, city, company_name, country, nickname
-    indexes github_repos.name, :as => :repo_names
+    #indexes github_repos.name, :as => :repo_names
     
     has rank
     has full_rank
@@ -69,7 +69,6 @@ class Coder < ActiveRecord::Base
     first, last = prev.split('-')
     "#{first.succ}-#{last.succ}"
   end
-  
   
   def <=>(other)
     if other.full_rank > self.full_rank
@@ -91,10 +90,9 @@ class Coder < ActiveRecord::Base
       :conditions => "company_name is not null AND company_name <> ''", :group => "company_name having total > 0", :order => "total DESC"
   named_scope :top_coders, lambda { |*args| { :limit => args.first || 15, :order => "full_rank DESC" } }
   named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "full_rank DESC"
+  named_scope :top_ranked, lambda { |*args| { :limit => args.first || 10, :order => "railsrank DESC" } }
   
   before_create :default_rank
-  
-
   
   def full_name
     return "#{whole_name}" if whole_name

@@ -79,25 +79,25 @@
       </div>
       <ol id="rubycities">
       <% cache :top_cities do %>
-        <%= render :partial => "city_rankings", :collection => Coder.cities, :as => :city %>
+        <%= render :partial => "city_rankings", :collection => @top_ten_cities, :as => :city %>
       <% end %>
       </ol>
       <h2><%= link_to "Top Rails Development Companies",all_companies_coders_path, { :title => "Top Ranked Rails Development Companies" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_companies_cache do %>
-        <%= render :partial => "company_rankings", :collection => Coder.companies, :as => :company %>
+        <%= render :partial => "company_rankings", :collection => @top_ten_companies, :as => :company %>
       <% end %>
       </ol>  
       <h2><%= link_to "Top Rails Coders", all_coders_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_coders do %>      
-        <%= render :partial => "top_coders_new_rank", :collection => Coder.ranked.top_coders, :as => :coder %>
+        <%= render :partial => "top_coders_new_rank", :collection => @top_ten_coders, :as => :coder %>
       <% end %>
       </ol>
       <h2><%= link_to "Top Github Repos", all_repos_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
       <ol id="rubycompanies">
       <% cache :top_repos do %>      
-        <%= render :partial => "top_repos", :collection => GithubRepo.popular(15), :as => :repo %>
+        <%= render :partial => "top_repos", :collection => @top_ten_repos, :as => :repo %>
       <% end %>
       </ol>      
     </div>

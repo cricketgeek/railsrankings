@@ -5,7 +5,7 @@ namespace :wwr do
     task :load => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_seed_data
-      #wwr_scraper.process_main_popular_page
+      wwr_scraper.process_main_popular_page
     end
     
     desc "load only the top 100 page"
@@ -18,7 +18,15 @@ namespace :wwr do
     task :load_all => :environment do
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_using_name_browse_pages
-      Rake::Task["data_helpers:slugify"].invoke      
+      Rake::Task["data_helpers:slugify"].invoke
+      Rake::Task["ts:stop"].invoke
+      Rake::Task["ts:index"].invoke
+      Rake::Task["ts:start"].invoke
+
+      # run "cd #{current_path} && rake ts:stop RAILS_ENV=#{rails_env}"
+      # run "cd #{current_path} && rake ts:index RAILS_ENV=#{rails_env}"
+      # run "cd #{current_path} && rake ts:start RAILS_ENV=#{rails_env}"
+
     end
     
     desc "process just one profile url, re-run rankings sort"

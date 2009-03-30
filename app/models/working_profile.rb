@@ -31,6 +31,7 @@ class WorkingProfile
       "chicago / il" => "Chicago",
       "san francisco, ca" => "San Francisco","san francisco ca" => "San Francisco", "san francisco bay area" => "San Francisco",
       "berkeley, ca" => "San Francisco","san francisco, california" => "San Francisco", "san francisco / ca" => "San Francisco",
+      "san francisco, USA" => "San Francisco",
       "boston, ma" => "Boston","boston ma" => "Boston", "boston, massachusetts" => "Boston", "boston/ma" => "Boston",
       "austin, tx" => "Austin","austin tx" => "Austin", "austin, tx, usa" => "Austin",
       "austin, texas" => "Austin","austin / texas" => "Austin","austin (texas)" => "Austin", "austin,, tx" => "Austin",
