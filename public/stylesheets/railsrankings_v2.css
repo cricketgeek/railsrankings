@@ -101,7 +101,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #header h1 {
-	background: url(../images/new/logo_railsrankings.png) no-repeat left top;
+	background: url(../images/new/logo_railsrankings.png) no-repeat left bottom;
 	height: 66px;
 	width: 293px;
 	position: relative;
@@ -267,6 +267,10 @@ a:link, a:visited, a:hover, a:active {
 	font-weight: bold;
 	text-decoration: none;
 	color: #FFFFFF;
+}
+
+#footer a:hover {
+	text-decoration: underline;
 }
 #footer .content {
 	background: transparent url(../images/new/logo_railsrankings_icon.png) no-repeat left top;
