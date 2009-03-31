@@ -22,20 +22,4 @@ describe CodersHelper do
       helper.rails_core_status(@coder).should == "Rails Core Team Member"
     end
   end
-  
-  describe "paging with index for all pages" do
-    
-    it "should return 3 based on first page and index of 2" do
-      @params = {:page => 1}
-      helper.stub!(:params).and_return(@params)     
-      helper.determine_rank_for_paging(2).should == 3
-    end
-    
-    it "should return 100 based on page being 2 and index 49" do
-      @params = {:page => 2}
-      helper.stub!(:params).and_return(@params)
-      helper.determine_rank_for_paging(49).should == 100
-    end
-    
-  end
 end
