@@ -70,6 +70,7 @@ class Coder < ActiveRecord::Base
     "#{first.succ}-#{last.succ}"
   end
   
+  
   def <=>(other)
     if other.full_rank > self.full_rank
       return 1
@@ -90,9 +91,10 @@ class Coder < ActiveRecord::Base
       :conditions => "company_name is not null AND company_name <> ''", :group => "company_name having total > 0", :order => "total DESC"
   named_scope :top_coders, lambda { |*args| { :limit => args.first || 15, :order => "full_rank DESC" } }
   named_scope :ranked, :conditions => "rank is not null and full_rank > 0", :order => "full_rank DESC"
-  named_scope :top_ranked, lambda { |*args| { :limit => args.first || 10, :order => "railsrank DESC" } }
   
   before_create :default_rank
+  
+
   
   def full_name
     return "#{whole_name}" if whole_name

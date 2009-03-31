@@ -1,12 +1,9 @@
 <div id="page" class="top_rule">
 	<div id="content">
 		<% cache :all_coders do %>
-		<%= will_paginate @all_coders %>		
-		<ul class="github_rank">
-		  <% @all_coders.each_with_index do |coder,index| %>
-      <li><%= determine_rank_for_paging(index) %>. <%= show_coder_name(coder) %> <%= "(points: #{number_with_delimiter(coder.full_rank,{:delimiter => ","})})"  %></li>
-      <% end %>
-		</ul>
+		<ol>
+		  <%= render :partial  => "top_coders_new_rank", :collection => Coder.ranked, :as => :coder  %>
+		</ol>
 		<% end %>
 	</div>
 </div>

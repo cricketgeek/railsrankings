@@ -3,8 +3,9 @@ class CodersController < ApplicationController
   caches_page :all_coders, :all_cities, :all_companies
   
   # GET /coders
-  # GET /coders.xml  
+  # GET /coders.xml
   def index
+    
     @coders = Coder.search(
       (params[:search] || ""),
       :page => (params[:page] || 1),
@@ -21,27 +22,20 @@ class CodersController < ApplicationController
       format.html
       format.xml  { render :xml => @coders }
       format.json { render :json => @coders }     
-    end    
+    end
+    
   end
   
   def all_coders
-    @all_coders = Coder.ranked.paginate :page => (params[:page] || 1), 
-                                        :per_page => TOP_PAGES_PER 
   end
   
   def all_cities
-    @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
-                                            :per_page => TOP_PAGES_PER
   end
   
   def all_companies
-    @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
-                                                  :per_page => TOP_PAGES_PER
   end
   
   def all_repos
-    @all_repos = GithubRepo.popular(500).paginate :page => (params[:page] || 1), 
-                                                  :per_page => TOP_PAGES_PER
   end
 
   # GET /coders/1
