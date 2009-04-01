@@ -2,17 +2,19 @@
     <ul>
 		
 		<!-- First Five Coders in This Format -->
-    <li class="coder">
+		<% @top_five.each do |coder| %>
+    <li class="coder <%= "last" if coder == @top_five.last %>">
       <div class="photo">
-      	<img src="http://img.skitch.com/20090224-pshkq2qgjas23fh95b7qgcym5s.jpg" width="70" height="70" />
-      	<p class="points">1,124,488</p>
+        <%= image_tag coder.image_path, :width => "70",:height => "70", :alt => "#{coder.full_name}'s bio pic" %>
+      	<p class="points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></p>
       </div>
-      <h4 class="rank_name"><em>1</em> Rick Olson</h4>
-      <p class="locale">Portland, USA</p>
+      <h4 class="rank_name"><em><%= coder.railsrank %></em> <%= coder.full_name %></h4>
+      <p class="locale"><%= show_city_name(coder.city) %></p>
     </li>
-		
+		<% end %>
 		<!-- Next Five in This Format -->
-		<li class="coder_line"><a href="#">Coder Name</a></li>
-		
+		<% @last_five.each do |coder| %>
+		  <li class="coder_line"><%= show_coder_link(coder) %></li>
+		<% end %>
     </ul>
 </div>

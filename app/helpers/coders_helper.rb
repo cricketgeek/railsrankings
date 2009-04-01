@@ -1,10 +1,5 @@
 module CodersHelper
-  
-  def format_image_path(path)
-    path = "/images/profile.png" if path and path.include?("images/profile.png")
-    path
-  end
-  
+    
   def page_index
     if params[:page]
       params[:page].to_i == 1 ? 1 : (SEARCH_PER_PAGE * (params[:page].to_i - 1)) + 1
@@ -19,10 +14,6 @@ module CodersHelper
   
   def recommendation_url(coder)    
     coder.profile_url.sub("http://www.workingwithrails.com/","http://www.workingwithrails.com/recommendation/new/")
-  end
-  
-  def show_rank(coder)
-    coder.railsrank < MAX_RANK ? coder.railsrank : "nil"
   end
   
   def show_repo_name(repo)
@@ -63,10 +54,6 @@ module CodersHelper
     when coder.delta < 0
       "<span class='negative'>#{coder.delta}</span>"      
     end
-  end
-  
-  def show_city_name(city)
-    city.blank? ? "Unknown location" : link_to("#{city}", coders_path(:search => city))
   end
 
   def show_company_name(company)
