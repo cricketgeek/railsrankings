@@ -8,7 +8,11 @@
 	<h1><%= link_to "Rails Rankings", root_path %></h1>
   <h2>The best way to find qualified Ruby on Rails developers and companies.</h2>
   <div id="search">
-    Search Here  </div>
+  	<% form_tag coders_path, :method => :get do %>
+      <%= text_field_tag :search, params[:search]%>
+      <input name="search" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
+    <% end %> 
+	</div>
 </div>
 
 <%= render :partial => "shared/top_coders" %>

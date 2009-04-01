@@ -1,25 +1,11 @@
 
 <% content_for :head do %>
 	<title>Search for Ruby on Rails developers, coders, companies and consultants on RailsRankings.com</title>
-	<meta name="description" content="Find Rails developers based on our unique ranking system. Search Ruby on Rails development companies by city. Top Rails developers, coders, consultants and companies listed." />
+	<meta name="description" content="RailsRankings, over <%= pluralize(@count,"Rails Coder") %> matching '<%= params[:search] %>'. Search for Rails developers, coders, companies, and cities." />
 	<meta name="verify-v1" content="D4WmRlOo3zesW7GMJuW1/nCSxEdMqGiS7L+qZYf5IAI=" />
 	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
 <% end %>
 
-<div id="topbar" class="bottom_rule">
-  <div id="searchbox">
-    <h1>Search for Ruby on Rails Developers</h1>
-    <div id="search_form">
-    <% form_tag coders_path, :method => :get do %>
-      <%= text_field_tag :search, params[:search]%>
-      <input name="search" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
-    <% end %>
-    </div>
-	<p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
-      and the number of public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.  RailsRankings Points is a better measuring stick.
-      </p>
-  </div><!--search-->
-</div>
 <div id="page">
   <div id="content">
   <div id="leftbar">
