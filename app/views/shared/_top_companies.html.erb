@@ -1,7 +1,9 @@
 <div id="top_companies" class="rank_list">
         <h3>Companies</h3>
           <ol>
-            <li>San Francisco</li>
+            <% @top_ten_companies.each do |company| %>
+              <li><%= show_company_name(company.company_name) %></li>
+            <% end %>
           </ol>
-          <a href="#">View All Ranked Companies</a>
+          <%= link_to "View All Ranked Companies", all_companies_coders_path %>
       </div>

@@ -1,7 +1,9 @@
 <div id="top_cities" class="rank_list">
         <h3>Cities</h3>
           <ol>
-            <li>San Francisco</li>
+            <% @top_ten_cities.each do |city| %>
+              <li><%= show_city_name(city.city) %></li>
+            <% end %>
           </ol>
-          <a href="#">View All Ranked Cities</a>
+          <%= link_to "View All Ranked Cities", all_cities_coders_path %>
       </div>
