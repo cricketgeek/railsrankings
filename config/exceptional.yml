@@ -16,7 +16,7 @@ development:
   <<: *default_settings
   # Normally no reason to collect exceptions in development
   # NOTE: for trial purposes you may want to enable exceptional in development
-  enabled: true
+  enabled: false
   
 test:
   <<: *default_settings
