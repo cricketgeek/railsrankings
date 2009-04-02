@@ -9,10 +9,10 @@ class HomeController < ApplicationController
     @coders = @top_ten_coders
   
     #top 10 cities
-    @top_ten_cities = Coder.cities
+    @top_ten_cities = Coder.cities(10)
 
     #top 10 companies
-    @top_ten_companies = Coder.companies
+    @top_ten_companies = Coder.companies(10)
   
     #top 10 github repos
     @top_ten_repos = GithubRepo.popular(10)

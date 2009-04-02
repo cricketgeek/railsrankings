@@ -21,7 +21,7 @@ class CodersController < ApplicationController
       format.html
       format.xml  { render :xml => @coders }
       format.json { render :json => @coders }     
-    end    
+    end  
   end
   
   def all_coders

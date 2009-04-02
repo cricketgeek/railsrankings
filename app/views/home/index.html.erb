@@ -5,6 +5,10 @@
 	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
 <% end %>
 
+<% content_for :top_coders do %>
+	<%= render :partial => "shared/top_coders" %>
+<% end %>
+
 <div class="home content">
 
 	<%= render :partial => "shared/success_formula" %>

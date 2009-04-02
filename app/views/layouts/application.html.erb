@@ -7,15 +7,16 @@
 <div id="header">
 	<h1><%= link_to "Rails Rankings", root_path %></h1>
   <h2>The best way to find qualified Ruby on Rails developers and companies.</h2>
-  <div id="search">
+  <div id="search_box">
   	<% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
-      <input name="search" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
+      <input name="search" id="search_btn" value="Search" type="image" src="../images/new/btn_search.gif" onclick="this.submit();"/>
     <% end %> 
 	</div>
 </div>
 
-<%= render :partial => "shared/top_coders" %>
+<!-- Home Only -->
+<%= yield :top_coders %>
 
 <div id="page">
 <%= yield %>
@@ -27,7 +28,7 @@
     	<li><a href="#">About Us</a></li>
         <li><a href="#">Advertise</a></li>
         <li><a href="#">Help and Support</a></li>
-        <li><a href="#">Feedback</a></li>
+        <li><a href="http://railsrankings.uservoice.com" title="Provide Feedback">Feedback</a></li>
     </ul>
 	<p>Site by <%= link_to "Reedhot Studios LLC","http://reedhot.com", :target => "_new" %>. Design by <%= link_to "Stephen Martin Design","http://www.stephenmartindesign.com", :target => "_new" %>. If you like RailsRankings.com, please recommend <%= link_to "me","http://www.workingwithrails.com/person/12633-mark-jones", :target => "_new" %>. If you'd like to advertise on RailsRankings.com please contact us <%= link_to 'sales@reedhot.com','mailto:sales@reedhot.com'%>.</p>
 	<p>WorkingWithRails logo copyright DSC.</p>

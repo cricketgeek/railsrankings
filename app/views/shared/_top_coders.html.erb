@@ -1,20 +1,18 @@
 <div id="top_coders">
     <ul>
-		
-		<!-- First Five Coders in This Format -->
 		<% @top_five.each do |coder| %>
-    <li class="coder <%= "last" if coder == @top_five.last %>">
-      <div class="photo">
-        <%= image_tag coder.image_path, :width => "70",:height => "70", :alt => "#{coder.full_name}'s bio pic" %>
-      	<p class="points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></p>
-      </div>
-      <h4 class="rank_name"><em><%= coder.railsrank %></em> <%= coder.full_name %></h4>
-      <p class="locale"><%= show_city_name(coder.city) %></p>
-    </li>
+		<li class="coder <%= "last" if coder == @top_five.last %>">
+			<div class="photo">
+			<%= image_tag coder.image_path, :width => "70",:height => "70", :alt => "#{coder.full_name}'s bio pic" %>
+			<p class="points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></p>
+			</div>
+			<h4 class="rank_name"><em><%= coder.railsrank %></em> <%= coder.full_name %></h4>
+			<p class="locale"><%= show_city_name(coder.city) %></p>
+		</li>
 		<% end %>
-		<!-- Next Five in This Format -->
 		<% @last_five.each do |coder| %>
-		  <li class="coder_line"><%= show_coder_link(coder) %></li>
+		  <li class="coder_line"><%= coder.railsrank %>. <%= show_coder_link(coder) %> <span><%= show_city_name(coder.city) %></span></li>
 		<% end %>
+		<li><a class="rank_list" href="#">View Top 100 Coders</a></li>
     </ul>
 </div>

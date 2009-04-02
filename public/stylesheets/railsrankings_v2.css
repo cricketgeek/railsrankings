@@ -120,10 +120,33 @@ a:link, a:visited, a:hover, a:active {
 	margin: -12px 0px 0px;
 }
 
-#header #search {
+#search_box {
+	background: url(../images/new/bg_searchbar.gif) repeat-x top left;
+	height: 50px;
 	position: absolute;
-	top: 0px;
-	right: 0px;
+	bottom: 12px;
+	right: 15px;
+	-moz-border-radius-topleft: 12px;
+	-webkit-border-top-left-radius: 12px;
+	-moz-border-radius-topright: 12px;
+	-webkit-border-top-right-radius: 12px;
+	border: solid 1px #e6e6e6;
+	border-bottom: none;
+	width: 520px;
+}
+
+#search_box #search, #search_box #search_btn {
+	float: left;
+	margin-top: 10px;
+}
+#search_box #search {
+	border:1px solid #E6E6E6;
+	font-size:18px;
+	height:30px;
+	margin-left:30px;
+	margin-right:3px;
+	padding:4px;
+	width:360px;
 }
 
 #page {
@@ -152,6 +175,17 @@ a:link, a:visited, a:hover, a:active {
 	width: 210px;
 }
 
+.results #top_cities, .results #top_companies {
+	width: 320px;
+	margin-bottom: 12px;
+	float: right;
+}
+
+.results #sponsors {
+	float: right;
+	width: 320px;
+}
+
 #rank_formula {
 	background: #fffbf3;
 	padding: 18px;
@@ -172,20 +206,44 @@ a:link, a:visited, a:hover, a:active {
 	float: right;
 }
 
-.rank_list h3 {
+#top_companies h3, #top_cities h3 {
 	color: #2e4479;
 	background: url(../images/new/bg_rankheadline.png) no-repeat left top;
 	height: 29px;
 	padding-left: 55px;
 	line-height: 29px;
-	margin-bottom: 12px;
 	border-bottom: 1px solid #d6d6d6;
 }
+#top_companies ol, #top_cities ol {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+#top_companies ol li, #top_cities ol li {
+	color: #206cbe;
+	background: #f6f6f6 url(../images/new/bg_listitem.gif) repeat-x left top;;
+	border-bottom: solid 1px #EEE;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 15px;
+}
+#top_companies ol li a, #top_cities ol li a {
+	color: #206cbe;
+	background: #FFF;
+	height: 30px;
+	font-size: 12px;
+	text-decoration: none;
+}
+#top_companies ol li em, #top_cities ol li em {
+	color: #4B4B4B;
+	font-size: 12px;
+	font-family: Tahoma, "Lucida Grande", sans-serif;
+	font-style: normal;
+}
 
-.rank_list a {
+a.rank_list {
 	background: url(../images/new/bg_linkstar.png) no-repeat left center;
 	padding-left: 12px;
-	display: block;
+	display: inline-block;
 }
 
 #top_coders ul {
@@ -193,13 +251,42 @@ a:link, a:visited, a:hover, a:active {
 	margin-right: auto;
 	margin-left: auto;
 	padding-top: 24px;
+	height: 156px;
 }
+
 #top_coders ul li.coder  {
 	text-align: center;
-	width: 150px;
+	width: 140px;
 	float: left;
 	margin-right: 10px;
 	display: block;
+}
+
+#top_coders ul li.coder_line {
+	display: block;
+	margin-bottom: 8px;
+	float: left;
+	clear: right;
+}
+#top_coders ul li.coder_line a {
+	color: #206cbe;
+	text-decoration: none;
+}
+
+#top_coders ul li.coder_line span, #top_coders ul li.coder_line span a {
+	color: #999;
+	font-size: 10px;
+	font-family: Tahoma, "Lucida Grande", sans-serif;
+}
+
+#top_coders ul li.last {
+	border-right: solid 1px #CCC;
+	margin-right: 24px;
+}
+
+#top_coders ul li {
+	color: #206cbe;
+	font-family: "Times New Roman",Times,serif;
 }
 
 .coder .photo {
@@ -243,11 +330,18 @@ a:link, a:visited, a:hover, a:active {
 	font-weight: bold;
 }
 
-.coder .locale {
+.coder .locale, .coder .locale a:link, .coder .locale a:visited, .coder .locale a:hover, .coder .locale a:active {
+	font-family: Tahoma, "Lucida Grande", sans-serif;
 	font-size: 10px;
 	color: #999;
 	margin: 0px;
 	padding: 0px;
+	text-decoration: none;
+}
+
+#search_results {
+	width: 640px;
+	float: right;
 }
 
 #footer {
@@ -256,7 +350,6 @@ a:link, a:visited, a:hover, a:active {
 	clear: both;
 	color: #FFFFFF;
 	font-size: 10px;
-	height: 100%;
 }
 
 #footer p {
