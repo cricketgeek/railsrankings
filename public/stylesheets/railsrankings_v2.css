@@ -396,7 +396,21 @@ a.rank_list {
 
 #search_results {
 	width: 640px;
-	float: right;
+	float: left;
+}
+
+p.text_ad {
+	background-color: #fff7e6;
+	font-size: 11px;
+	line-height: 20px;
+	height: 20px;
+	text-align: center;
+	padding: 0px 12px;
+	color: #312209;
+	margin-bottom: 3px;
+}
+p.text_ad a {
+	color: #e97110;
 }
 
 #footer {
