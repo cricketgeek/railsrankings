@@ -27,19 +27,18 @@
 				</dl>
 			</div>
       <% end %>
+      <!-- Should render every 25 results -->
+  		<%= render :partial => "shared/text_ad" if should_show_text_ad?(index) %>
     <% end %>
-    
-		<!-- Should render every 25 results -->
-		<%= render :partial => "shared/text_ad" %>
 
     <%= will_paginate @coders %>
 
     </div>
 
-		<%# render :partial => "shared/top_cities" %>
+		<% render :partial => "shared/top_cities" %>
 		
-		<%# render :partial => "shared/sponsors" %>
+		<% render :partial => "shared/sponsors" %>
 
-		<%# render :partial => "shared/top_companies" %>
+		<% render :partial => "shared/top_companies" %>
 
 </div>

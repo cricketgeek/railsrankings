@@ -8,6 +8,10 @@ module CodersHelper
     end
   end
   
+  def should_show_text_ad?(index)
+    index == (SEARCH_PER_PAGE - 1)
+  end
+  
   def company_clipped(coder)
     coder.company_name ? coder.company_name.slice(0..20) : ""
   end
