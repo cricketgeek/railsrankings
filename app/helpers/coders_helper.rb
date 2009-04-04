@@ -9,11 +9,11 @@ module CodersHelper
   end
   
   def should_show_text_ad?(index)
-    index == (SEARCH_PER_PAGE - 1)
+    index == ((SEARCH_PER_PAGE/2) - 1)
   end
   
   def show_search_term
-    "\"Matched #{params[:search]}\"" if params[:search]
+    "Matching \"#{params[:search]}\"" if params[:search]
   end
   
   def company_clipped(coder)

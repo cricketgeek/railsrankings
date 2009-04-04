@@ -243,6 +243,7 @@ a:link, a:visited, a:hover, a:active {
 a.rank_list {
 	background: url(../images/new/bg_linkstar.png) no-repeat left center;
 	padding-left: 12px;
+	-moz-desplay: inline-block; /* FF2 Fix */
 	display: inline-block;
 	width: 90px;
 }
@@ -415,9 +416,44 @@ a.rank_list {
 	float: right;
 	position: absolute;
 	right: 10px;
-	top: 14px;
+	top: 8px;
 }
 
+.result h3.coder {
+	padding-top: 10px;
+}
+
+.result h3.coder a {
+	color: #206cbe;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.result p.locale {
+	color: #999;
+	font-size: 10px;
+	font-family: Tahoma, "Lucida Grande", sans-serif;
+	margin-top: 3px;
+}
+
+.result .photo {
+	display:block;
+	float:left;
+	height:46px;
+	width:46px;
+	border: solid 1px #E7E7E7;
+	margin: 6px 10px 0px 65px;
+}
+.result .photo img {
+	margin: 3px 0 0 3px;
+}
+.result .coder .rank {
+	left:30px;
+	position:absolute;
+	text-align:right;
+	top:15px;
+	color: #2e3192;
+}
 dl.score_box {
 	border: 1px solid #E7E7E7;
 	height: 40px;
@@ -454,6 +490,7 @@ dl.score_box dt.watchers {
 }
 
 dl.score_box dd {
+	-moz-desplay: inline-block; /* FF2 Fix */
 	display: inline-block;
 	font: bold 14px/40px Helvetica, Geneva, Verdana, sans-serif;
 	width: 40px;
@@ -464,17 +501,24 @@ dl.score_box dt.wwr_rank, dl.score_box dd.wwr_rank_number, dl.score_box dt.watch
 }
 
 p.text_ad {
-	background-color: #fff7e6;
-	font-size: 11px;
-	line-height: 20px;
-	height: 20px;
-	text-align: center;
-	padding: 0px 12px;
-	color: #312209;
-	margin-bottom: 3px;
+	background-color:#FFF7E6;
+	color:#312209;
+	font-size:11px;
+	height:20px;
+	line-height:20px;
+	margin:12px 0;
+	padding:0 12px;
+	text-align:center;
 }
 p.text_ad a {
 	color: #e97110;
+}
+
+.pagination {
+	postion: relative;
+	margin: 12px 0px;
+	font-size: 10px;
+	text-align: right;
 }
 
 #footer {
