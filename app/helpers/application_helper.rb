@@ -2,7 +2,7 @@
 module ApplicationHelper
   
   def show_rank(coder)
-    coder.railsrank < MAX_RANK ? coder.railsrank : "<small>nil</small>"
+    coder.railsrank < MAX_RANK ? coder.railsrank : "<em>nil</em>"
   end
   
   def format_image_path(path)

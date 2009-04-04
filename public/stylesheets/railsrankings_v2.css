@@ -179,10 +179,12 @@ a:link, a:visited, a:hover, a:active {
 	width: 320px;
 	margin-bottom: 12px;
 	float: right;
+	clear: right;
 }
 
 .results #sponsors {
 	float: right;
+	clear: right;
 	width: 320px;
 }
 
@@ -369,7 +371,7 @@ a.rank_list {
 	color: #206CBE;
 }
 
-#top_repos ol li a span.repo_detail {
+#top_repos ol li span.repo_detail {
 	font-size: 10px;
 	color: #333;
 }
@@ -454,6 +456,11 @@ a.rank_list {
 	top:15px;
 	color: #2e3192;
 }
+
+.result .coder .rank em {
+	font-size: 14px;
+	color: #999;
+}
 dl.score_box {
 	border: 1px solid #E7E7E7;
 	height: 40px;
@@ -515,7 +522,7 @@ p.text_ad a {
 }
 
 .pagination {
-	postion: relative;
+	position: relative;
 	margin: 12px 0px;
 	font-size: 10px;
 	text-align: right;
