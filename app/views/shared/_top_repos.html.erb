@@ -2,15 +2,15 @@
   	<h4>Top GitHub Repos</h4>
   	<ol>
 			<!-- First 5 Repos Like This -->
-    	<li><a href="#">restful-authentication <span class="repo_detail">(1661 watchers 415,250 points)</span></a>
-      <p class="repo_description">Generates common user authentication code for Rails/Merb, with a full test/unit and rspec suite and optional Acts as State Machine support built-in.</p>
-      </li>
+			<% @repos_first_section.each do |repo| %>
+        <%= render :partial => "shared/repo", :locals => {:repo => repo} %>
+      <% end %>
     </ol>
     <ol start="6" class="continued">
 			<!-- Next 5 Repos Like This -->
 			<!-- start="" is depricated, but it is probably the most correct way to do this -->
-      <li><a href="#">restful-authentication <span class="repo_detail">(1661 watchers 415,250 points)</span></a>
-      <p class="repo_description">Generates common user authentication code for Rails/Merb, with a full test/unit and rspec suite and optional Acts as State Machine support built-in.</p>
-      </li>
+			<% @repos_second_section.each do |repo| %>
+        <%= render :partial => "shared/repo", :locals => {:repo => repo} %>
+      <% end %>
     </ol>
-  </div>
+</div>

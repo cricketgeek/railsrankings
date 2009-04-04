@@ -1,0 +1,4 @@
+<li><%= link_to repo.name,repo.url,:target => "_new" %>
+  <span class="repo_detail">(<%= number_with_delimiter(repo.watchers,:delimeter => ",") %> watchers <%= number_with_delimiter(repo.total_point_value,:delimiter => ",") %> points)</span></a>
+  <p class="repo_description"><%= repo.description %></p>
+</li>

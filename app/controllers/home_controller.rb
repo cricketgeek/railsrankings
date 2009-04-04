@@ -16,6 +16,8 @@ class HomeController < ApplicationController
   
     #top 10 github repos
     @top_ten_repos = GithubRepo.popular(10)
+    @repos_first_section = @top_ten_repos[0..4]
+    @repos_second_section = @top_ten_repos[5..9]
   
   end
 
