@@ -1,13 +1,11 @@
 <div id="top_repos" class="rounded">
   	<h4>Top GitHub Repos</h4>
   	<ol>
-			<!-- First 5 Repos Like This -->
 			<% @repos_first_section.each do |repo| %>
         <%= render :partial => "shared/repo", :locals => {:repo => repo} %>
       <% end %>
     </ol>
     <ol start="6" class="continued">
-			<!-- Next 5 Repos Like This -->
 			<!-- start="" is depricated, but it is probably the most correct way to do this -->
 			<% @repos_second_section.each do |repo| %>
         <%= render :partial => "shared/repo", :locals => {:repo => repo} %>

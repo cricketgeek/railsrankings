@@ -8,7 +8,7 @@
 
 <div class="results content">
 	<div id="search_results">
-    <h2><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h2>
+    <h2><%= pluralize(@count,"Rails Coder") %> <% if params[:search] %> Matched "<%= params[:search] %>"<% end %> </h2>
     
     <%= will_paginate @coders %>
     <% @coders.each_with_index do |coder, index| %>

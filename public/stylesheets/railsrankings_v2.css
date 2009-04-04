@@ -252,6 +252,7 @@ a.rank_list {
 	margin-left: 18px;
 	height: 30px;
 	line-height: 30px;
+	width: auto;
 }
 
 #top_coders ul {
