@@ -257,7 +257,7 @@ class WWRScraper
       coder.nickname = "andre"
     elsif coder.first_name == "Clemens" and coder.last_name == "Kofler"
       coder.nickname = "clemens"
-    elsif coder.first_name == "Mike" and coder.last_name == "Clark"
+    elsif coder.first_name == "Mike" and coder.last_name == "Clark" and coder.profile_url == "http://www.workingwithrails.com/person/5380-mike-clark"
       coder.nickname = "clarkware"
     elsif coder.first_name == "Giles" and coder.last_name == "Bowkett"
       coder.nickname = "gilesbowkett"

@@ -14,7 +14,8 @@ class WorkingProfile
     @companies ||= {"active reload, llc." => "Active Reload","thoughtworks, inc." => "ThoughtWorks",
       "atlantic dominion solutions, llc" => "Atlantic Dominion Solutions",
       "37 signals" => "37signals","consumer source inc" => "Primedia", 
-      "intridea, inc" => "Intridea"}
+      "intridea, inc" => "Intridea",
+      "entp.com" => "ENTP", "entp" => "ENTP"}
     
     return @companies[company.downcase] if @companies[company.downcase]
     return company
