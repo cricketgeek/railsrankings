@@ -12,6 +12,10 @@ module CodersHelper
     index == (SEARCH_PER_PAGE - 1)
   end
   
+  def show_search_term
+    "\"Matched #{params[:search]}\"" if params[:search]
+  end
+  
   def company_clipped(coder)
     coder.company_name ? coder.company_name.slice(0..20) : ""
   end
