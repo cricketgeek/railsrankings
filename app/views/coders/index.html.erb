@@ -13,29 +13,19 @@
     <%= will_paginate @coders %>
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
-      
-      <!--<%= alternate_row_color(index) %>"-->
-		<%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75", :alt => coder.full_name}), coder_path(coder) %>
-		<span class="rr_points" title="RailsRankings points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
-        	<% if coder.github_watchers > 0 %>
-    			  <ul class="github_rank rounded">
-    				  <li class="github_watchers" title="public repo github watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
-    			  </ul>
-    			<% end %>  
-	        <a href="#"><%= show_rank(coder) %></a>	
-
-	        <!-- <%= show_delta(coder) %>
-			<p><%= coder.recommendation_count %> Recommendations</p>
-	      	<p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p> 
-			-->
-
-        <!--userpic-->
-        <ul class="user_info">
-          <li class="name"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
-          <li class="city"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
-          <li class="company"><%=h coder.company_name %></li>
-          <li class="website"><%=link_to coder.website, coder.website, :target => "_new" %></li>
-        </ul>
+			<div class="<%= alternate_row_color(index) %>">
+				<div class="photo"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "40x40", :alt => coder.full_name}), coder_path(coder) %></div>
+				<h3 class="coder"><span class="rank"><%= show_rank(coder) %></span> <%= link_to "#{coder.full_name}",coder_path(coder) %></h3>
+				<p class="locale"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></p>
+				<dl class="score_box rounded">
+					<dt class="wwr_rank">WWR Rank</dt>
+					<dd class="wwr_rank_number"><%= coder.rank %></dd>
+					<dt class="watchers">GitHub Watchers</dt>
+					<dd class="watchers_number"><%= coder.github_watchers %></dd>
+					<dt class="rr_points">RailsRanking Points</dt>
+					<dd class="rr_point_total"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></dd>
+				</dl>
+			</div>
       <% end %>
     <% end %>
     

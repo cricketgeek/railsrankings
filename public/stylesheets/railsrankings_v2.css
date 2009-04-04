@@ -58,7 +58,7 @@ h2 {
 	font: 12px Tahoma, "Lucida Grande", sans-serif;
 }
 
-h3 {
+h3, .results h2 {
 	font-size:18px;
 }
 
@@ -397,6 +397,68 @@ a.rank_list {
 #search_results {
 	width: 640px;
 	float: left;
+}
+
+.result {
+	height: 60px;
+	position: relative;
+	clear: both;
+}
+
+.result.odd {
+	background-color: #f9f9f9;
+}
+
+.result dl.score_box {
+	float: right;
+	position: absolute;
+	right: 10px;
+	top: 14px;
+}
+
+dl.score_box {
+	border: 1px solid #E7E7E7;
+	height: 40px;
+	background: #FFFFFF url(../images/new/bg_rankbubble.gif) repeat-x left bottom;
+	min-width: 240px;
+}
+
+dl.score_box dt, dl.score_box dd {
+	float: left;
+}
+
+dl.score_box dt {
+	height: 40px;
+	width: 30px;
+	display: block;
+	position: relative;
+	text-indent: -9999px;
+}
+dl.score_box dt.wwr_rank {
+	background: url(../images/new/icon_wwrmini.gif) no-repeat center center;
+	-moz-border-radius-topleft: 12px;
+	-webkit-border-top-left-radius: 12px;
+	-moz-border-radius-bottomleft: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+}
+
+dl.score_box dt.rr_points {
+	background: url(../images/new/icon_rstar.png) no-repeat center center;
+	border-left: solid 1px #E7E7E7;
+}
+
+dl.score_box dt.watchers {
+	background: url(../images/new/icon_githubwatchers.gif) no-repeat center center;
+}
+
+dl.score_box dd {
+	display: inline-block;
+	font: bold 14px/40px Helvetica, Geneva, Verdana, sans-serif;
+	width: 40px;
+}
+
+dl.score_box dt.wwr_rank, dl.score_box dd.wwr_rank_number, dl.score_box dt.watchers, dl.score_box dd.watchers_number {
+	background-color: #FFF;
 }
 
 p.text_ad {

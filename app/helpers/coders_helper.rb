@@ -23,7 +23,7 @@ module CodersHelper
   def show_repo_points(repo)
     repo ? (repo.watchers * GITHUB_WATCHER_POINTS) : 0
   end
-  
+
   def available_for_hire?(coder)
     coder.is_available_for_hire ? "Available for hire at the moment." : "Not available for hire, a bit busy just now."
   end
@@ -61,7 +61,7 @@ module CodersHelper
   end
   
   def alternate_row_color(index)
-    (index % 2) == 0 ? "user greybg" : "user"
+    (index % 2) == 0 ? "result odd" : "result"
   end
   
   def show_coder_name(coder)
