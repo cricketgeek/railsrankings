@@ -244,6 +244,7 @@ a.rank_list {
 	background: url(../images/new/bg_linkstar.png) no-repeat left center;
 	padding-left: 12px;
 	display: inline-block;
+	width: 90px;
 }
 
 #top_cities a.rank_list, #top_companies a.rank_list {
