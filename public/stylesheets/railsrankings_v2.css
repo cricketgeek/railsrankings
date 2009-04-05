@@ -164,6 +164,10 @@ a:link, a:visited, a:hover, a:active {
 	width: 100%;
 }
 
+#top_coders a.rank_list {
+	width: 90px;
+}
+
 .home #top_cities, .home #top_companies {
 	width: 365px;
 	margin-right: 20px;
@@ -247,7 +251,6 @@ a.rank_list {
 	padding-left: 12px;
 	-moz-desplay: inline-block; /* FF2 Fix */
 	display: inline-block;
-	width: 90px;
 }
 
 #top_cities a.rank_list, #top_companies a.rank_list {
@@ -255,7 +258,6 @@ a.rank_list {
 	margin-left: 18px;
 	height: 30px;
 	line-height: 30px;
-	width: auto;
 }
 
 #top_coders ul {
@@ -371,21 +373,26 @@ a.rank_list {
 	color: #206CBE;
 }
 
-#top_repos ol li span.repo_detail {
+#top_repos ol li span.repo_detail, ul.results_list li span.repo_detail {
 	font-size: 10px;
 	color: #333;
 }
 
-#top_repos ol li p {
+#top_repos ol li p, ul.results_list li p {
 	color: #666;
 }
 
 #top_repos ol {
-	list-style: decimal inside;
-	color: #206CBE;
-	margin: 0px 0px 24px 35px;
 	float: left;
 	width: 45%;
+	margin: 0px 0px 24px 35px;
+	list-style: decimal inside;
+	color: #206CBE;
+	line-height: 18px;
+}
+
+ul.results_list {
+	color: #206CBE;
 	line-height: 18px;
 }
 
@@ -397,6 +404,11 @@ a.rank_list {
 #top_repos ol li {
 	margin-right: 24px;
 	margin-bottom: 12px;
+}
+
+#top_repos a.rank_list {
+	float: right;
+	margin-right: 35px;
 }
 
 #search_results {
