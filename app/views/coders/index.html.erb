@@ -13,7 +13,7 @@
     <%= will_paginate @coders %>
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
-			<div class="<%= alternate_row_color(index) %>">
+			<div class="result<%= alternate_row_color(index) %>">
 				<div class="photo"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "40x40", :alt => coder.full_name}), coder_path(coder) %></div>
 				<h3 class="coder"><span class="rank"><%= show_rank(coder) %></span> <%= link_to "#{coder.full_name}",coder_path(coder) %></h3>
 				<p class="locale"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></p>

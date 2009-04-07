@@ -69,7 +69,7 @@ module CodersHelper
   end
   
   def alternate_row_color(index)
-    (index % 2) == 0 ? "result odd" : "result"
+    (index % 2) == 0 ? " odd" : ""
   end
   
   def show_coder_name(coder)

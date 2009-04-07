@@ -416,6 +416,10 @@ ul.results_list {
 	float: left;
 }
 
+#search_results h2 {
+	margin-bottom: 12px;
+}
+
 .result {
 	height: 60px;
 	position: relative;
@@ -433,11 +437,11 @@ ul.results_list {
 	top: 8px;
 }
 
-.result h3.coder {
+.result h3 {
 	padding-top: 10px;
 }
 
-.result h3.coder a {
+.result h3 a {
 	color: #206cbe;
 	font-weight: bold;
 	text-decoration: none;
@@ -462,10 +466,12 @@ ul.results_list {
 	margin: 3px 0 0 3px;
 }
 .result .coder .rank {
-	left:30px;
+	left:25px;
 	position:absolute;
 	text-align:right;
 	top:15px;
+}
+.result .rank {
 	color: #2e3192;
 }
 
@@ -473,6 +479,7 @@ ul.results_list {
 	font-size: 14px;
 	color: #999;
 }
+
 dl.score_box {
 	border: 1px solid #E7E7E7;
 	height: 40px;
@@ -504,6 +511,10 @@ dl.score_box dt.rr_points {
 	border-left: solid 1px #E7E7E7;
 }
 
+p.rr_points {
+	background: url(../images/new/icon_rstar.png) no-repeat left center;
+}
+
 dl.score_box dt.watchers {
 	background: url(../images/new/icon_githubwatchers.gif) no-repeat center center;
 }
@@ -515,7 +526,7 @@ dl.score_box dd {
 	width: 40px;
 }
 
-dl.score_box dt.wwr_rank, dl.score_box dd.wwr_rank_number, dl.score_box dt.watchers, dl.score_box dd.watchers_number {
+dt.wwr_rank, dd.wwr_rank_number, dt.watchers, dd.watchers_number, dt.coders, dd.coders_count {
 	background-color: #FFF;
 }
 
