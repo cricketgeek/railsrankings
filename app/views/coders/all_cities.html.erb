@@ -1,3 +1,9 @@
+<% content_for :head do %>
+	<title>RailsRankings.com: Ruby on Rails Cities ordered by Rails coder point totals for each city.</title>
+	<meta name="description" content="Search Top Ruby on Rails development cities. View coders within each city based on rank. Top Rails developers, coders, consultants and companies listed." />
+	<meta name="keywords" content="<%=  city_metadata(@all_cities)%>"/>
+<% end %>
+
 <div class="results content">
 	<div id="search_results">
 		<% cache :all_cities do %>
@@ -5,12 +11,11 @@
 			<% @all_cities.each_with_index do |city,index| %>
 				<div class="result<%= alternate_row_color(index) %>">
 				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_city_name(city.city) %></h3>
-				<dl class="score_box round">
-					<dt class="coders">Coders:</dt>
-					<dd class="coders_count"><%= link_to("Show #{pluralize(city.count,"Coder")}", coders_path(:search => city.city)) %></dd>
+				<dl class="score_box list_view">
 					<dt class="rr_points">RailsRankings Points</dt>
 					<dd class="rr_point_total"><%= "#{number_with_delimiter(city.total,{:delimiter => ","})}" %></dd>
 				</dl>
+				<p><%= link_to("View #{pluralize(city.count,"Coder")}", coders_path(:search => city.city), :class => 'rank_list') %></p>
 				</div>  
 			<% end %>
 			<%= will_paginate @all_cities %>

@@ -3,6 +3,9 @@
 <%= yield :head %>
 <link rel="shortcut icon" href="/favicon.ico">
 <%= stylesheet_link_tag "railsrankings_v2" %>
+
+<%= javascript_include_tag 'jquery' %>
+
 </head>
 <body>
 <div id="header">
@@ -12,7 +15,14 @@
   	<% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
       <input name="search" id="search_btn" value="Search" type="image" src="../images/new/btn_search.gif" onclick="this.submit();"/>
-    <% end %> 
+    <% end %>
+		<div class="bubbleInfo">
+			<img class="trigger" src="http://mysite.com/path/to/image.png" />
+			<div class="popup">
+				<p>Whittle the field of ranked rails coders down by alias, country, city, full name, company. Use a pipe ("|") to include multipe areas, <code>ex. Atlanta | Boston | New York</code>.</p>
+				<p>RailsRanking points are based on our unique formula. Coders are given a number of points based on their  workingwithrails.com ranking, their number of public github repo watchers and 'bonus point' modifiers, like WWR Top 100. Github repo authorship is determined by the alias field from the coder's WWR profile.</p>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -48,6 +58,66 @@
 			pageTracker._trackPageview();
 		} catch(err) {}</script>
 
-<script src="http://railsrankings.uservoice.com/pages/general/widgets/tab.js?alignment=right&amp;color=f00" type="text/javascript"></script>
+<script src="http://railsrankings.uservoice.com/pages/general/widgets/tab.js?alignment=left&amp;color=e97110" type="text/javascript"></script>
+
+<script type="text/javascript">   
+<!-- Needs to be moved to js file //--> 
+   $(function () {
+        $('.bubbleInfo').each(function () {
+            var distance = 10;
+            var time = 250;
+            var hideDelay = 500;
+
+            var hideDelayTimer = null;
+
+            var beingShown = false;
+            var shown = false;
+            var trigger = $('.trigger', this);
+            var info = $('.popup', this).css('opacity', 0);
+
+
+            $([trigger.get(0), info.get(0)]).mouseover(function () {
+                if (hideDelayTimer) clearTimeout(hideDelayTimer);
+                if (beingShown || shown) {
+                    // don't trigger the animation again
+                    return;
+                } else {
+                    // reset position of info box
+                    beingShown = true;
+
+                    info.css({
+                        top: -90,
+                        left: -33,
+                        display: 'block'
+                    }).animate({
+                        top: '-=' + distance + 'px',
+                        opacity: 1
+                    }, time, 'swing', function() {
+                        beingShown = false;
+                        shown = true;
+                    });
+                }
+
+                return false;
+            }).mouseout(function () {
+                if (hideDelayTimer) clearTimeout(hideDelayTimer);
+                hideDelayTimer = setTimeout(function () {
+                    hideDelayTimer = null;
+                    info.animate({
+                        top: '-=' + distance + 'px',
+                        opacity: 0
+                    }, time, 'swing', function () {
+                        shown = false;
+                        info.css('display', 'none');
+                    });
+
+                }, hideDelay);
+
+                return false;
+            });
+        });
+    });
+    </script>
+
 </body>
 </html>

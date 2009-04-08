@@ -485,6 +485,8 @@ dl.score_box {
 	height: 40px;
 	background: #FFFFFF url(../images/new/bg_rankbubble.gif) repeat-x left bottom;
 	min-width: 240px;
+	-moz-border-radius:12px;
+	-webkit-border-radius:12px;
 }
 
 dl.score_box dt, dl.score_box dd {
@@ -520,10 +522,18 @@ dl.score_box dt.watchers {
 }
 
 dl.score_box dd {
-	-moz-desplay: inline-block; /* FF2 Fix */
+	-moz-display: inline-block; /* FF2 Fix */
 	display: inline-block;
 	font: bold 14px/40px Helvetica, Geneva, Verdana, sans-serif;
 	width: 40px;
+}
+
+dl.score_box.list_view {
+	min-width: 115px;
+}
+
+dl.score_box.list_view dt.rr_points {
+	border: none;
 }
 
 dt.wwr_rank, dd.wwr_rank_number, dt.watchers, dd.watchers_number, dt.coders, dd.coders_count {
@@ -597,3 +607,14 @@ p.text_ad a {
 	height: 20px;
 	padding-left: 12px;
 }
+
+/* Help Bubble */
+.bubbleInfo {
+    position: relative;
+}
+
+.popup {
+    position: absolute;
+    display: none; /* keeps the popup hidden if no JS available */
+}
+

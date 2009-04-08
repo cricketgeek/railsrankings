@@ -78,7 +78,17 @@ module CodersHelper
   
   def coder_metadata(coders)
     coders = @coders.collect { |coder| coder.full_name }
-    coders.join(",")
+    coders.join(", ")
+  end
+  
+  def city_metadata(cities)
+    cities = @all_cities.collect { |city| city.city }
+    cities.join(", ")
+  end
+  
+  def company_metadata(companies)
+    companies = @all_companies.collect { |company| company.company_name }
+    companies.join(", ")
   end
   
   def determine_rank_for_paging(index)
