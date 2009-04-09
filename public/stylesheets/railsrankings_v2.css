@@ -98,6 +98,14 @@ a:link, a:visited, a:hover, a:active {
 	color: #598456;
 }
 
+a.back_link {
+	clear:both;
+	display:block;
+	float:left;
+	margin:12px 0;
+	position:relative;
+}
+
 #header {
 	width: 980px;
 	height: 120px;
@@ -204,6 +212,13 @@ a:link, a:visited, a:hover, a:active {
 	clear: right;
 	width: 320px;
 }
+
+.profile #sponsors {
+	float: right;
+	clear: right;
+	width: 320px;
+}
+
 
 #rank_formula {
 	background: #fffbf3;
@@ -424,7 +439,7 @@ ul.results_list {
 	margin-right: 35px;
 }
 
-#search_results {
+#search_results, #detail {
 	width: 640px;
 	float: left;
 }
@@ -572,6 +587,59 @@ p.text_ad a {
 	margin: 12px 0px;
 	font-size: 10px;
 	text-align: right;
+}
+
+#detail {
+	position: relative;
+}
+#mugshot {
+	float: left;
+}
+#stats {
+	float: right;
+}
+#stats p {
+	font-size: 11px;
+	line-height: 12px;
+	margin: 0px 0px 3px 0px;
+}
+#stats dl.score_box {
+	margin-bottom: 12px;
+}
+#stats p.github_watchers {
+	color: #666;
+}
+#stats p.wwr_recommend a {
+	color: #a00;
+}
+dl#info {
+	clear: both;
+}
+dl#info dt, dl#info dd {
+	float: left;
+}
+dl#info dt {
+	clear:left;
+	font-weight:bold;
+	margin:12px 3px 0 0;
+}
+dl#info dd {
+	margin:12px 0 0;
+}
+#github_repos {
+	background: #f6f6f6;
+	border: 1px solid #d6d6d6;
+	float: left;
+	clear: both;
+	margin-top: 24px;
+	width: 100%;
+}
+#detail p.timestamp {
+	color:#CCCCCC;
+	font-size:9px;
+	position:absolute;
+	right:0;
+	top:0;
 }
 
 #footer {
