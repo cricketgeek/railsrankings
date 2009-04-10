@@ -1,3 +1,11 @@
+<% content_for :head do %>
+	<title>RailsRankings.com: All GitHub Repos Listed by Number of Watchers</title>
+	<meta name="description" content="A list of GitHub Repos listed in order by watcher number. Search for Rails developers, coders, companies, and cities." />
+	<meta name="verify-v1" content="D4WmRlOo3zesW7GMJuW1/nCSxEdMqGiS7L+qZYf5IAI=" />
+	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
+	<link rel="canonical" href="http://railsrankings.com/coders/all_repos" />
+<% end %>
+
 <div class="results content">
 	<div id="search_results">
 		<% cache :all_repos do %>

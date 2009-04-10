@@ -1,3 +1,11 @@
+<% content_for :head do %>
+	<title>RailsRankings.com: Ruby on Rails developers and coders <%= show_search_term %></title>
+	<meta name="description" content="RailsRankings, over <%= pluralize(@count,"Rails Coder") %> matching '<%= params[:search] %>'. Search for Rails developers, coders, companies, and cities." />
+	<meta name="verify-v1" content="D4WmRlOo3zesW7GMJuW1/nCSxEdMqGiS7L+qZYf5IAI=" />
+	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
+	<link rel="canonical" href="http://railsrankings.com/coders/" />
+<% end %>
+
 <div id="page" class="top_rule">
 	<div id="content">
 		<% cache :all_coders do %>
