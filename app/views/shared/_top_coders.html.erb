@@ -3,7 +3,7 @@
 		<% @top_five.each do |coder| %>
 		<li class="coder <%= "last" if coder == @top_five.last %>">
 			<div class="photo">
-			<%= image_tag coder.image_path, :width => "70",:height => "70", :alt => "#{coder.full_name}'s bio pic" %>
+			<%= link_to image_tag(coder.image_path, :width => "70",:height => "70", :alt => "#{coder.full_name}'s bio pic"), coder_path(coder) %>
 			<p class="points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></p>
 			</div>
 			<h4 class="rank_name"><em><%= coder.railsrank %></em> <%= coder.full_name %></h4>
