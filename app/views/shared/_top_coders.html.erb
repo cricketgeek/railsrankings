@@ -13,6 +13,6 @@
 		<% @last_five.each do |coder| %>
 		  <li class="coder_line"><%= coder.railsrank %>. <%= show_coder_link(coder) %> <span><%= show_city_name(coder.city) %></span></li>
 		<% end %>
-		<li><%= link_to "View All Coders","/coders/all_coders?page=1", :class => "rank_list" %></li>
+		<li><%= link_to "View All Coders","/coders/", :class => "rank_list" %></li>
     </ul>
 </div>
