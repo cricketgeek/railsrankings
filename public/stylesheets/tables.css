@@ -14,9 +14,6 @@ caption {
 	font-weight: bold;
 	margin: 5px;
 }
-td, th {
-	padding: 4px;
-}
 thead th {
 	background: #E6EDF5;
 	color: #1a56b0;
@@ -26,7 +23,6 @@ thead th {
 tbody th {
 	font-weight: bold;
 }
-tbody tr { background: #FCFDFE; }
 
 tbody tr.odd { background: #F7F9FC; }
 

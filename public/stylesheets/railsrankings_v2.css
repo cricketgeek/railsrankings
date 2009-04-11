@@ -407,7 +407,7 @@ a.rank_list {
 }
 
 #top_repos ol li p, ul.results_list li p {
-	color: #666;
+	color: #777;
 }
 
 #top_repos ol {
@@ -589,14 +589,92 @@ p.text_ad a {
 	text-align: right;
 }
 
+.profile .sponsor_125 {
+	display:inline;
+	margin-right:12px;
+}
+
+.profile #github_repos {
+	float: left;
+}
+
+.profile #github_repos h4 {
+	color:#777;
+	margin:12px 0 0 12px;
+}
+.profile #github_repos table {
+	margin: 12px 0px 12px 12px;
+	width: 600px;
+	float: left;
+}
+.profile #recent_commits {
+	background:#FFFFFF none repeat scroll 0 0;
+	float:right;
+	margin:12px;
+	padding:12px;
+	width:300px;
+}
+
+.profile #recent_commits {
+	color: #777;
+}
+
+.profile #recent_commits h5 {
+	margin-bottom: 12px;
+	color: #206cbe;
+}
+
+#github_repos table td, #github_repos table th {
+	padding: 4px;
+} 
 #detail {
 	position: relative;
+	height:	225px;
+}
+#detail h3 {
+	color: #206cbe;
+}
+#detail p.locale {
+	color: #777;
+}
+#detail p.rank {
+	background:transparent url(../images/new/bg_rankheadline.png) no-repeat scroll left center;
+	float:left;
+	font-size:24px;
+	font-weight:bold;
+	height:32px;
+	line-height:30px;
+	margin-right:12px;
+	padding-left:60px;
+}
+#detail p.rank a {
+	text-decoration: none;
+	color: #2b3f70;
+}
+#detail .rails_status {
+	color:#AA0000;
+	font-size:8px;
+	font-weight:bold;
+	left:0;
+	position:absolute;
+	text-align:center;
+	text-transform:uppercase;
+	top:210px;
+	width:146px;
 }
 #mugshot {
 	float: left;
+	background: transparent url(../images/new/bg_profile.png) no-repeat left top;
+	width: 146px;
+	height: 153px;
 }
-#stats {
-	float: right;
+#mugshot img {
+	border:1px solid #CCCCCC;
+	margin:9px 0 0 9px;
+}
+#stats, dl#info {
+	float: left;
+	margin-left: 12px;
 }
 #stats p {
 	font-size: 11px;
@@ -607,13 +685,10 @@ p.text_ad a {
 	margin-bottom: 12px;
 }
 #stats p.github_watchers {
-	color: #666;
+	color: #777;
 }
 #stats p.wwr_recommend a {
 	color: #a00;
-}
-dl#info {
-	clear: both;
 }
 dl#info dt, dl#info dd {
 	float: left;

@@ -6,13 +6,12 @@
 
 <div class="profile content">
 	<div id="detail">
+		<p class="rank"><%= link_to show_rank(@coder), @coder.profile_url %></p>
 		<h3><%=h "#{@coder.full_name}" %></h2>
 		<p class="locale"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></p>
 		<div id="mugshot">
-			<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150", :alt => @coder.full_name}), coder_path(@coder) %>
+			<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "125x125", :alt => @coder.full_name}), coder_path(@coder) %>
 		</div>
-		<%= link_to show_rank(@coder), @coder.profile_url %>
-		<%= show_delta(@coder) %>
 		
 		<div id="stats">
 			<dl class="score_box">
