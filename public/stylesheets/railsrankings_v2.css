@@ -172,9 +172,10 @@ a.back_link {
 }
 
 #top_coders {
-	background: url(../images/new/bg_topcoders.gif);
+	background: #e7edee;
 	height: 180px;
 	width: 100%;
+	border-bottom: solid 1px #c2d6ec;
 }
 
 #top_coders a.rank_list {
@@ -221,7 +222,7 @@ a.back_link {
 
 
 #rank_formula {
-	background: #fffbf3;
+	background: #feffc3;
 	padding: 18px;
 	position: relative;
 	margin-bottom: 24px;
