@@ -4,77 +4,73 @@
 	<%= stylesheet_link_tag "tables" %>
 <% end %>
 
-<div id="page" class="top_rule">
-	<div id="content">
-	  	<div class="profile">
-			<div class="profile_pic">
-				<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "150x150", :alt => @coder.full_name}), coder_path(@coder) %>
-			</div>
-			<div class="rank">
-				<div class="wwr_rank" title="RailsRanking Rank">
-					<%= link_to show_rank(@coder), @coder.profile_url %>
-					<div class="rank_change rounded">
-						<%= show_delta(@coder) %>
-					</div>
-				</div>
-				<p><%= link_to("workingwithrails rank: #{@coder.rank}", @coder.profile_url, { :title => "View #{@coder.first_name}'s Profile on Working With Rails"}) %></p>	
-				<p><%= @coder.recommendation_count %> WWR Recommendations</p>
-				<p><%= link_to "Recommend #{ @coder.full_name[0..35] }", @coder.profile_url %></p>
-				<br class="clr" />   
-
-				<% if @coder.github_watchers > 0 %>
-				<ul class="github_rank rounded">
-					<li class="github_watchers"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></li>
-					<li>Total github <%= pluralize(@coder.github_watchers,"watcher") %> across [<%= @repos.size %>] projects.</li>
-				</ul>
-				<% end %>
-			</div>
-
-			<!--userinfo-->
-			<ul class="user_info">
-				<li class="username"><%=h "#{@coder.full_name}" %></li>
-				<li class="userlocation">RailsRankings Points: <%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></li>
-				<li class="userlocation"><strong>Last Updated: <%= distance_of_time_in_words(@coder.updated_at,Time.now,true) %> ago</strong></li>   
-				<li class="userlocation"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></li>
-				<li class="userlocation"><%=h @coder.company_name %></li>
-				<li class="userlocation"><%=link_to @coder.website, @coder.website %></li>
-				<li class="userlocation"><strong><%= rails_core_status(@coder) %></strong></li>
-				<li class="userlocation"><%= available_for_hire?(@coder) %></li>
-				<% if @coder.twitter_name %>
-				  <li class="userlocation">Twitter: <%=link_to @coder.twitter_name, "http://twitter.com/#{@coder.twitter_name}", :target => "_new" %></li>
-			  <% end %>
-			</ul>
-		 </div>
-
-		<div class="github_watchers">
-			<h2>Github Public Repos</h2>
-			<div id="github_repos">
-			<table cellspacing="0" cellpadding="0">
-				<thead>
-					<tr>
-						<th>Repo Name</th>
-						<th>Forked?</th>
-						<th>Description</th>
-						<th>Forks</th>
-						<th>Watchers</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
-				</tbody>
-			</table>
-			</div>
-			<div id="github_latest">
-				<%= render :partial => "github_commits", :locals => { :commits => @commits } unless @commits.empty? %>
-			</div>
-			<br class="clr" />
-		</div>
-		<div class="nav_links">
-			<%= link_to "Back to search", coders_path(:search => cookies[:search_term]) %>
+<div class="profile content">
+	<div id="detail">
+		<p class="rank"><%= link_to show_rank(@coder), @coder.profile_url %></p>
+		<h3><%=h "#{@coder.full_name}" %></h2>
+		<p class="locale"><%=h @coder.city %><%= ", #{h @coder.country}" if @coder.country %></p>
+		<div id="mugshot">
+			<%=link_to image_tag(format_image_path(@coder.image_path),{:size  => "125x125", :alt => @coder.full_name}), coder_path(@coder) %>
 		</div>
 		
-		<div class="ad_box">
-			<!-- Insert Google Script -->
+		<div id="stats">
+			<dl class="score_box">
+				<dt class="wwr_rank">WWR Rank</dt>
+				<dd class="wwr_rank_number"><%= link_to("#{@coder.rank}", @coder.profile_url, { :title => "View #{@coder.first_name}'s Profile on Working With Rails"}) %></dd>
+				<dt class="watchers">GitHub Watchers</dt>
+				<dd class="watchers_number"><a href="<%= @coder.github_url %>"><%= @coder.github_watchers %></a></dd>
+				<dt class="rr_points">RailsRanking Points</dt>
+				<dd class="rr_point_total"><%= number_with_delimiter(@coder.full_rank,{:delimiter => ","}) %></dd>
+			</dl>
+			
+			<p class="wwr_recommend"><%= @coder.recommendation_count %> WWR Recommendations, <%= link_to "Recommend #{ @coder.full_name[0..35] }", @coder.profile_url %></p>
+			
+			<% if @coder.github_watchers > 0 %>
+				<p class="github_watchers"><%=h "#{@coder.full_name}" %> has <%= pluralize(@coder.github_watchers,"watcher") %> across [<%= @repos.size %>] projects.</p>
+			<% end %>
 		</div>
-	</div><!-- Close Content -->
-</div><!-- Close Page -->
+		
+		<div class="rails_status">
+			<%= rails_core_status(@coder) %>
+		</div>
+		
+		<dl id="info">
+			<dt>Company</dt>
+			<dd><%=h @coder.company_name %>
+			<dt>Web Site:</dt>
+			<dd><%=link_to @coder.website, @coder.website %></dd>
+			<dt>Availability:</dt>
+			<dd><%= available_for_hire?(@coder) %></dd>
+			<% if @coder.twitter_name %>
+				<dt class="twitter">Twitter:</dt>
+				<dd><%=link_to @coder.twitter_name, "http://twitter.com/#{@coder.twitter_name}", :target => "_new" %></dd>
+			<% end %>
+		</dl>
+		
+		<p class="timestamp"><strong>Last Updated:</strong> <%= distance_of_time_in_words(@coder.updated_at,Time.now,true) %> ago</p>
+	</div>
+
+	<%= render :partial => "shared/sponsors" %>
+	
+	<div id="github_repos">
+		<h4>Github Public Repos</h2>
+		<table cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>Repo Name</th>
+					<th>Forked?</th>
+					<th>Description</th>
+					<th>Forks</th>
+					<th>Watchers</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%= render :partial => "github_repos", :collection => @repos, :as => :repo unless @repos.empty? %>
+			</tbody>
+		</table>
+
+		<%= render :partial => "github_commits", :locals => { :commits => @commits } unless @commits.empty? %>
+	</div>
+	
+	<%= link_to "Back to search", coders_path(:search => cookies[:search_term]), :class => "back_link" %>
+</div>

@@ -1,16 +1,19 @@
 module CodersHelper
-  
-  def format_image_path(path)
-    path = "/images/profile.png" if path and path.include?("images/profile.png")
-    path
-  end
-  
+    
   def page_index
     if params[:page]
       params[:page].to_i == 1 ? 1 : (SEARCH_PER_PAGE * (params[:page].to_i - 1)) + 1
     else
       return 1
     end
+  end
+  
+  def should_show_text_ad?(index)
+    index == ((SEARCH_PER_PAGE/2) - 1)
+  end
+  
+  def show_search_term
+    "Matching \"#{params[:search]}\"" if params[:search]
   end
   
   def company_clipped(coder)
@@ -21,10 +24,6 @@ module CodersHelper
     coder.profile_url.sub("http://www.workingwithrails.com/","http://www.workingwithrails.com/recommendation/new/")
   end
   
-  def show_rank(coder)
-    coder.railsrank < MAX_RANK ? coder.railsrank : "nil"
-  end
-  
   def show_repo_name(repo)
     repo && repo.name ? link_to(repo.name,repo.url, :target => "_new") : "unknown"
   end
@@ -32,7 +31,7 @@ module CodersHelper
   def show_repo_points(repo)
     repo ? (repo.watchers * GITHUB_WATCHER_POINTS) : 0
   end
-  
+
   def available_for_hire?(coder)
     coder.is_available_for_hire ? "Available for hire at the moment." : "Not available for hire, a bit busy just now."
   end
@@ -64,17 +63,13 @@ module CodersHelper
       "<span class='negative'>#{coder.delta}</span>"      
     end
   end
-  
-  def show_city_name(city)
-    city.blank? ? "Unknown location" : link_to("#{city}", coders_path(:search => city))
-  end
 
   def show_company_name(company)
     company.blank? ? "Unknown" : link_to("#{company}", coders_path(:search => company))
   end
   
   def alternate_row_color(index)
-    (index % 2) == 0 ? "user greybg" : "user"
+    (index % 2) == 0 ? " odd" : ""
   end
   
   def show_coder_name(coder)
@@ -83,7 +78,17 @@ module CodersHelper
   
   def coder_metadata(coders)
     coders = @coders.collect { |coder| coder.full_name }
-    coders.join(",")
+    coders.join(", ")
+  end
+  
+  def city_metadata(cities)
+    cities = @all_cities.collect { |city| city.city }
+    cities.join(", ")
+  end
+  
+  def company_metadata(companies)
+    companies = @all_companies.collect { |company| company.company_name }
+    companies.join(", ")
   end
   
 end

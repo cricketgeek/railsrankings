@@ -1,9 +1,32 @@
-<div id="page" class="top_rule">
-	<div id="content">
+<% content_for :head do %>
+	<title>RailsRankings.com: Ruby on Rails companies including product, service and screencast production companies.</title>
+	<meta name="description" content="Search Top Ruby on Rails companies. Rankings include product companies, service companies, screencast production companies and internal company Rails divisions." />
+	<meta name="keywords" content="<%=  company_metadata(@all_companies)%>"/>
+	<link rel="canonical" href="http://railsrankings.com/coders/all_companies" />
+<% end %>
+
+<div class="results content">
+	<div id="search_results">
 		<% cache :all_companies do %>
-		<ol>
-		  <%= render :partial  => "company_rankings", :collection => Coder.all_companies, :as => :company  %>
-		</ol>
+			<%= will_paginate @all_companies %>
+			<% @all_companies.each_with_index do |company,index| %>
+				<div class="result<%= alternate_row_color(index) %>">
+				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_company_name(company.company_name) %></h3>
+				<dl class="score_box list_view">
+					<dt class="rr_points">RailsRankings Points</dt>
+					<dd class="rr_point_total"><%= "#{number_with_delimiter(company.total,{:delimiter => ","})}" %></dd>
+				</dl>
+				<p><%= link_to("View #{pluralize(company.count,"Coder")}", coders_path(:search => company.company_name), :class => 'rank_list') %></p>
+				</div>  
+			<% end %>
+			<%= will_paginate @all_companies %>
 		<% end %>
 	</div>
+
+		<%= render :partial => "shared/top_cities" %>
+		
+		<%= render :partial => "shared/sponsors" %>
+
+		<%= render :partial => "shared/top_companies" %>
+
 </div>

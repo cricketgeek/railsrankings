@@ -1,109 +1,43 @@
 
 <% content_for :head do %>
-	<title>Find Ruby on Rails developers, coders, companies and consultants on RailsRankings.com</title>
-	<meta name="description" content="Search for Rails developers based on our unique ranking system. Find Ruby on Rails development companies by city. Top Rails developers, coders, consultants and companies listed." />
+	<title>RailsRankings.com: Ruby on Rails developers and coders <%= show_search_term %></title>
+	<meta name="description" content="RailsRankings, over <%= pluralize(@count,"Rails Coder") %> matching '<%= params[:search] %>'. Search for Rails developers, coders, companies, and cities." />
 	<meta name="verify-v1" content="D4WmRlOo3zesW7GMJuW1/nCSxEdMqGiS7L+qZYf5IAI=" />
 	<meta name="keywords" content="<%=  coder_metadata(@coders)%>"/>
 <% end %>
 
-<div id="topbar" class="bottom_rule">
-  <div id="searchbox">
-    <h1>Search for Ruby on Rails Developers</h1>
-    <div id="search_form">
-    <% form_tag coders_path, :method => :get do %>
-      <%= text_field_tag :search, params[:search]%>
-      <input name="search" type="image" src="/images/btn-search.gif" id="search-btn" onclick="this.submit();"/>
-    <% end %>
-    </div>
-	<p class="desc">Whittle the field of ranked rails coders down by alias, country, city, full name, company and use "|" (Atlanta | Boston | New York) to OR your search terms.  RailsRanking points are based on the <%= link_to "workingwithrails.com","http://workingwithrails.com/", :target => "_new" %> ranking
-      and the number of public <%= link_to "github","http://www.github.com/",:target => "_new" %> repo watchers they have.  Github repo authorship is determined by the alias field from the coder's WWR profile.  RailsRankings Points is a better measuring stick.
-      </p>
-  </div><!--search-->
-</div>
-<div id="page">
-  <div id="content">
-  <div id="leftbar">
-    <h2><%= pluralize(@count,"Rails Coder") %> Matched "<%= params[:search] %>"</h2>
+<div class="results content">
+	<div id="search_results">
+    <h2><%= pluralize(@count,"Rails Coder") %> <%= show_search_term %></h2>
     
     <%= will_paginate @coders %>
-    <br class="clr" />
     <% @coders.each_with_index do |coder, index| %>
       <% if coder %>
-      
-      <div class="<%= alternate_row_color(index) %>">
-        <div class="userpic">
-		<%=link_to image_tag(format_image_path(coder.image_path),{:size  => "75x75", :alt => coder.full_name}), coder_path(coder) %>
-		<span class="rr_points" title="RailsRankings points"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></span>
-		</div>
-        <div class="rank">
-        	<% if coder.github_watchers > 0 %>
-    			  <ul class="github_rank rounded">
-    				  <li class="github_watchers" title="public repo github watchers"><a href="<%= coder.github_url %>"><%= coder.github_watchers %></a></li>
-    			  </ul>
-    			<% end %>  
-	      <div class="wwr_rank" title="railsranking rank">
-	        <a href="#"><%= show_rank(coder) %></a>	
-
-				</div>
-	        <!-- <%= show_delta(coder) %>
-			<p><%= coder.recommendation_count %> Recommendations</p>
-	      	<p><%= link_to "Recommend on WWR",recommendation_url(coder), :target => "_new" %></p> 
-			-->
-
-	    </div>      
-        <!--userpic-->
-        <ul class="user_info">
-          <li class="name"><%= link_to "#{coder.full_name}",coder_path(coder) %></li>
-          <li class="city"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></li>
-          <li class="company"><%=h coder.company_name %></li>
-          <li class="website"><%=link_to coder.website, coder.website, :target => "_new" %></li>
-        </ul>
-		<br class="clr" />
-      </div>
+			<div class="result<%= alternate_row_color(index) %>">
+				<div class="photo"><%=link_to image_tag(format_image_path(coder.image_path),{:size  => "40x40", :alt => coder.full_name}), coder_path(coder) %></div>
+				<h3 class="coder"><span class="rank"><%= show_rank(coder) %></span> <%= link_to "#{coder.full_name}",coder_path(coder) %></h3>
+				<p class="locale"><%=h coder.city %><%= ", #{h coder.country}" if coder.country %></p>
+				<dl class="score_box">
+					<dt class="wwr_rank">WWR Rank</dt>
+					<dd class="wwr_rank_number"><%= coder.rank %></dd>
+					<dt class="watchers">GitHub Watchers</dt>
+					<dd class="watchers_number"><%= coder.github_watchers %></dd>
+					<dt class="rr_points">RailsRanking Points</dt>
+					<dd class="rr_point_total"><%= number_with_delimiter(coder.full_rank,{:delimiter => ","}) %></dd>
+				</dl>
+			</div>
       <% end %>
+  		<%= render :partial => "shared/text_ad" if should_show_text_ad?(index) %>
     <% end %>
-    
 
     <%= will_paginate @coders %>
 
-   </div>
-    <!--leftbar-->
-    <div id="rightbar">
-      
-      <h2><%= link_to "Top Ruby on Rails Cities",all_cities_coders_path, { :title => "Most Active Cities for Rails Application Development" } %></h2>
-      <div>
-        <p class="desc"><strong>Every</strong> ranked coder is counted.  Bonus points
-          for being in the top 100 of WWR and 250 points for every github watcher. Sorted on RailsRankings Points in the top 20
-          lists below
-        </p>
-      </div>
-      <ol id="rubycities">
-      <% cache :top_cities do %>
-        <%= render :partial => "city_rankings", :collection => Coder.cities, :as => :city %>
-      <% end %>
-      </ol>
-      <h2><%= link_to "Top Rails Development Companies",all_companies_coders_path, { :title => "Top Ranked Rails Development Companies" } %></h2>
-      <ol id="rubycompanies">
-      <% cache :top_companies_cache do %>
-        <%= render :partial => "company_rankings", :collection => Coder.companies, :as => :company %>
-      <% end %>
-      </ol>  
-      <h2><%= link_to "Top Rails Coders", all_coders_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
-      <ol id="rubycompanies">
-      <% cache :top_coders do %>      
-        <%= render :partial => "top_coders_new_rank", :collection => Coder.ranked.top_coders, :as => :coder %>
-      <% end %>
-      </ol>
-      <h2><%= link_to "Top Github Repos", all_repos_coders_path, { :title => "All Rails Coders by Rank" } %></h2>
-      <ol id="rubycompanies">
-      <% cache :top_repos do %>      
-        <%= render :partial => "top_repos", :collection => GithubRepo.popular(15), :as => :repo %>
-      <% end %>
-      </ol>      
     </div>
-    <!--rightbar-->
-    <br class="clr" />
-    </div>
-  </div><!--main-->
 
+		<%= render :partial => "shared/top_cities" %>
+		
+		<%= render :partial => "shared/sponsors" %>
 
+		<%= render :partial => "shared/top_companies" %>
+
+</div>

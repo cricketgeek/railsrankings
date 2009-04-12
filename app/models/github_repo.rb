@@ -30,6 +30,10 @@ class GithubRepo < ActiveRecord::Base
     !repo.name.include?("django") || !repo.description.include?("django")
   end
   
+  def total_point_value
+    watchers * GITHUB_WATCHER_POINTS
+  end
+  
   generator_for :watchers, :start => 1 do |watcher|
     watcher.succ
   end

@@ -1,4 +1,6 @@
-<h3>Recent Activity on Repos:</h3>
+<div id="recent_commits">
+<h5>Recent Activity on Repos:</h5>
 <% commits.each do |commit| %>
-<p><strong><%= "#{commit.github_repo.name} [#{commit.author}]" %></strong>: <%= commit.message %> <em>at</em> <%= commit.committed_date %></p>
+	<p><strong><%= "#{commit.github_repo.name} [#{commit.author}]" %></strong>: <%= commit.message %> <em>at</em> <%= commit.committed_date %></p>
 <% end %>
+</div>

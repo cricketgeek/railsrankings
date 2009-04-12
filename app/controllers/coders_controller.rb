@@ -1,4 +1,5 @@
 class CodersController < ApplicationController
+  before_filter :build_top_items, :only => [:index,:all_coders,:all_cities,:all_companies,:all_repos]
   
   caches_page :all_coders, :all_cities, :all_companies
   
@@ -22,20 +23,27 @@ class CodersController < ApplicationController
       format.html
       format.xml  { render :xml => @coders }
       format.json { render :json => @coders }     
-    end
-    
+    end  
   end
   
   def all_coders
+    @all_coders = Coder.ranked.paginate :page => (params[:page] || 1), 
+                                        :per_page => TOP_PAGES_PER 
   end
   
   def all_cities
+    @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
+                                            :per_page => TOP_PAGES_PER
   end
   
   def all_companies
+    @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
+                                                  :per_page => TOP_PAGES_PER
   end
   
   def all_repos
+    @all_repos = GithubRepo.popular(500).paginate :page => (params[:page] || 1), 
+                                                  :per_page => TOP_PAGES_PER
   end
 
   # GET /coders/1

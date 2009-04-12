@@ -22,11 +22,6 @@ namespace :wwr do
       Rake::Task["ts:stop"].invoke
       Rake::Task["ts:index"].invoke
       Rake::Task["ts:start"].invoke
-
-      # run "cd #{current_path} && rake ts:stop RAILS_ENV=#{rails_env}"
-      # run "cd #{current_path} && rake ts:index RAILS_ENV=#{rails_env}"
-      # run "cd #{current_path} && rake ts:start RAILS_ENV=#{rails_env}"
-
     end
     
     desc "process just one profile url, re-run rankings sort"
@@ -54,6 +49,7 @@ namespace :wwr do
         raise "usage: rake letters=A,M"
       end
       letters = ENV['letters'].split(",")
+      puts letters.inspect
       wwr_scraper = WWRScraper.new      
       (letters[0]..letters[1]).each do |letter|
         wwr_scraper.process_name_browse_by_letter(letter)
@@ -65,14 +61,13 @@ namespace :wwr do
     desc "load data by a specific first letter of the first name on WWR"
     task :load_by_letter, [:letter] => :environment do
       unless ENV.include?("letter")
-          raise "usage: rake letter=[A-Z]" 
+          raise "usage: rake letter=A" 
       end
       letter = ENV['letter']
       puts "processing just letter #{letter} page"
       wwr_scraper = WWRScraper.new
       wwr_scraper.process_name_browse_by_letter(letter)
       Rake::Task["data_helpers:slugify"].invoke
-      
     end
     
     desc "remove bad repos and commits"
