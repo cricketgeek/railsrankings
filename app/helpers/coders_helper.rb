@@ -13,7 +13,7 @@ module CodersHelper
   end
   
   def show_search_term
-    "Matching \"#{params[:search]}\"" if params[:search]
+    "Matching \"#{params[:search]}\"" if params[:search] && !(params[:search].blank?)
   end
   
   def company_clipped(coder)
@@ -89,6 +89,10 @@ module CodersHelper
   def company_metadata(companies)
     companies = @all_companies.collect { |company| company.company_name }
     companies.join(", ")
+  end
+  
+  def determine_rank_for_paging(index)
+    params[:page] == "1" ? index + 1 : (params[:page].to_i - 1) * TOP_PAGES_PER + index + 1
   end
   
 end
