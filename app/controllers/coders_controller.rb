@@ -45,6 +45,10 @@ class CodersController < ApplicationController
     @all_repos = GithubRepo.popular(500).paginate :page => (params[:page] || 1), 
                                                   :per_page => TOP_PAGES_PER
   end
+  
+  def badges
+    
+  end
 
   # GET /coders/1
   # GET /coders/1.xml

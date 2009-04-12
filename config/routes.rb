@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :coders, 
+  map.resources :coders,
     :collection => {
+      :badges => :get,
       :all_companies => :get,
       :all_cities => :get,
       :all_coders => :get,
