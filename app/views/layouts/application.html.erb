@@ -13,7 +13,7 @@
   <div id="search_box">
   	<% form_tag coders_path, :method => :get do %>
       <%= text_field_tag :search, params[:search]%>
-      <input name="search" id="search_btn" value="Search" type="image" src="../images/new/btn_search.gif" onclick="this.submit();"/>
+      <input name="search" id="search_btn" value="Search" type="image" src="../images/new/btn_search.gif" onclick="this.submit(); pageTracker._trackPageview("Search"); return false;"/>
     <% end %>
 	</div>
 </div>
