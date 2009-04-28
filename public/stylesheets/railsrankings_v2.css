@@ -189,11 +189,15 @@ a.back_link {
 }
 #sponsors {
 	text-align: center;
+	margin-bottom: 12px;
 }
 
 .sponsor_125 {
 	text-align: center;
-	margin-bottom: 12px;
+}
+
+.results .sponsor_125, .subpage .sponsor_125 {
+	display: inline;
 }
 
 .home #sponsors {
@@ -201,25 +205,18 @@ a.back_link {
 	width: 210px;
 }
 
-.results #top_cities, .results #top_companies {
+.results #top_cities, .results #top_companies, .subpage #top_cities, .subpage #top_companies {
 	width: 320px;
 	margin-bottom: 12px;
 	float: right;
 	clear: right;
 }
 
-.results #sponsors {
+.results #sponsors, .subpage #sponsors, .profile #sponsors {
 	float: right;
 	clear: right;
 	width: 320px;
 }
-
-.profile #sponsors {
-	float: right;
-	clear: right;
-	width: 320px;
-}
-
 
 #rank_formula {
 	background: #feffc3;
@@ -278,7 +275,7 @@ a.back_link {
 a.rank_list {
 	background: url(../images/new/bg_linkstar.png) no-repeat left center;
 	padding-left: 12px;
-	-moz-desplay: inline-block; /* FF2 Fix */
+	-moz-display: inline-block; /* FF2 Fix */
 	display: inline-block;
 }
 
@@ -440,7 +437,7 @@ ul.results_list {
 	margin-right: 35px;
 }
 
-#search_results, #detail {
+#search_results, #detail, #badges {
 	width: 640px;
 	float: left;
 }
