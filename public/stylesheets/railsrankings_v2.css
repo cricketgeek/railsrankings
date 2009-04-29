@@ -155,7 +155,7 @@ a.back_link {
 #search_box #search {
 	border:1px solid #E6E6E6;
 	font-size:18px;
-	height:30px;
+	height:22px;
 	margin-left:30px;
 	margin-right:3px;
 	padding:4px;
@@ -361,6 +361,7 @@ a.rank_list {
 #top_coders .coder .rank_name {
 	font-size: 12px;
 	color: #206cbe;
+	margin-bottom: 0px;
 }
 
 .coder .rank_name em {
@@ -718,6 +719,27 @@ dl#info dd {
 	position:absolute;
 	right:0;
 	top:0;
+}
+
+#badges h3, #badges h4 {
+	font-family: Tahoma, "Lucida Grande", sans-serif;
+	margin-bottom: 12px;
+}
+
+#badges h4 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#badges pre {
+	background-color: #F9F9F9;
+	color: #1A56B0;
+	font-family: Monaco,"Lucida Grande", monospace;
+	font-size: 12px;
+	line-height: 140%;
+	margin-bottom: 12px;
+	padding: 8px;
+	white-space:normal;
 }
 
 #footer {

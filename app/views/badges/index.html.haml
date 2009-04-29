@@ -1,0 +1,32 @@
+=content_for :head do
+  %title RailsRankings.com Badges for Your Web Site or Blog
+  %meta{:name => "description", :content => "Find Rails developers based on our unique ranking system. Search Ruby on Rails development companies by city. Top Rails developers, coders, consultants and companies listed."}
+  %meta{:name => "keywords", :content =>""}
+
+=content_for :top_coders do
+  =render :partial => "shared/top_coders"
+
+.subpage.content
+  #badges
+    %h3 Get Your RailsRankings.com Badge
+    
+    %p Example badge code:
+    %pre
+      ==&lt;a href=&quot;http://railsrankings.com/coders/David-Heinemeier-Hansson&quot; title=&quot;My Rails Rankings Badge&quot;&gt;&lt;img src=&quot;http://railsrankings.com/images/badges/rr_badge_80x15&quot; alt=&quot;RailsRankings.com Badge&quot;&gt;&lt;/a&gt;
+    
+    %h4 80x15 Badge
+    %p
+      =image_tag("badges/rr_badge_80x15.gif", :width => "80", :height => "15", :alt => "RR Badge 80x15")
+    
+    %h4 120x45 Badge
+    %p
+      =image_tag("badges/rr_badge_120x45.gif", :width => "120", :height => "45", :alt => "RR Badge 120x45")
+    
+    %h4 240x90 Badge
+    %p
+      =image_tag("badges/rr_badge_240x90.gif", :width => "240", :height => "90", :alt => "RR Badge 240x90")
+	  
+  =render :partial => "shared/top_cities"
+  =render :partial => "shared/top_companies"
+  =render :partial => "shared/sponsors"
+  =render :partial => "shared/top_repos"
