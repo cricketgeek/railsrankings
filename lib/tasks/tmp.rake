@@ -1,3 +1,9 @@
-=begin
-Please put code in here to clear the cache, thanks.
-=end
+namespace :wwr do
+  
+  desc "delete page cached files"
+  task :clear_cache => :environment do
+    
+  end
+  
+  
+end
