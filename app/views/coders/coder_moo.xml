@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.moo.com/xsd/api_0.7.xsd">
+	<request>
+		<version>0.7</version>
+		<api_key>06636302-0836-558545e8-49bae8a6-272f</api_key>
+		<call>build</call>
+	</request>
+	<payload>
+		<products>
+			<product>
+				<product_type>minicard</product_type>
+				<designs>
+					<design>
+						<image>
+							<url>
+								http://farm3.static.flickr.com/2290/2178246751_a5124fdbc7_o.jpg
+							</url>
+							<type>variable</type>
+							<crop>
+								<auto>true</auto>
+							</crop>
+						</image>
+						<text_collection>
+							<minicard>
+								<text_line>
+									<id>1</id>
+									<string>This is line 1</string>
+									<bold>true</bold>
+									<align>left</align>
+									<font>modern</font>
+									<colour>#ff0000</colour>
+								</text_line>
+								<text_line>
+									<id>2</id>
+									<string>This is line 2</string>
+								</text_line>
+								<text_line>
+									<id>3</id>
+									<string>This is line 3</string>
+								</text_line>
+								<text_line>
+									<id>4</id>
+									<string>This is line 4</string>
+								</text_line>
+								<text_line>
+									<id>5</id>
+									<string>This is line 5</string>
+								</text_line>
+								<text_line>
+									<id>6</id>
+									<string>This is line 6</string>
+								</text_line>
+							</minicard>
+						</text_collection>
+					</design>
+				</designs>
+			</product>
+		</products>
+	</payload>
+</moo>
