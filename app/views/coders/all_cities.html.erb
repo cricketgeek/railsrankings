@@ -7,7 +7,6 @@
 
 <div class="results content">
 	<div id="search_results">
-		<% cache :all_cities do %>
 			<%= will_paginate @all_cities %>
 			<% @all_cities.each_with_index do |city,index| %>
 				<div class="result<%= alternate_row_color(index) %>">
@@ -20,7 +19,6 @@
 				</div>  
 			<% end %>
 			<%= will_paginate @all_cities %>
-		<% end %>
 	</div>
 
 	<%= render :partial => "shared/top_cities" %>
