@@ -146,6 +146,7 @@ class WWRScraper
       coder.delete
     end
     Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
+    Coder.delete_all("first_name='Steven' AND last_name='Bristol' AND rank = 9999")
   end  
   
   private
