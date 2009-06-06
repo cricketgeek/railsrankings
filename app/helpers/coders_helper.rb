@@ -28,6 +28,10 @@ module CodersHelper
     repo && repo.name ? link_to(repo.name,repo.url, :target => "_new") : "unknown"
   end
   
+  def show_repo_name_with_author(repo)
+    repo && repo.name ? link_to("#{repo.name} - #{repo.author.name}",repo.url, :target => "_new") : "unknown"    
+  end
+  
   def show_repo_points(repo)
     repo ? (repo.watchers * GITHUB_WATCHER_POINTS) : 0
   end
