@@ -8,15 +8,12 @@
 
 <div class="results content">
 	<div id="search_results">
-		<% cache :all_repos do %>
 		<%= will_paginate @all_repos %>
-				<ul class="results_list">
-					<% @all_repos.each_with_index do |repo,index| %>
-				  <li><%= determine_rank_for_paging(index) %> > <%= show_repo_name(repo) %> <%= "(#{pluralize(repo.watchers,"watcher")} #{number_with_delimiter(show_repo_points(repo),{:delimiter => ","})} points)"%></li>
-				  <% end %>
-				</ul>
-		<% end %>
-		
+			<ul class="results_list">
+				<% @all_repos.each_with_index do |repo,index| %>
+			  <li><%= determine_rank_for_paging(index) %> > <%= show_repo_name(repo) %> <%= "(#{pluralize(repo.watchers,"watcher")} #{number_with_delimiter(show_repo_points(repo),{:delimiter => ","})} points)"%></li>
+			  <% end %>
+			</ul>
 		<%= will_paginate @all_repos %>
 	</div>
 
