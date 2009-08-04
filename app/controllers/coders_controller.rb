@@ -1,5 +1,6 @@
 class CodersController < ApplicationController
   before_filter :build_top_items, :only => [:index,:all_coders,:all_cities,:all_companies,:all_repos]
+  before_filter :get_ad_item, :only  => [:index,:all_coders,:all_cities,:all_companies,:all_repos]
   
   #caches_page :all_coders, :all_cities, :all_companies
   

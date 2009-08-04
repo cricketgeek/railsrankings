@@ -147,6 +147,15 @@ class WWRScraper
     end
     Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
     Coder.delete_all("first_name='Steven' AND last_name='Bristol' AND rank = 9999")
+    
+    tobias = Coder.find(:first, :conditions => "last_name='Kahre' and first_name='Tobias'")
+    if tobias
+      tobias.railsrank = MAX_RANK
+      tobias.github_url = ""
+      tobias.github_watchers = 0
+      tobias.full_rank = calculate_full_rank(tobias)
+      tobias.save
+    end
   end  
   
   private
@@ -210,6 +219,7 @@ class WWRScraper
         coder.website = wwr_profile.website
         coder.image_path = wwr_profile.image_path
         coder.city = wwr_profile.location
+        company = Company.find_or_create_by_name(wwr_profile.company_name)
         coder.company_name = wwr_profile.company_name
         coder.country = wwr_profile.country_name
         coder.recommendation_count = wwr_profile.recommendation_count
@@ -225,21 +235,24 @@ class WWRScraper
     end
   end
   
-  # def process_recent_rails_commits_on_github
-  #   rails_github_user = GitHub::API.user("rails")
-  #   repo = rails_github_user.repositories.find { |repo| repo.name == "rails" }
-  #   
-  #   rails_repo = GithubRepo.find_or_create_by_url(repo.url)
-  #   
-  # end
+  def process_recent_rails_commits_on_github
+    rails_github_user = GitHub::API.user("rails")
+    repo = rails_github_user.repositories.find { |repo| repo.name == "rails" }
+    rails_repo = GithubRepo.find_or_create_by_url(repo.url)
+    save_commits(rails_repo,rails_repo.commits.first(50))
+    
+  end
   
   def process_company(company_name, coder)
-    company = @companies[company_name] || Company.find_or_create_by_name(:first,:conditions => {:name => company_name})
+    company = @companies[company_name] || Company.find_or_create_by_name(company_name)
     if company
-      company.coders << coder
-      company.full_rank += coder.full_rank
-      company.save
-      @companies[company_name] = company
+      repos = []
+      github_user = GitHub::API.user(company)
+      repos = github_user.repositories
+      create_or_update_repo(company_name)
+      # company.full_rank += company
+      # company.save
+      # @companies[company_name] = company
     end
   end
   
@@ -262,7 +275,10 @@ class WWRScraper
       coder.nickname = "clarkware"
     elsif coder.first_name == "Giles" and coder.last_name == "Bowkett"
       coder.nickname = "gilesbowkett"
+    
+    
     end
+    
     
   end
 
@@ -279,6 +295,18 @@ class WWRScraper
     @rails_rankings << coder
   end
   
+  def create_or_update_repo(repo)
+    github_repo = GithubRepo.find_or_create_by_name(repo.name)
+    github_url = repo.owner
+    github_repo.description = repo.description
+    github_repo.watchers = (repo.watchers - 1)
+    github_repo.name = repo.name
+    github_repo.url = repo.url
+    github_repo.forked = repo.forked
+    github_repo.forks = repo.forks
+    github_repo
+  end
+  
   def save_github_info(coder)
     watchers = 0
     github_url = ""
@@ -286,17 +314,11 @@ class WWRScraper
     coder.retrieve_github_repos.each do |repo|
       if GithubRepo.valid_repo_name_and_description?(repo)
         begin
-          github_repo = coder.github_repos.find_or_create_by_name(repo.name)
+          github_repo = create_or_update_repo(repo)
+debugger
           github_repo.coder_id = coder.id
           github_repo.commits.delete_all
           watchers += (repo.watchers - 1)
-          github_url = repo.owner
-          github_repo.description = repo.description
-          github_repo.watchers = (repo.watchers - 1)
-          github_repo.name = repo.name
-          github_repo.url = repo.url
-          github_repo.forked = repo.forked
-          github_repo.forks = repo.forks
           github_repo.save
           if github_repo.valid?
             coder.github_repos << github_repo

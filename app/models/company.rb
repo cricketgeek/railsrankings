@@ -18,5 +18,6 @@
 class Company < ActiveRecord::Base
   
   has_many :coders
+  has_many :github_repos
   
 end

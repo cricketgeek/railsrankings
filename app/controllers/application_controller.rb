@@ -33,4 +33,24 @@ class ApplicationController < ActionController::Base
     @repos_second_section = @top_ten_repos[5..9]
   end
   
+  def get_ad_item
+    @ads = ResultsAd.all
+    if @ads.size > 0
+      @result_ad =  rand_with_range(@ads)
+    else
+      @result_ad = ResultsAd.new
+      @result_ad.link = "/badges"
+      @result_ad.link_text = "The R★> Badge"
+      @result_ad.description = ": Promote Your Rank on Your Web Site or Blog"
+    end
+  end
+  
+  def rand_with_range(values = nil)
+    if values.respond_to? :sort_by
+      values.sort_by { rand }.first
+    else
+      rand(values)
+    end
+  end
+  
 end

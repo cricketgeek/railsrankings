@@ -22,6 +22,12 @@ namespace :wwr do
     Rake::Task["ts:start"].invoke
   end
   
+  desc "create "
+  task :export_sitemap => :environment do
+    
+    
+  end
+  
   desc "process just one profile url, re-run rankings sort"
   task :reload_one, [:profile_url] => :environment do
     unless ENV.include?("profile_url")
