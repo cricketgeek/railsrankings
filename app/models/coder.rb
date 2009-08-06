@@ -44,7 +44,7 @@ class Coder < ActiveRecord::Base
   
   belongs_to :company
   
-  has_friendly_id :slug, :strip_diacritics => true, :reserved => ["new", "index"]
+  has_friendly_id :username, :use_slug => true, :strip_diacritics => true
   has_many :github_repos
   
   define_index do
@@ -203,7 +203,7 @@ class Coder < ActiveRecord::Base
   end
   
   def default_rank
-    rank = 9999 if rank.blank?
+    rank = MAX_RANK if rank.blank?
   end
   
 end

@@ -8,6 +8,8 @@ class CodersController < ApplicationController
   # GET /coders.xml
   def index
     
+debugger
+
     @coders = Coder.search(
       (params[:search] || ""),
       :page => (params[:page] || 1),

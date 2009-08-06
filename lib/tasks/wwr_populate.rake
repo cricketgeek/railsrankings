@@ -37,7 +37,7 @@ namespace :wwr do
     puts "processing just profile #{profile_url} page"
     wwr_scraper = WWRScraper.new
     wwr_scraper.reprocess_for_one_person(profile_url) 
-    Rake::Task["data_helpers:slugify"].invoke
+    #Rake::Task["data_helpers:slugify"].invoke
   end
 
   desc "re-run rankings algo"

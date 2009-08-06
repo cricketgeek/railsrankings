@@ -14,7 +14,7 @@ namespace :friendly_id do
       end
     end
   end
- 
+
   desc "Regenereate slugs for a model."
   task :redo_slugs => :environment do
     raise 'USAGE: rake friendly_id:redo_slugs MODEL=MyModelName' if ENV["MODEL"].nil?
@@ -24,7 +24,7 @@ namespace :friendly_id do
     Slug.destroy_all(["sluggable_type = ?", sluggable_class.to_s])
     Rake::Task["friendly_id:make_slugs"].invoke
   end
- 
+
   desc "Kill obsolete slugs older than 45 days."
   task :remove_old_slugs => :environment do
     if ENV["DAYS"].nil?
@@ -38,7 +38,7 @@ namespace :friendly_id do
     end
   end
 end
- 
+
 def sluggable_class
   if (ENV["MODEL"].split('::').size > 1)
     ENV["MODEL"].split('::').inject(Kernel) {|scope, const_name| scope.const_get(const_name)}

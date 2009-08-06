@@ -129,7 +129,7 @@ class WWRScraper
   
   def output_rankings
     @@logger.info "running output rankings"
-    @rails_rankings.sort!
+    #@rails_rankings.sort!
     puts "running calculations on all coders' rankings"
     @rails_rankings.each_with_index do |coder,index|
       new_rank = index + 1
@@ -195,6 +195,8 @@ class WWRScraper
       @processed_urls[url] = url
       puts "processing profile: #{url}"
       begin
+debugger
+
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
         wwr_profile = WorkingProfile.new(url)
@@ -315,7 +317,6 @@ class WWRScraper
       if GithubRepo.valid_repo_name_and_description?(repo)
         begin
           github_repo = create_or_update_repo(repo)
-debugger
           github_repo.coder_id = coder.id
           github_repo.commits.delete_all
           watchers += (repo.watchers - 1)
