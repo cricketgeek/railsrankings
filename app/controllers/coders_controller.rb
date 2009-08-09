@@ -29,7 +29,12 @@ class CodersController < ApplicationController
   
   def all_coders
     @all_coders = Coder.ranked.paginate :page => (params[:page] || 1), 
-                                        :per_page => TOP_PAGES_PER 
+                                        :per_page => TOP_PAGES_PER
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @all_coders }
+        format.json { render :json => {:models => @all_coders} }     
+    end
   end
   
   def all_cities
@@ -39,7 +44,7 @@ class CodersController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @all_cities }
-      format.json { render :json => @all_cities }     
+        format.json { render :json => {:models => @all_cities} }     
     end                                            
   end
   
@@ -49,13 +54,19 @@ class CodersController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @all_companies }
-      format.json { render :json => @all_companies }     
+      format.json { render :json => {:models => @all_companies } }     
     end
   end
   
   def all_repos
     @all_repos = GithubRepo.popular(500).paginate :page => (params[:page] || 1), 
                                                   :per_page => TOP_PAGES_PER
+                                                  
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @all_repos }
+      format.json { render :json => {:models => @all_repos } }     
+    end  
   end
   
   def badges
