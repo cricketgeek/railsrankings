@@ -211,6 +211,7 @@ debugger
         coder.core_contributor =  wwr_profile.core_contributor?
         coder.core_team_member =  wwr_profile.core_team_member?
         coder.is_available_for_hire = wwr_profile.is_available_for_hire?
+        coder.username = build_username(coder)
         
         add_known_aliases(coder)
         save_github_info(coder)
@@ -235,6 +236,12 @@ debugger
         @@logger.error("FFFAIL: #{ex} while processing #{url}")
       end
     end
+  end
+  
+  def build_username(coder)
+    return coder.whole_name if coder.whole_name
+    return "#{coder.first_name}-#{coder.last_name}" if coder.first_name or coder.last_name
+    return "unknown"
   end
   
   def process_recent_rails_commits_on_github
@@ -310,6 +317,7 @@ debugger
   end
   
   def save_github_info(coder)
+debugger
     watchers = 0
     github_url = ""
     coder.save

@@ -7,8 +7,6 @@ class CodersController < ApplicationController
   # GET /coders
   # GET /coders.xml
   def index
-    
-debugger
 
     @coders = Coder.search(
       (params[:search] || ""),
@@ -25,7 +23,7 @@ debugger
     respond_to do |format|
       format.html
       format.xml  { render :xml => @coders }
-      format.json { render :json => @coders }     
+      format.json { render :json => {:models => @coders} }     
     end  
   end
   
@@ -37,11 +35,22 @@ debugger
   def all_cities
     @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
                                             :per_page => TOP_PAGES_PER
+                                            
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @all_cities }
+      format.json { render :json => @all_cities }     
+    end                                            
   end
   
   def all_companies
     @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
                                                   :per_page => TOP_PAGES_PER
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @all_companies }
+      format.json { render :json => @all_companies }     
+    end
   end
   
   def all_repos
