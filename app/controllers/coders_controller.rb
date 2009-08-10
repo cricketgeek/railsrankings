@@ -54,7 +54,20 @@ class CodersController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @all_companies }
-      format.json { render :json => {:models => @all_companies } }     
+      format.json { 
+
+        if params[:page] && params[:page] > 0
+          rank_start = (params[:page] * TOP_PAGES_PER) + 1
+        else
+          rank_start = 1
+        end
+        @all_companies.each do |comp| 
+          comp.railsrank = rank_start
+          rank_start += 1
+        end
+        render :json => {:models => @all_companies } 
+        
+      }
     end
   end
   
