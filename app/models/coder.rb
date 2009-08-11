@@ -189,6 +189,14 @@ class Coder < ActiveRecord::Base
     repos ||= []
   end
   
+  def full_rank_formatted
+    "#{helpers.number_with_delimiter(self.full_rank, {:delimeter => ","})}"
+  end
+  
+  def helpers
+    ActionController::Base.helpers
+  end
+  
   private
   
   def get_github_ident_info(github_user)

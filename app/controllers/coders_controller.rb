@@ -44,7 +44,10 @@ class CodersController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @all_cities }
-        format.json { render :json => {:models => @all_cities} }     
+      format.json { 
+        set_rails_rank(@all_cities)        
+        render :json => {:models => @all_cities}      
+      } 
     end                                            
   end
   
@@ -55,16 +58,7 @@ class CodersController < ApplicationController
       format.html
       format.xml  { render :xml => @all_companies }
       format.json { 
-
-        if params[:page] && params[:page] > 0
-          rank_start = (params[:page] * TOP_PAGES_PER) + 1
-        else
-          rank_start = 1
-        end
-        @all_companies.each do |comp| 
-          comp.railsrank = rank_start
-          rank_start += 1
-        end
+        set_rails_rank(@all_companies)
         render :json => {:models => @all_companies } 
         
       }
@@ -118,67 +112,79 @@ class CodersController < ApplicationController
 
   # GET /coders/new
   # GET /coders/new.xml
-  def new
-    @coder = Coder.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @coder }
-    end
-  end
+  # def new
+  #   @coder = Coder.new
+  # 
+  #   respond_to do |format|
+  #     format.html # new.html.erb
+  #     format.xml  { render :xml => @coder }
+  #   end
+  # end
 
   # GET /coders/1/edit
-  def edit
-    @coder = Coder.find(params[:id])
-  end
+  # def edit
+  #   @coder = Coder.find(params[:id])
+  # end
 
   # POST /coders
   # POST /coders.xml
-  def create
-    @coder = Coder.new(params[:coder])
-
-    respond_to do |format|
-      if @coder.save
-        flash[:notice] = 'Coder was successfully created.'
-        format.html { redirect_to(@coder) }
-        format.xml  { render :xml => @coder, :status => :created, :location => @coder }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @coder.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+  # def create
+  #   @coder = Coder.new(params[:coder])
+  # 
+  #   respond_to do |format|
+  #     if @coder.save
+  #       flash[:notice] = 'Coder was successfully created.'
+  #       format.html { redirect_to(@coder) }
+  #       format.xml  { render :xml => @coder, :status => :created, :location => @coder }
+  #     else
+  #       format.html { render :action => "new" }
+  #       format.xml  { render :xml => @coder.errors, :status => :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PUT /coders/1
   # PUT /coders/1.xml
-  def update
-    @coder = Coder.find(params[:id])
-
-    respond_to do |format|
-      if @coder.update_attributes(params[:coder])
-        flash[:notice] = 'Coder was successfully updated.'
-        format.html { redirect_to(@coder) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @coder.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   @coder = Coder.find(params[:id])
+  # 
+  #   respond_to do |format|
+  #     if @coder.update_attributes(params[:coder])
+  #       flash[:notice] = 'Coder was successfully updated.'
+  #       format.html { redirect_to(@coder) }
+  #       format.xml  { head :ok }
+  #     else
+  #       format.html { render :action => "edit" }
+  #       format.xml  { render :xml => @coder.errors, :status => :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /coders/1
   # DELETE /coders/1.xml
-  def destroy
-    @coder = Coder.find(params[:id])
-    @coder.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(coders_url) }
-      format.xml  { head :ok }
-    end
-  end
+  # def destroy
+  #   @coder = Coder.find(params[:id])
+  #   @coder.destroy
+  # 
+  #   respond_to do |format|
+  #     format.html { redirect_to(coders_url) }
+  #     format.xml  { head :ok }
+  #   end
+  # end
   
   private
+  
+  def set_rails_rank(items)
+    if params[:page] && params[:page] > 0
+      rank_start = (params[:page] * TOP_PAGES_PER) + 1
+    else
+      rank_start = 1
+    end
+    items.each do |comp| 
+      comp.railsrank = rank_start
+      rank_start += 1
+    end
+  end
   
   def get_coders_by_nickname(coder_params)
     coders_found = []
