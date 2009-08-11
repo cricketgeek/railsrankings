@@ -5,7 +5,8 @@ ActionController::Routing::Routes.draw do |map|
       :all_cities => :get,
       :all_coders => :get,
       :all_repos  => :get,
-      :get_coders => :get      
+      :get_coders => :get,
+      :get_coders_by_ids => :get     
     }
   
   # The priority is based upon order of creation: first created -> highest priority.
