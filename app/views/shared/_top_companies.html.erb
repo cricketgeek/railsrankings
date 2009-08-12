@@ -2,7 +2,7 @@
 	<h3>Top Companies</h3>
 	<ol>
 		<% @top_ten_companies.each do |company| %>
-		<li><%= show_company_name(company.company_name) %> <em><%= "(#{pluralize(company.count,"coder")} #{number_with_delimiter(company.total,{:delimiter => ","})} points)"  %></em></li>
+		<li><%= show_company_name(company.name) %> <em><%= "(#{pluralize(company.count,"coder")} #{number_with_delimiter(company.total,{:delimiter => ","})} points)"  %></em></li>
 		<% end %>
 	</ol>
 	<%= link_to "View All Ranked Companies", "/coders/all_companies?page=1", :class => "rank_list" %>

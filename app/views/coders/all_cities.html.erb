@@ -10,12 +10,12 @@
 			<%= will_paginate @all_cities %>
 			<% @all_cities.each_with_index do |city,index| %>
 				<div class="result<%= alternate_row_color(index) %>">
-				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_city_name(city.city) %></h3>
+				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_city_name(city.name) %></h3>
 				<dl class="score_box list_view">
 					<dt class="rr_points">RailsRankings Points</dt>
 					<dd class="rr_point_total"><%= "#{number_with_delimiter(city.total,{:delimiter => ","})}" %></dd>
 				</dl>
-				<p><%= link_to("View #{pluralize(city.count,"Coder")}", coders_path(:search => city.city), :class => 'rank_list') %></p>
+				<p><%= link_to("View #{pluralize(city.count,"Coder")}", coders_path(:search => city.name), :class => 'rank_list') %></p>
 				</div>  
 			<% end %>
 			<%= will_paginate @all_cities %>

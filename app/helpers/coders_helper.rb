@@ -87,12 +87,12 @@ module CodersHelper
   end
   
   def city_metadata(cities)
-    cities = @all_cities.collect { |city| city.city }
+    cities = @all_cities.collect { |city| city.name }
     cities.join(", ")
   end
   
   def company_metadata(companies)
-    companies = @all_companies.collect { |company| company.company_name }
+    companies = @all_companies.collect { |company| company.name }
     companies.join(", ")
   end
   

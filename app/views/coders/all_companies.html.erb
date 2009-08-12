@@ -10,12 +10,12 @@
 			<%= will_paginate @all_companies %>
 			<% @all_companies.each_with_index do |company,index| %>
 				<div class="result<%= alternate_row_color(index) %>">
-				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_company_name(company.company_name) %></h3>
+				<h3><span class="rank"><%= determine_rank_for_paging(index) %></span> <%= show_company_name(company.name) %></h3>
 				<dl class="score_box list_view">
 					<dt class="rr_points">RailsRankings Points</dt>
 					<dd class="rr_point_total"><%= "#{number_with_delimiter(company.total,{:delimiter => ","})}" %></dd>
 				</dl>
-				<p><%= link_to("View #{pluralize(company.count,"Coder")}", coders_path(:search => company.company_name), :class => 'rank_list') %></p>
+				<p><%= link_to("View #{pluralize(company.count,"Coder")}", coders_path(:search => company.name), :class => 'rank_list') %></p>
 				</div>  
 			<% end %>
 			<%= will_paginate @all_companies %>
