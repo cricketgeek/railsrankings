@@ -29,7 +29,8 @@ module CodersHelper
   end
   
   def show_repo_name_with_author(repo)
-    repo && repo.name ? link_to("#{repo.name} - #{repo.user}",repo.url, :target => "_new") : "unknown"    
+    coder_name = repo.coder ? show_coder_name(repo.coder) : "Unknown"
+    repo && repo.name ? link_to("#{repo.name} - #{coder_name}",repo.url, :target => "_new") : "unknown"    
   end
   
   def show_repo_points(repo)
