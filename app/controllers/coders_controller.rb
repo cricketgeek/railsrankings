@@ -107,6 +107,33 @@ class CodersController < ApplicationController
     end  
   end
   
+  def get_coders_by_company
+    company_name = params[:company]
+    @coders = Coder.find(:all,:conditions => ["company_name = ?",company_name])
+    @coders.compact!
+    @coders.sort! { |first,second| first.railsrank <=> second.railsrank}
+    
+    respond_to do |format|
+      format.html
+      format.json {render :json  => {:models => @coders} }
+      format.xml  {render :xml   => @coders}
+    end    
+  end
+  
+  def get_coders_by_city
+    company_name = params[:city]
+    @coders = Coder.find(:all,:conditions => ["city = ?",company_name])
+    @coders.compact!
+    @coders.sort! { |first,second| first.railsrank <=> second.railsrank}
+    
+    respond_to do |format|
+      format.html
+      format.json {render :json  => {:models => @coders} }
+      format.xml  {render :xml   => @coders}
+    end    
+  end
+  
+  
   def get_coders
     coder_params = params[:coders].split(",")
     coders_by_alias = get_coders_by_nickname(coder_params)
