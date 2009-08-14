@@ -55,9 +55,13 @@ class CodersController < ApplicationController
     @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
                                                   :per_page => TOP_PAGES_PER
     respond_to do |format|
-      format.html
-      format.xml  { render :xml => @all_companies }
+      format.html {
+        @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
+                                                      :per_page => TOP_PAGES_PER
+      }
       format.json { 
+        @all_companies = Coder.all_companies.paginate :page => (params[:page] || 1), 
+                                                      :per_page => 150
         set_rails_rank(@all_companies)
         render :json => {:models => @all_companies } 
         
