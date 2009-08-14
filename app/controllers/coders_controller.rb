@@ -38,13 +38,15 @@ class CodersController < ApplicationController
   end
   
   def all_cities
-    @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
-                                            :per_page => TOP_PAGES_PER
                                             
     respond_to do |format|
-      format.html
-      format.xml  { render :xml => @all_cities }
+      format.html {
+        @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
+                                                :per_page => TOP_PAGES_PER
+      }
       format.json { 
+        @all_cities = Coder.all_cities.paginate :page => (params[:page] || 1), 
+                                                :per_page => 150
         set_rails_rank(@all_cities)        
         render :json => {:models => @all_cities}      
       } 
