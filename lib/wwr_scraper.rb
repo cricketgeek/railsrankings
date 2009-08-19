@@ -330,7 +330,7 @@ debugger
     github_repo.watchers = (repo.watchers - 1)
     github_repo.name = repo.name
     github_repo.url = repo.url
-    github_repo.forked = repo.forked
+    github_repo.forked = repo.fork
     github_repo.forks = repo.forks
     return github_repo
   end
