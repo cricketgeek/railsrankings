@@ -66,6 +66,27 @@ class WWRScraper
     rerun_rankings
   end
   
+  def all_github_only
+    @coders = Coder.all
+    puts "Processing #{@coders.size} coders"
+    @coders.each do |coder|
+      puts "Processing repos for #{coder.whole_name}"
+      save_github_info(coder)
+    end
+  end
+  
+  def github_only(coder_nickname)
+    @coder = Coder.find(:first, :conditions => ["whole_name= ?", coder_nickname])
+    if @coder
+      puts "processing coder #{@coder.whole_name} for github only"
+      save_github_info(@coder)
+    else
+      puts "no coder by that name: #{coder_nickname}"
+    end
+  end
+  
+  
+  
   def process_using_seed_data
     @crawling = false
     @@logger.info "processing based on seed data"
@@ -196,7 +217,6 @@ class WWRScraper
       puts "processing profile: #{url}"
       begin
 debugger
-
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
         wwr_profile = WorkingProfile.new(url)
@@ -266,6 +286,7 @@ debugger
   end
   
   def add_known_aliases(coder)
+    
     if coder.first_name == "David" and coder.last_name == "Chelimsky"
       coder.nickname = "dchelimsky"
     elsif coder.first_name == "Sam" and coder.last_name == "Smoot"
@@ -284,10 +305,7 @@ debugger
       coder.nickname = "clarkware"
     elsif coder.first_name == "Giles" and coder.last_name == "Bowkett"
       coder.nickname = "gilesbowkett"
-    
-    
     end
-    
     
   end
 
@@ -305,19 +323,19 @@ debugger
   end
   
   def create_or_update_repo(repo)
-    github_repo = GithubRepo.find_or_create_by_name(repo.name)
-    github_url = repo.owner
+debugger
+    github_repo = GithubRepo.find_or_create_by_url(repo.url)
     github_repo.description = repo.description
+    github_repo.alias_used = repo.nickname_used
     github_repo.watchers = (repo.watchers - 1)
     github_repo.name = repo.name
     github_repo.url = repo.url
     github_repo.forked = repo.forked
     github_repo.forks = repo.forks
-    github_repo
+    return github_repo
   end
   
   def save_github_info(coder)
-debugger
     watchers = 0
     github_url = ""
     coder.save
@@ -331,7 +349,7 @@ debugger
           github_repo.save
           if github_repo.valid?
             coder.github_repos << github_repo
-            save_commits(github_repo,repo.commits.first(10))
+            save_commits(github_repo,repo.commits.first(30))
           end
         rescue Exception => ex
           puts "error for repo #{repo.name}  #{ex}"

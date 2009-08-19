@@ -103,7 +103,12 @@ class Coder < ActiveRecord::Base
   end
   
   def recent_commits
-    github_repos.size > 0 ? Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date DESC limit 8",github_repo_ids]) : []
+    commits = []
+    if github_repos.size > 0
+      limit = github_repos.size > 30 ? (github_repos.size / 2) + 5 : github_repos.size
+      commits = Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date DESC limit ?",github_repo_ids,limit])      
+    end
+    return commits
   end
   
   def clean_nicknames
@@ -180,6 +185,9 @@ class Coder < ActiveRecord::Base
         unless got_github_ident_info
           get_github_ident_info(github_user) 
           got_github_ident_info = true
+        end
+        github_user.repositories.each do |repo|
+          repo.nickname_used = nickname
         end
         repos = repos + github_user.repositories
       rescue Exception => ex

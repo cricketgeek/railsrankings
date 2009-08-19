@@ -39,6 +39,23 @@ namespace :wwr do
     wwr_scraper.reprocess_for_one_person(profile_url) 
     #Rake::Task["data_helpers:slugify"].invoke
   end
+  
+  desc "process just github repos for everyone"
+  task :process_github_only => :environment do
+    wwr_scraper = WWRScraper.new
+    wwr_scraper.all_github_only
+  end
+  
+  desc "process just one person for github only"
+  task :github_only, [:name] => :environment do
+    unless ENV.include?("name")
+        raise "usage: rake name=russell norris" 
+    end
+    name = ENV['name']
+    puts "processing just profile #{name} page"
+    wwr_scraper = WWRScraper.new
+    wwr_scraper.github_only(name) 
+  end  
 
   desc "re-run rankings algo"
   task :rerun_rankings => :environment do
