@@ -49,13 +49,24 @@ namespace :wwr do
   desc "process just one person for github only"
   task :github_only, [:name] => :environment do
     unless ENV.include?("name")
-        raise "usage: rake name=russell norris" 
+        raise "usage: rake github_only name=russell norris" 
     end
     name = ENV['name']
     puts "processing just profile #{name} page"
     wwr_scraper = WWRScraper.new
     wwr_scraper.github_only(name) 
   end  
+
+  desc "process github only from 1 to some max rank"
+  task :github_only_to_rank, [:rank] => :environment do
+    unless ENV.include?("rank")
+        raise "usage: rake github_only_to_rank rank=2000" 
+    end
+    rank = ENV['rank']
+    puts "processing just to rails ranking #{rank}"
+    wwr_scraper = WWRScraper.new
+    wwr_scraper.all_github_only_to_rank(rank) 
+  end
 
   desc "re-run rankings algo"
   task :rerun_rankings => :environment do

@@ -70,7 +70,7 @@ class WWRScraper
     @coders = Coder.all
     puts "Processing #{@coders.size} coders"
     @coders.each do |coder|
-      puts "Processing repos for #{coder.whole_name}"
+      #puts "Processing repos for #{coder.whole_name}"
       save_github_info(coder)
     end
   end
@@ -85,7 +85,13 @@ class WWRScraper
     end
   end
   
-  
+  def all_github_only_to_rank(rank)
+    @coders = Coder.find(:all,:limit => rank,:order => "railsrank ASC")
+    @coders.each do |coder|
+      puts "Processing repos for #{coder.whole_name}"
+      save_github_info(coder)
+    end
+  end
   
   def process_using_seed_data
     @crawling = false
@@ -216,7 +222,6 @@ class WWRScraper
       @processed_urls[url] = url
       puts "processing profile: #{url}"
       begin
-debugger
         coder = Coder.find_by_profile_url(url)
         coder = Coder.new if coder.nil?
         wwr_profile = WorkingProfile.new(url)
@@ -323,7 +328,6 @@ debugger
   end
   
   def create_or_update_repo(repo)
-debugger
     github_repo = GithubRepo.find_or_create_by_url(repo.url)
     github_repo.description = repo.description
     github_repo.alias_used = repo.nickname_used
