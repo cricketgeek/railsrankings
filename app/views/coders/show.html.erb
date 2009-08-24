@@ -47,7 +47,7 @@
 			<% end %>
 		</dl>
 		
-		<p class="timestamp"><strong>Last Updated:</strong> <%= distance_of_time_in_words(@coder.updated_at,Time.now,true) %> ago</p>
+		<p class="timestamp"><strong>Last Updated:</strong> <%= distance_of_time_in_words(@coder.scraperUpdateDate,Time.now,true) %> ago</p>
 	</div>
 
 	<%= render :partial => "shared/sponsors" %>

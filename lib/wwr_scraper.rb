@@ -238,8 +238,8 @@ class WWRScraper
         coder.is_available_for_hire = wwr_profile.is_available_for_hire?
         coder.username = build_username(coder)
         
-        add_known_aliases(coder)
-        save_github_info(coder)
+        #add_known_aliases(coder)
+        #save_github_info(coder)
         
         delta = coder.rank - wwr_profile.rank if coder.rank
         coder.rank = wwr_profile.rank
@@ -252,9 +252,11 @@ class WWRScraper
         coder.country = wwr_profile.country_name
         coder.recommendation_count = wwr_profile.recommendation_count
         coder.delta = delta
+        coder.updated = true
+        coder.scraperUpdateDate = DateTime.now
         coder.save!        
         add_to_rails_rank(coder)
-        crawl_recommendations(coder,url) if @crawling
+        #crawl_recommendations(coder,url) if @crawling
         wwr_profile.close
       rescue Exception => ex
         puts "exception #{ex}"
@@ -342,6 +344,9 @@ class WWRScraper
   def save_github_info(coder)
     watchers = 0
     github_url = ""
+    coder.updated = true
+    coder.scraperUpdateDate = DateTime.now
+    
     coder.save
     coder.retrieve_github_repos.each do |repo|
       if GithubRepo.valid_repo_name_and_description?(repo)
