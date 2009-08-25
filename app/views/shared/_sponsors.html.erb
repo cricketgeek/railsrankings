@@ -1,5 +1,8 @@
+
 <div id="sponsors">
 	<p class="note">Our Sponsors</p>
+
+<% if @block_ads.blank? %>
 	<div class="sponsor_125">
 		<img src="/images/new/placeholder_ad.gif" alt="Your Ad Here, Contact Sales@RailsRankings.com"/>
 	</div>
@@ -7,4 +10,14 @@
 	<div class="sponsor_125">
 		<img src="/images/new/placeholder_ad.gif" alt="Your Ad Here, Contact Sales@RailsRankings.com"/>
 	</div>
+<% else %>
+<div class="sponsor_125">
+  <%= link_to(image_tag(@block_ads.first.image_path), @block_ads.first.link)%>
+</div>
+
+<div class="sponsor_125">
+	<img src="/images/new/placeholder_ad.gif" alt="Your Ad Here, Contact Sales@RailsRankings.com"/>
+</div>
+<% end %>	
+	
 </div>

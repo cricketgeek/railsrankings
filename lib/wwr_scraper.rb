@@ -93,6 +93,14 @@ class WWRScraper
     end
   end
   
+  def all_github_only_rank_range(start,finish)
+    @coders = Coder.find(:all,:limit => start,:offset => finish,:order => "railsrank ASC")
+    @coders.each do |coder|
+      puts "Processing repos for #{coder.whole_name}"
+      save_github_info(coder)
+    end
+  end
+  
   def process_using_seed_data
     @crawling = false
     @@logger.info "processing based on seed data"

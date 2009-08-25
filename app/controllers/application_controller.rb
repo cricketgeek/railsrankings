@@ -3,12 +3,21 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-
+  before_filter :block_ads
+  
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'd59b651ef4ce6957caee0dfc59f326a3'
 
   
+  def block_ads
+    @block_ads = []
+    all_block_ads = BlockAd.all
+    if all_block_ads.size > 0
+      @block_ads << rand_with_range(all_block_ads)
+      @block_ads << rand_with_range(all_block_ads)
+    end
+  end
   
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters

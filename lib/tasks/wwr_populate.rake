@@ -67,6 +67,18 @@ namespace :wwr do
     wwr_scraper = WWRScraper.new
     wwr_scraper.all_github_only_to_rank(rank) 
   end
+  
+  desc "process github only from start to finish"
+  task :github_only_rank_range, [:start,:finish] => :environment do
+    unless ( ENV.include?("start") && ENV.include?("finish") )
+        raise "usage: rake github_only_rank_range start=200 finish=1000" 
+    end
+    start = ENV['start']
+    finish = ENV['finish']
+    puts "processing just to rails ranking from #{start} to #{finish}"
+    wwr_scraper = WWRScraper.new
+    wwr_scraper.all_github_only_rank_range(start,finish) 
+  end  
 
   desc "re-run rankings algo"
   task :rerun_rankings => :environment do

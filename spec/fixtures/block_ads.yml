@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  link: MyString
+  image_path: MyString
+  click_count: 1
+  views: 1
+
+two:
+  link: MyString
+  image_path: MyString
+  click_count: 1
+  views: 1
