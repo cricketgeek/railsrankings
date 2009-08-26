@@ -194,6 +194,7 @@ a.back_link {
 
 .sponsor_125 {
 	text-align: center;
+	margin-bottom: 6px;
 }
 
 .results .sponsor_125, .subpage .sponsor_125 {
@@ -441,6 +442,7 @@ ul.results_list {
 #search_results, #detail, #badges {
 	width: 640px;
 	float: left;
+	
 }
 
 #search_results h2 {
@@ -599,6 +601,8 @@ p.text_ad a {
 
 .profile #github_repos h4 {
 	color:#777;
+	display: block;
+	clear: both;
 	margin:12px 0 0 12px;
 }
 .profile #github_repos table {
@@ -625,10 +629,11 @@ p.text_ad a {
 
 #github_repos table td, #github_repos table th {
 	padding: 4px;
-} 
+}
+
 #detail {
 	position: relative;
-	height:	225px;
+	height:	250px;
 }
 #detail h3 {
 	color: #206cbe;
