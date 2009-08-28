@@ -106,7 +106,7 @@ class Coder < ActiveRecord::Base
     commits = []
     if github_repos.size > 0
       limit = github_repos.size > 30 ? (github_repos.size / 2) + 5 : github_repos.size
-      commits = Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date DESC limit ?",github_repo_ids,limit])      
+      commits = Commit.find_by_sql(["select * from commits where github_repo_id in (?) order by committed_date DESC limit ?",github_repo_ids,15])      
     end
     return commits
   end

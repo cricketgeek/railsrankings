@@ -381,6 +381,7 @@ class WWRScraper
   
   def save_commits(github_repo,commits)
     commits.each_with_index do |commit,index|
+      puts "saving new commit #{commit.message} for github repo ID: #{github_repo.id}"
       begin
         new_commit = github_repo.commits.build
         new_commit.author = commit.author.name
@@ -393,7 +394,7 @@ class WWRScraper
         new_commit.save!
         github_repo.commits << new_commit
       rescue Exception => ex
-        #puts "error saving commit #{ex}"
+        puts "error saving commit #{ex}"
         # @@logger.error "error saving commit #{ex}"
       end
     end
