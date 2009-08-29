@@ -94,7 +94,7 @@ class WWRScraper
   end
   
   def all_github_only_rank_range(start,finish)
-    @coders = Coder.find(:all,:limit => start,:offset => finish,:order => "railsrank ASC")
+    @coders = Coder.find(:all,:limit => finish,:offset => start,:order => "railsrank ASC")
     @coders.each do |coder|
       puts "Processing repos for #{coder.whole_name}"
       save_github_info(coder)
