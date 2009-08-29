@@ -361,7 +361,7 @@ class WWRScraper
         begin
           github_repo = create_or_update_repo(repo)
           github_repo.coder_id = coder.id
-          github_repo.commits.delete_all
+          Commit.delete_all(["github_repo_id = ?",github_repo.id])
           watchers += (repo.watchers - 1)
           github_repo.save
           if github_repo.valid?
