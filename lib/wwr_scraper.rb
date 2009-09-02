@@ -376,6 +376,7 @@ class WWRScraper
     end
     coder.github_watchers = watchers
     coder.github_url = "http://www.github.com/#{github_url}" if github_url.length > 0
+    coder.save
     @@logger.error("couldn't save coder validation errors #{coder.errors.inspect}") if !coder.valid?
   end
   
