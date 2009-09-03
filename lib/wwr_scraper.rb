@@ -246,7 +246,7 @@ class WWRScraper
         coder.is_available_for_hire = wwr_profile.is_available_for_hire?
         coder.username = build_username(coder)
         
-        #add_known_aliases(coder)
+        add_known_aliases(coder)
         #save_github_info(coder)
         
         delta = coder.rank - wwr_profile.rank if coder.rank
