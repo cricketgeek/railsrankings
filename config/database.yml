@@ -6,6 +6,7 @@ development:
   pool: 5
   username: root
   password:
+  encoding: latin1
   #socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -25,4 +26,5 @@ production:
   pool: 5
   username: root
   password: Magpies123
+  encoding: utf8
   #socket: /tmp/mysql.sock
