@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :coders,
     :collection => {
+      :register_udid => :post,
+      :udid => :get,
       :all_companies => :get,
       :all_cities => :get,
       :all_coders => :get,

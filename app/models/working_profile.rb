@@ -55,7 +55,7 @@ class WorkingProfile
       "São Paulo - SP" => "São Paulo", "sao paulo/sp" => "São Paulo", "são paulo, sp" => "São Paulo",
       "winchester" => "Southampton, UK",
       "hamburg, germany" => "Hamburg", 
-      "montreal / quebec" => "Montreal",
+      "montreal / quebec" => "Montreal","Montreal, Quebec" => "Montreal",
       "dallas, tx" => "Dallas", "dallas tx" => "Dallas","dallas, texas" => "Dallas",
       "chapel hill, nc" => "Chapel Hill", "chapel hill, north carolina" => "Chapel Hill", "Chapel Hill NC" => "Chapel Hill",
       "stillwater, oklahoma" => "Stillwater", "stillwater, ok" => "Stillwater, Oklahoma",

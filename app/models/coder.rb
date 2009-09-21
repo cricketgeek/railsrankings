@@ -163,6 +163,10 @@ class Coder < ActiveRecord::Base
         clean_name = "not_robin_lu"
       elsif alias_name.downcase == "dan" and (self.whole_name.downcase != "dan benjamin")
         clean_name = "not_dan_benjamin"
+      elsif alias_name.downcase == "sr" and (self.whole_name.downcase != "simon rozet")
+        clean_name = "not_simon_rozet"
+      elsif alias_name.downcase == "twp" and (self.whole_name.downcase != "tim pease")
+        clean_name = "not_tim_pease"
       end
     end
     return clean_name

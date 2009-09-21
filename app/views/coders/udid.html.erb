@@ -1,0 +1,25 @@
+<div class="form_entry content">
+  <div class="form_spacer">
+
+    <p>
+    Please enter your UDID (which you can get in iTunes by connecting your phone, selecting it in the left navigation, selecting the Info tab and clicking on the serial number.  Go to the Edit menu, select copy and now you can paste into the text box below for UDID) along
+    with your workingwithrails.com profile url.  An upcoming new release of <a href="http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=327505103&mt=8">Rails Rankr</a> and
+    railsrankings.com will make use of this data by displaying your current location on a map.  Of course this will
+    only update your location when you have Rails Rankr running on your iPhone and you will be prompted if you want
+    to allow this to happen.  
+    </p>
+	  <% form_tag(register_udid_coders_path :method => "POST") do  %>
+
+  	    <%= label_tag(:udid, "iPhone UDID") %>
+  	    <%= text_field_tag :udid, nil, :size => 50 %>
+
+  	    <%= label_tag(:wwr_profile_url, "WWR Profile URL") %>
+  	    <%= text_field_tag(:wwr_profile_url, nil, :size => 50) %>
+  
+
+  	    <%= submit_tag("Register") %>
+
+	  <% end %>
+
+  </div>
+</div>

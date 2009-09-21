@@ -7,6 +7,13 @@
 <% end %>
 
 <div class="results content">
+  <% if flash[:notice] -%>
+    <p id="flash_notice"><%= flash[:notice] %></p>
+  <% end -%>
+  <% if flash[:error] -%>
+    <p id="flash_error"><%= flash[:error] %></p>
+  <% end -%>  
+  
 	<div id="search_results">
     <h2><%= pluralize(@count,"Rails Coder") %> <%= show_search_term %></h2>
     

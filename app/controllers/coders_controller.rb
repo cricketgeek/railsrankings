@@ -100,6 +100,28 @@ class CodersController < ApplicationController
     end
   end
   
+  def udid
+  end
+  
+  def register_udid
+    
+    coder = Coder.find_by_profile_url(params[:wwr_profile_url])
+    if coder
+      coder.UDID = params[:udid]
+      coder.save
+      if coder.valid?
+        flash[:notice] = "Sweet sweet succes! now make sure you have Rails Rankr on your iPhone and wait for the updates to come down the pipe."
+      else
+        flash[:error] = "Error saving UDID please try again or email me through github or workingwithrails for support."
+      end
+    else
+      flash[:error] = "no coder record found for that Workingwithrails.com profile url: #{params[:wwr_profile_url]}"  
+    end
+    redirect_to coders_path
+  end
+  
+  
+  
   def get_coders_by_ids
     coder_ids = params[:coders].split(",")
     @coders = Coder.find(coder_ids)
