@@ -191,6 +191,10 @@ class WWRScraper
       tobias.full_rank = calculate_full_rank(tobias)
       tobias.save
     end
+    
+    mao = Coder.find("mao-dan")
+    mao.delete
+    
   end  
   
   private
