@@ -11,6 +11,7 @@ class WorkingProfile
   end
   
   def normalize_company_name(company)
+    
     @companies ||= {"active reload, llc." => "Active Reload","thoughtworks, inc." => "ThoughtWorks",
       "atlantic dominion solutions, llc" => "Atlantic Dominion Solutions",
       "37 signals" => "37signals","consumer source inc" => "Primedia", 
