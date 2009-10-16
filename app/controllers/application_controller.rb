@@ -40,6 +40,11 @@ class ApplicationController < ActionController::Base
     @top_ten_repos = GithubRepo.popular(10)
     @repos_first_section = @top_ten_repos[0..4]
     @repos_second_section = @top_ten_repos[5..9]
+    
+    @top_ten_repos = [] if @top_ten_repos.nil?
+    @repos_first_section = [] if @repos_first_section.nil?
+    @repos_second_section = [] if @repos_second_section.nil?
+    
   end
   
   def get_ad_item
