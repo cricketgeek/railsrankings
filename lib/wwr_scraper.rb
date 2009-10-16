@@ -182,6 +182,7 @@ class WWRScraper
     end
     Coder.delete_all("last_name = 'Maccaw' and first_name = 'Alexander'")
     Coder.delete_all("first_name='Steven' AND last_name='Bristol' AND rank = 9999")
+    Coder.delete_all("whole_name = 'Entered in world of RAILS'")
     
     tobias = Coder.find(:first, :conditions => "last_name='Kahre' and first_name='Tobias'")
     if tobias

@@ -131,7 +131,7 @@ class WorkingProfile
   end
   
   def rank
-    raw_rank = @doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html    
+    raw_rank = @doc.search('div/a[@href="http://www.workingwithrails.com/browse/popular/people"]').inner_html
     raw_rank.blank? ? MAX_RANK : raw_rank.to_i
   end
   

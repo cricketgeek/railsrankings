@@ -16,9 +16,15 @@
 #
 
 class Location < ActiveRecord::Base
-    has_many :coders
+    belongs_to :coder
+    before_create :associate_coder
     
-    validates_uniqueness_of :name
-    validates_presence_of :name
+    
+    def associate_coder
+      if !udid.blank?
+        coder = Coder.find(:first,:conditions => ["udid = ?",self.udid])
+        self.coder = coder if coder 
+      end
+    end
     
 end
