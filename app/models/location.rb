@@ -24,7 +24,11 @@ class Location < ActiveRecord::Base
     def associate_coder
       if !udid.blank?
         coder = Coder.find(:first,:conditions => ["udid = ?",self.udid])
-        self.coder = coder if coder 
+        if coder
+          self.coder = coder if coder
+          self.name = "#{coder.whole_name}"
+        end
+        
       end
     end
     
