@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090301191852
+# Schema version: 20091009155858
 #
 # Table name: locations
 #
@@ -9,10 +9,11 @@
 #  state      :string(255)
 #  zip        :string(255)
 #  lat        :string(255)
-#  long       :string(255)
+#  lon        :string(255)
 #  coder_id   :integer(4)
 #  created_at :datetime
 #  updated_at :datetime
+#  udid       :string(255)
 #
 
 class Location < ActiveRecord::Base

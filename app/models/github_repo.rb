@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090301191852
+# Schema version: 20091009155858
 #
 # Table name: github_repos
 #
@@ -13,6 +13,8 @@
 #  updated_at  :datetime
 #  forked      :boolean(1)
 #  forks       :integer(4)
+#  company_id  :integer(4)
+#  alias_used  :string(255)
 #
 
 class GithubRepo < ActiveRecord::Base
