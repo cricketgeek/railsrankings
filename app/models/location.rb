@@ -26,7 +26,7 @@ class Location < ActiveRecord::Base
         coder = Coder.find(:first,:conditions => ["udid = ?",self.udid])
         if coder
           self.coder = coder if coder
-          self.name = "#{coder.whole_name}"
+          self.name = "#{coder.whole_name}" if self.name.blank?
         end
         
       end
