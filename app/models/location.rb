@@ -20,7 +20,7 @@ class Location < ActiveRecord::Base
     belongs_to :coder
     before_create :associate_coder
     
-    
+    validates_uniqueness_of :udid, :scope => [:lat,:lon]
     def associate_coder
       if !udid.blank?
         coder = Coder.find(:first,:conditions => ["udid = ?",self.udid])
