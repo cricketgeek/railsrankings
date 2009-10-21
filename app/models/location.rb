@@ -20,6 +20,12 @@ class Location < ActiveRecord::Base
     belongs_to :coder
     before_create :associate_coder
     
+    define_index do
+      indexes name
+      
+      has lat,lon
+    end
+    
     validates_uniqueness_of :udid, :scope => [:lat,:lon]
     def associate_coder
       if !udid.blank?

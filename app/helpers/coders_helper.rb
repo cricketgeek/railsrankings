@@ -13,7 +13,11 @@ module CodersHelper
   end
   
   def show_search_term
-    "Matching \"#{params[:search]}\"" if params[:search] && !(params[:search].blank?)
+    if params[:search] && !(params[:search].blank?)
+      return "Matching \"#{params[:search]}\""
+    else
+      return "Ruby on Rails Coders Ranked"
+    end
   end
   
   def company_clipped(coder)
