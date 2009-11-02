@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20091009155858
+# Schema version: 20090301191852
 #
 # Table name: coders
 #
@@ -24,7 +24,7 @@
 #  github_url            :string(255)
 #  full_rank             :integer(4)      default(0)
 #  core_contributor      :boolean(1)
-#  username              :string(255)
+#  slug                  :string(255)
 #  is_available_for_hire :boolean(1)
 #  railsrank             :integer(4)      default(9999)
 #  company_id            :integer(4)
@@ -35,10 +35,6 @@
 #  latitude              :float
 #  longitude             :float
 #  whole_name            :string(255)
-#  twitter_name          :string(255)
-#  updated               :boolean(1)
-#  scraperUpdateDate     :datetime        default(Mon Sep 21 11:58:59 UTC 2009)
-#  UDID                  :string(255)
 #
 
 

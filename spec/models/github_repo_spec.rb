@@ -1,23 +1,4 @@
 # == Schema Information
-# Schema version: 20091009155858
-#
-# Table name: github_repos
-#
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)
-#  url         :string(255)
-#  watchers    :integer(4)
-#  description :string(255)
-#  coder_id    :integer(4)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  forked      :boolean(1)
-#  forks       :integer(4)
-#  company_id  :integer(4)
-#  alias_used  :string(255)
-#
-
-# == Schema Information
 # Schema version: 20090221173936
 #
 # Table name: github_repos
