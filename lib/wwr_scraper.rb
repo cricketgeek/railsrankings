@@ -331,6 +331,8 @@ class WWRScraper
       coder.nickname = "jimweirich"
     elsif coder.whole_name == "Jim Neath"
       coder.nickname = "jimneath"
+    elsif coder.whole_name == "Jaime Bellmyer"
+      coder.nickname = "bellmyer"
     end
     
   end
