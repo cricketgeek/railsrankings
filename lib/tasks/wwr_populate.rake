@@ -122,7 +122,8 @@ namespace :wwr do
       repo.delete
     end
     Commit.delete_all("github_repo_id is NULL")
-    
+    c = Coder.find("abhijat-mahajan")
+    c.delete
     wwr_scraper = WWRScraper.new
     wwr_scraper.remove_phonies
     
