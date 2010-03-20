@@ -194,8 +194,9 @@ class WWRScraper
     end
     
     mao = Coder.find("mao-dan")
-    mao.delete
-    
+    mao.delete if mao
+    c = Coder.find("abhijat-mahajan")
+    c.delete if c   
   end  
   
   private
