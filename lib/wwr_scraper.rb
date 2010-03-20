@@ -193,10 +193,18 @@ class WWRScraper
       tobias.save
     end
     
-    mao = Coder.find("mao-dan")
-    mao.delete if mao
-    c = Coder.find("abhijat-mahajan")
-    c.delete if c   
+    begin
+      mao = Coder.find_by_("mao-dan")
+      mao.delete
+    rescue
+    end
+    
+    begin
+      c = Coder.find("abhijat-mahajan")
+      c.delete
+    rescue
+    end
+         
   end  
   
   private
