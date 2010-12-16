@@ -344,6 +344,22 @@ class WWRScraper
       coder.nickname = "bellmyer"
     elsif coder.whole_name == "Jeremy McAnally"
       coder.nickname = "jm"
+    elsif coder.whole_name == "Manuel Meurer"
+      coder.nickname = "manuelmeurer"
+    elsif coder.whole_name == "Julius Francisco"
+      coder.nickname = "baldrailers"
+    elsif coder.whole_name == "Chris Herring"
+      coder.nickname = "cherring"
+    elsif coder.whole_name == "Andrea Salicetti"
+      coder.nickname = "knightq"
+    elsif coder.whole_name == "Tony Arcieri"
+      coder.nickname = "tarcieri"
+    elsif coder.whole_name == "Kieran P"
+      coder.nickname = "KieranP"
+    elsif coder.whole_name = "Mike Bailey"
+      coder.nickname = "mbailey"
+    elsif coder.whole_name == "Claudio Poli"
+      coder.nickname = "masterkain"
     end
     
   end
