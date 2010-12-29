@@ -356,7 +356,7 @@ class WWRScraper
       coder.nickname = "tarcieri"
     elsif coder.whole_name == "Kieran P"
       coder.nickname = "KieranP"
-    elsif coder.whole_name = "Mike Bailey"
+    elsif coder.whole_name == "Mike Bailey"
       coder.nickname = "mbailey"
     elsif coder.whole_name == "Claudio Poli"
       coder.nickname = "masterkain"
